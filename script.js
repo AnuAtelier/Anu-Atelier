@@ -59,31 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Profile Modal Logic
-    const profileBtn = document.getElementById('open-profile-btn');
-    const profileModal = document.getElementById('profile-modal');
-    const closeProfile = document.querySelector('.close-profile');
-    const profileForm = document.getElementById('profile-form');
-
-    if (profileBtn && profileModal) {
-        profileBtn.addEventListener('click', () => {
-            profileModal.classList.add('active');
-        });
-    }
-
-    if (closeProfile) {
-        closeProfile.addEventListener('click', () => {
-            profileModal.classList.remove('active');
-        });
-    }
-
-    if (profileForm) {
-        profileForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Profile updated successfully!');
-            profileModal.classList.remove('active');
-        });
-    }
 
     // Load custom crafts from localStorage
     const productGrid = document.querySelector('.product-grid');

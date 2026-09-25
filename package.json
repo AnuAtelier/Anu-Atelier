@@ -1,0 +1,27 @@
+{
+  "name": "selling-company",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnuAtelier/Anu-Atelier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnuAtelier/Anu-Atelier/issues"
+  },
+  "homepage": "https://github.com/AnuAtelier/Anu-Atelier#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "twilio": "^6.1.1"
+  }
+}

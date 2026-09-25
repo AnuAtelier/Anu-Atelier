@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label>Image URL</label>
-                    <input type="url" id="craft-image" placeholder="https://images.unsplash.com/..." required>
+                    <label>Craft Image</label>
+                    <input type="file" id="craft-image-file" accept="image/*" required>
                 </div>
                 <button type="submit" class="btn primary-btn">Publish Craft</button>
             </form>
@@ -135,15 +135,22 @@
                 e.preventDefault();
                 const name = document.getElementById('craft-name').value;
                 const price = document.getElementById('craft-price').value;
-                const image = document.getElementById('craft-image').value;
+                const fileInput = document.getElementById('craft-image-file');
+                
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const image = event.target.result; // Base64 string
+                        const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
+                        crafts.push({ name, price, image });
+                        localStorage.setItem('addedCrafts', JSON.stringify(crafts));
 
-                const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
-                crafts.push({ name, price, image });
-                localStorage.setItem('addedCrafts', JSON.stringify(crafts));
-
-                form.reset();
-                renderCrafts();
-                alert('Craft added successfully! Check the main store page.');
+                        form.reset();
+                        renderCrafts();
+                        alert('Craft added successfully! Check the main store page.');
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
             });
 
             renderCrafts();
