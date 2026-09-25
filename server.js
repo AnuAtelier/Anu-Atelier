@@ -4,6 +4,27 @@ const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
 const twilio = require('twilio');
 const path = require('path');
+const fs = require('fs');
+
+const PRODUCTS_FILE = path.join(__dirname, 'products.json');
+if (!fs.existsSync(PRODUCTS_FILE)) {
+    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify([]));
+}
+
+const CATEGORIES = {
+    'terracotta-clay': {
+        name: 'Terracotta & Clay Items',
+        subcategories: ['pots', 'planters', 'diyas', 'jewelry', 'cookware', 'wall-murals', 'figurines', 'tableware', 'water-bottles', 'wind-chimes', 'cups', 'piggy-banks', 'vases']
+    },
+    'embroidered-clothes': {
+        name: 'Embroidered & Hand-Stitched Clothes',
+        subcategories: ['kurtis', 'dupattas', 'sarees', 'lehengas', 'quilts', 'shawls', 'blouses', 'handkerchiefs', 'frocks', 'jackets', 'gowns', 'scarves']
+    },
+    'other-handicrafts': {
+        name: 'Other Handicrafts',
+        subcategories: ['jute-bags', 'wooden-toys', 'bamboo-baskets', 'brass-idols', 'macrame-hangings', 'leather-puppets', 'papier-mache-boxes', 'marble-coasters', 'rugs', 'dhurries', 'wind-chimes']
+    }
+};
 
 dotenv.config();
 
@@ -116,6 +137,124 @@ app.post('/api/auth/verify-otp', verifyLimiter, async (req, res) => {
         }
         return res.status(500).json({ error: 'Server error during verification. Please try again.' });
     }
+});
+
+// --- Product Endpoints ---
+
+// Get all products
+app.get('/api/products', (req, res) => {
+    try {
+        const data = fs.readFileSync(PRODUCTS_FILE, 'utf8');
+        const products = JSON.parse(data);
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to read products' });
+    }
+});
+
+// Get a single product
+app.get('/api/products/:id', (req, res) => {
+    try {
+        const data = fs.readFileSync(PRODUCTS_FILE, 'utf8');
+        const products = JSON.parse(data);
+        const product = products.find(p => p.id === req.params.id);
+        if (!product) return res.status(404).json({ error: 'Product not found' });
+        res.json(product);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to read product' });
+    }
+});
+
+// Create a new product
+app.post('/api/products', (req, res) => {
+    try {
+        const { name, description, price, categoryId, subcategoryId, stock, image, originalPrice, status } = req.body;
+        
+        if (!name || !price || !categoryId || !subcategoryId) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        const data = fs.readFileSync(PRODUCTS_FILE, 'utf8');
+        const products = JSON.parse(data);
+
+        const newProduct = {
+            id: 'prod_' + Date.now().toString(),
+            name,
+            description: description || '',
+            price: Number(price),
+            originalPrice: originalPrice ? Number(originalPrice) : null,
+            categoryId,
+            subcategoryId,
+            categoryName: CATEGORIES[categoryId] ? CATEGORIES[categoryId].name : categoryId,
+            subcategoryName: subcategoryId,
+            stock: Number(stock) || 1,
+            image: image || null,
+            status: status || 'published',
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+        };
+
+        products.push(newProduct);
+        fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2));
+
+        res.status(201).json({ success: true, product: newProduct });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to save product' });
+    }
+});
+
+// Update a product
+app.put('/api/products/:id', (req, res) => {
+    try {
+        const data = fs.readFileSync(PRODUCTS_FILE, 'utf8');
+        let products = JSON.parse(data);
+        
+        const index = products.findIndex(p => p.id === req.params.id);
+        if (index === -1) return res.status(404).json({ error: 'Product not found' });
+
+        const updatedProduct = {
+            ...products[index],
+            ...req.body,
+            updatedAt: Date.now()
+        };
+
+        if (req.body.categoryId && CATEGORIES[req.body.categoryId]) {
+            updatedProduct.categoryName = CATEGORIES[req.body.categoryId].name;
+        }
+
+        products[index] = updatedProduct;
+        fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2));
+
+        res.json({ success: true, product: updatedProduct });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to update product' });
+    }
+});
+
+// Delete a product
+app.delete('/api/products/:id', (req, res) => {
+    try {
+        const data = fs.readFileSync(PRODUCTS_FILE, 'utf8');
+        let products = JSON.parse(data);
+        
+        const initialLength = products.length;
+        products = products.filter(p => p.id !== req.params.id);
+        
+        if (products.length === initialLength) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2));
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to delete product' });
+    }
+});
+
+// Get Categories Config
+app.get('/api/categories', (req, res) => {
+    res.json(CATEGORIES);
 });
 
 // Fallback to index.html for SPA if needed

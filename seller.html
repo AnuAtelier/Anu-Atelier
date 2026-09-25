@@ -3,62 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Dashboard | Anu Atelier</title>
+    <title>Add Craft | Anu Atelier</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .dashboard-container {
-            padding: 4rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
+        body {
+            background: #faf8f5;
         }
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
+        .add-craft-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 5%;
         }
-        .add-craft-card {
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .page-header h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .craft-form-card {
             background: var(--white);
-            padding: 2rem;
             border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            margin-bottom: 4rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
         }
-        .add-craft-card h3 { margin-bottom: 1.5rem; }
+        
+        /* Decorative corner */
+        .craft-form-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle at top right, var(--secondary), transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
         .form-row {
-            display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
         }
+
         .form-group {
-            flex: 1;
             display: flex;
             flex-direction: column;
+            margin-bottom: 1.5rem;
         }
+        
         .form-group label {
+            font-size: 0.95rem;
+            font-weight: 500;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+        
+        .form-group label span.required {
+            color: #ff4757;
+        }
+
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px var(--secondary);
+        }
+
+        /* Image Upload Area */
+        .image-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .image-upload-area:hover, .image-upload-area.dragover {
+            border-color: var(--primary);
+            background: #fffafa;
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-subtext {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        #file-input {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 1rem;
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px; right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px; height: 25px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .remove-image:hover { background: #ff4757; }
+
+        /* Premium Button */
+        .publish-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff6b81 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .publish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 129, 0.5);
+        }
+        
+        .publish-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .craft-form-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ecc71;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex; align-items: center; gap: 0.8rem;
             font-weight: 500;
         }
-        .form-group input, .form-group textarea {
-            padding: 0.8rem;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-family: var(--font-body);
-            outline: none;
-            transition: var(--transition);
+        .toast.show {
+            bottom: 30px;
         }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--primary);
-        }
-        .my-crafts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
+        .toast.error {
+            background: #e74c3c;
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
             <a href="index.html">Anu<span>Atelier</span></a>
@@ -68,93 +265,251 @@
         </div>
     </nav>
 
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Artisan Dashboard</h2>
-        </div>
-
-        <div class="add-craft-card">
-            <h3>Add New Craft</h3>
-            <form id="new-craft-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Craft Name</label>
-                        <input type="text" id="craft-name" placeholder="e.g. Handpainted Coasters" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Price (₹)</label>
-                        <input type="number" id="craft-price" placeholder="e.g. 499" required>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label>Craft Image</label>
-                    <input type="file" id="craft-image-file" accept="image/*" required>
-                </div>
-                <button type="submit" class="btn primary-btn">Publish Craft</button>
-            </form>
-        </div>
-
-        <div class="section-title" style="text-align: left; margin-bottom: 2rem;">
-            <h2>Your Listed Crafts</h2>
-            <p>Crafts you add will appear here and on the main store front page.</p>
+    <div class="add-craft-container">
+        <div class="page-header">
+            <h2>Add New Craft</h2>
+            <p>Showcase your handmade magic to the world</p>
         </div>
         
-        <div class="my-crafts-grid" id="my-crafts-list">
-            <!-- Dynamically populated -->
+        <div class="craft-form-card">
+            <form id="add-craft-form">
+                
+                <!-- Section 1: Basic Info -->
+                <div class="form-section">
+                    <div class="section-title"><i class="fas fa-info-circle"></i> Basic Information</div>
+                    
+                    <div class="form-group">
+                        <label>Craft Name <span class="required">*</span></label>
+                        <input type="text" id="p-name" placeholder="E.g., Handpainted Terracotta Vase" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description <span class="required">*</span></label>
+                        <textarea id="p-desc" rows="4" placeholder="Tell the story behind this craft... what makes it special?" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 2: Categorization -->
+                <div class="form-section">
+                    <div class="section-title"><i class="fas fa-tags"></i> Categorization</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Main Category <span class="required">*</span></label>
+                            <select id="p-category" required>
+                                <option value="">Select Category</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subcategory <span class="required">*</span></label>
+                            <select id="p-subcategory" required disabled>
+                                <option value="">Select Subcategory</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Pricing & Inventory -->
+                <div class="form-section">
+                    <div class="section-title"><i class="fas fa-rupee-sign"></i> Pricing & Inventory</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Selling Price (₹) <span class="required">*</span></label>
+                            <input type="number" id="p-price" placeholder="E.g., 999" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Original Price (₹) <span style="color:var(--text-muted); font-size:0.8rem; font-weight:normal;">(Optional)</span></label>
+                            <input type="number" id="p-original-price" placeholder="E.g., 1299" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Available Stock <span class="required">*</span></label>
+                            <input type="number" id="p-stock" value="1" required min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Media -->
+                <div class="form-section">
+                    <div class="section-title"><i class="fas fa-image"></i> Media</div>
+                    
+                    <div class="form-group">
+                        <label>Product Image <span class="required">*</span></label>
+                        <div class="image-upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <div class="upload-text">Click or drag image to upload</div>
+                            <div class="upload-subtext">Supports JPG, PNG (Max 5MB)</div>
+                            <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp">
+                        </div>
+                        
+                        <div class="image-preview" id="image-preview">
+                            <img id="preview-img" src="" alt="Preview">
+                            <button type="button" class="remove-image" id="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="publish-btn" id="submit-btn">
+                    <i class="fas fa-magic"></i> Publish Craft
+                </button>
+            </form>
         </div>
+    </div>
+    
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i> <span id="toast-msg">Craft published successfully!</span>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('new-craft-form');
-            const list = document.getElementById('my-crafts-list');
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : '/api';
+        
+        // Elements
+        const catSelect = document.getElementById('p-category');
+        const subCatSelect = document.getElementById('p-subcategory');
+        const form = document.getElementById('add-craft-form');
+        const fileInput = document.getElementById('file-input');
+        const previewDiv = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const removeBtn = document.getElementById('remove-btn');
+        const uploadArea = document.getElementById('upload-area');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        let categoriesData = {};
+        let currentBase64 = null;
 
-            function renderCrafts() {
-                const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
-                list.innerHTML = '';
-                if(crafts.length === 0) {
-                    list.innerHTML = '<p style="color:var(--text-muted);">No crafts listed yet. Add your first craft above!</p>';
+        // Load Categories
+        async function loadCategories() {
+            try {
+                const res = await fetch(`${API_URL}/categories`);
+                if (res.ok) {
+                    categoriesData = await res.json();
+                    
+                    catSelect.innerHTML = '<option value="">Select Category</option>';
+                    Object.keys(categoriesData).forEach(key => {
+                        catSelect.innerHTML += `<option value="${key}">${categoriesData[key].name}</option>`;
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load categories", err);
+            }
+        }
+        
+        // Handle Category Change
+        catSelect.addEventListener('change', () => {
+            const catId = catSelect.value;
+            if (catId && categoriesData[catId]) {
+                subCatSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                categoriesData[catId].subcategories.forEach(sub => {
+                    // Format subcategory (e.g. 'wind-chimes' -> 'Wind Chimes')
+                    const formatted = sub.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    subCatSelect.innerHTML += `<option value="${sub}">${formatted}</option>`;
+                });
+                subCatSelect.disabled = false;
+            } else {
+                subCatSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                subCatSelect.disabled = true;
+            }
+        });
+
+        // Handle Image Upload
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('File size must be under 5MB', true);
+                    fileInput.value = '';
                     return;
                 }
-                crafts.forEach(craft => {
-                    list.innerHTML += `
-                        <div class="product-card" style="box-shadow:var(--shadow-sm); border-radius:var(--radius); overflow:hidden; background:var(--white);">
-                            <div class="product-image" style="height:250px;">
-                                <img src="${craft.image}" alt="${craft.name}" style="width:100%; height:100%; object-fit:cover;">
-                            </div>
-                            <div class="product-info" style="padding:1rem;">
-                                <h3 style="font-size:1.1rem; margin-bottom:0.3rem;">${craft.name}</h3>
-                                <div style="color:var(--primary); font-weight:600;">₹${craft.price}</div>
-                            </div>
-                        </div>
-                    `;
-                });
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    currentBase64 = event.target.result;
+                    previewImg.src = currentBase64;
+                    previewDiv.style.display = 'block';
+                    uploadArea.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
             }
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('craft-name').value;
-                const price = document.getElementById('craft-price').value;
-                const fileInput = document.getElementById('craft-image-file');
-                
-                if (fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const image = event.target.result; // Base64 string
-                        const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
-                        crafts.push({ name, price, image });
-                        localStorage.setItem('addedCrafts', JSON.stringify(crafts));
-
-                        form.reset();
-                        renderCrafts();
-                        alert('Craft added successfully! Check the main store page.');
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            });
-
-            renderCrafts();
         });
+        
+        removeBtn.addEventListener('click', () => {
+            currentBase64 = null;
+            fileInput.value = '';
+            previewDiv.style.display = 'none';
+            uploadArea.style.display = 'block';
+        });
+
+        // Form Submit
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentBase64) {
+                showToast('Please upload a product image', true);
+                return;
+            }
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
+            submitBtn.disabled = true;
+            
+            const payload = {
+                name: document.getElementById('p-name').value.trim(),
+                description: document.getElementById('p-desc').value.trim(),
+                categoryId: catSelect.value,
+                subcategoryId: subCatSelect.value,
+                price: document.getElementById('p-price').value,
+                originalPrice: document.getElementById('p-original-price').value || null,
+                stock: document.getElementById('p-stock').value,
+                image: currentBase64,
+                status: 'published'
+            };
+            
+            try {
+                const res = await fetch(`${API_URL}/products`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (res.ok) {
+                    showToast('Craft published successfully! 🎉');
+                    form.reset();
+                    removeBtn.click(); // resets image
+                    subCatSelect.disabled = true;
+                    subCatSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                    
+                    // Redirect to category page after success
+                    setTimeout(() => {
+                        window.location.href = `category.html?cat=${payload.categoryId}`;
+                    }, 2000);
+                } else {
+                    const data = await res.json();
+                    showToast(data.error || 'Failed to publish', true);
+                }
+            } catch (err) {
+                showToast('Network error. Please try again.', true);
+            } finally {
+                submitBtn.innerHTML = '<i class="fas fa-magic"></i> Publish Craft';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.className = 'toast show ' + (isError ? 'error' : '');
+            if(isError) toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span id="toast-msg">${msg}</span>`;
+            else toast.innerHTML = `<i class="fas fa-check-circle"></i> <span id="toast-msg">${msg}</span>`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', loadCategories);
     </script>
 </body>
 </html>

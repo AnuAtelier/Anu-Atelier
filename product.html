@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail | Anu Atelier</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+        .breadcrumbs {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            display: flex; gap: 0.5rem; align-items: center;
+        }
+        .breadcrumbs a { color: var(--primary); text-decoration: none; }
+        .breadcrumbs a:hover { text-decoration: underline; }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+
+        .product-gallery {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #fafafa;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+            height: 600px;
+        }
+        .product-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .p-category {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .p-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .p-price-row {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        .p-price {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .p-original {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+        
+        .p-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .action-row {
+            display: flex; gap: 1rem; align-items: center;
+            margin-bottom: 2rem;
+        }
+        .qty-selector {
+            display: flex; align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            overflow: hidden;
+            background: white;
+        }
+        .qty-btn {
+            background: none; border: none; padding: 0.8rem 1rem;
+            cursor: pointer; color: var(--text-main);
+        }
+        .qty-input {
+            width: 40px; text-align: center; border: none; font-size: 1rem;
+            font-family: var(--font-body); pointer-events: none;
+        }
+        
+        .btn-add-cart {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(232, 67, 147, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4);
+        }
+        
+        .btn-wishlist {
+            background: white;
+            border: 1px solid #ddd;
+            color: var(--text-main);
+            width: 55px; height: 55px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-wishlist:hover {
+            color: #ff4757; border-color: #ff4757;
+        }
+
+        .product-meta {
+            background: #faf8f5;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+        }
+        .meta-item {
+            display: flex; justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        .meta-item:last-child { margin-bottom: 0; }
+        .meta-label { color: var(--text-muted); }
+        .meta-value { font-weight: 500; color: var(--text-main); }
+        
+        @media (max-width: 900px) {
+            .product-container { grid-template-columns: 1fr; gap: 2rem; }
+            .product-gallery { height: 400px; }
+        }
+        
+        .error-state {
+            text-align: center; padding: 5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">Anu<span>Atelier</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" style="font-weight: 500; color: var(--primary);"><i class="fas fa-arrow-left"></i> Back to Store</a>
+        </div>
+        <div class="nav-icons" style="align-items: center;">
+            <a href="seller.html" class="btn small-btn" style="margin-right:0.5rem; padding: 0.5rem 1rem; text-decoration:none;"><i class="fas fa-plus"></i> Add Craft</a>
+        </div>
+    </nav>
+
+    <div class="product-page" id="content-area">
+        <div style="text-align:center; padding:5rem 0; font-size:1.5rem; color:var(--primary);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+
+    <script>
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : '/api';
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        async function loadProduct() {
+            if(!productId) {
+                renderError("Product ID is missing.");
+                return;
+            }
+            try {
+                const res = await fetch(`${API_URL}/products/${productId}`);
+                if (!res.ok) {
+                    renderError("Product not found or has been removed.");
+                    return;
+                }
+                const product = await res.json();
+                renderProduct(product);
+            } catch (err) {
+                renderError("Failed to load product details.");
+            }
+        }
+
+        function renderError(msg) {
+            document.getElementById('content-area').innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#ff4757; margin-bottom:1rem;"></i>
+                    <h2>Oops!</h2>
+                    <p style="color:var(--text-muted); margin-bottom:2rem;">${msg}</p>
+                    <a href="index.html" class="btn primary-btn" style="text-decoration:none;">Return Home</a>
+                </div>
+            `;
+        }
+
+        function renderProduct(p) {
+            const formattedSub = p.subcategoryName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            const originalHtml = p.originalPrice ? `<span class="p-original">₹${p.originalPrice}</span>` : '';
+            
+            document.getElementById('content-area').innerHTML = `
+                <div class="breadcrumbs">
+                    <a href="index.html">Home</a> / 
+                    <a href="category.html?cat=${p.categoryId}">${p.categoryName}</a> / 
+                    <a href="category.html?cat=${p.categoryId}&subcat=${p.subcategoryId}">${formattedSub}</a> / 
+                    <span>${p.name}</span>
+                </div>
+                
+                <div class="product-container">
+                    <div class="product-gallery">
+                        <img src="${p.image || 'img/placeholder.png'}" alt="${p.name}">
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="p-category">${p.categoryName} • ${formattedSub}</div>
+                        <h1 class="p-title">${p.name}</h1>
+                        
+                        <div class="p-price-row">
+                            <span class="p-price">₹${p.price}</span>
+                            ${originalHtml}
+                        </div>
+                        
+                        <div class="p-desc">
+                            ${p.description.replace(/\n/g, '<br>')}
+                        </div>
+                        
+                        <div class="action-row">
+                            <div class="qty-selector">
+                                <button class="qty-btn" onclick="updateQty(-1)"><i class="fas fa-minus"></i></button>
+                                <input type="text" id="qty-val" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="updateQty(1)"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="btn-add-cart" onclick="alert('Added to cart!')"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+                            <button class="btn-wishlist" onclick="this.style.color='#ff4757'; this.style.borderColor='#ff4757';"><i class="far fa-heart"></i></button>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Availability</span>
+                                <span class="meta-value" style="color: ${p.stock > 0 ? '#2ecc71' : '#e74c3c'}">${p.stock > 0 ? 'In Stock' : 'Out of Stock'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Product ID</span>
+                                <span class="meta-value">${p.id}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Expose globally for inline onclick
+        window.updateQty = function(change) {
+            const inp = document.getElementById('qty-val');
+            let val = parseInt(inp.value) + change;
+            if(val < 1) val = 1;
+            inp.value = val;
+        };
+
+        document.addEventListener('DOMContentLoaded', loadProduct);
+    </script>
+</body>
+</html>

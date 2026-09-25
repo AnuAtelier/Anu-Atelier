@@ -25,10 +25,10 @@
             <button><i class="fas fa-search"></i></button>
         </div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Crafts</a></li>
-            <li><a href="#">Clothing</a></li>
-            <li><a href="#">Stories</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="category.html?cat=terracotta-clay">Terracotta</a></li>
+            <li><a href="category.html?cat=embroidered-clothes">Clothing</a></li>
+            <li><a href="category.html?cat=other-handicrafts">Handicrafts</a></li>
         </ul>
         <div class="nav-icons" style="align-items: center;">
             <a href="seller.html" class="btn small-btn"
@@ -57,215 +57,126 @@
     </div>
 
 
-    <!-- Quick Categories  -->
-    <div class="quick-categories-container">
-        <div class="quick-categories">
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-gift"></i></div>
-                <span>For You</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-scissors"></i></div>
-                <span>Upcycled</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-shapes"></i></div>
-                <span>Applique</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
-                <span>Embroidery</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-image"></i></div>
-                <span>Wall Art</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-lightbulb"></i></div>
-                <span>Decor Lights</span>
-            </div>
-            <div class="quick-cat-item">
-                <div class="cat-icon"><i class="fas fa-box-open"></i></div>
-                <span>Miniatures</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Massive Banner -->
-    <section class="massive-banner-section">
+    <!-- Hero Banner -->
+    <section class="massive-banner-section" style="margin-top:2rem;">
         <div class="massive-banner">
             <div class="banner-text">
                 <h2>Stock up on artisanal magic ✨</h2>
-                <p>Discover upcycled denim, colorful applique pouches, and glowing floral hoops</p>
-                <button class="btn banner-btn">Explore Now</button>
+                <p>Discover terracotta creations, hand-stitched clothing, and bespoke handicrafts.</p>
+                <a href="category.html" class="btn banner-btn" style="text-decoration:none;">Explore Now</a>
             </div>
         </div>
     </section>
 
-    <!-- Secondary Promo Row -->
-    <section class="promo-cards-row">
-        <div class="promo-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%);">
-            <h3>Sashiko &<br>Upcycled</h3>
-            <button class="btn small-btn">Shop Denim</button>
-        </div>
-        <div class="promo-card" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
-            <h3>Applique<br>Pouches</h3>
-            <button class="btn small-btn">Shop Bags</button>
-        </div>
-        <div class="promo-card" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
-            <h3>Floral Hoop<br>Lights</h3>
-            <button class="btn small-btn">Shop Decor</button>
-        </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section id="shop" class="products">
+    <!-- Explore Our Crafts (Main Categories) -->
+    <section class="products" style="padding-top: 3rem; padding-bottom: 2rem;">
         <div class="section-title">
-            <h2>Featured Finds</h2>
-            <p>Discover this week's most loved handcrafted items.</p>
+            <h2>Explore Our Crafts</h2>
+            <p>Shop by our curated artisan collections.</p>
         </div>
-        <div class="product-grid">
-            <!-- Product 0 (Added from Vercel) -->
-            <div class="product-card">
-                <div class="product-image">
-                    <!-- Placeholder image since the original was from LocalStorage -->
-                </div>
-                <div class="product-info">
-                    <span class="product-category">New Arrival</span>
-                    <h3 class="product-title">A Cute Little Girl Hand Stitching Clothes</h3>
-                    <div class="product-price">₹500</div>
-                </div>
+        <div class="promo-cards-row">
+            <div class="promo-card" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);">
+                <h3>Terracotta &<br>Clay Items</h3>
+                <a href="category.html?cat=terracotta-clay" class="btn small-btn" style="text-decoration:none;">Shop
+                    Terracotta</a>
             </div>
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpijLGyKIV-d9VrEGbWzLLHe44J1P3BFvgHJq4E9d7gA&s=10"
-                        alt="Applique Pouch">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Pouches & Bags</span>
-                    <h3 class="product-title">Colorful Applique Pouch</h3>
-                    <div class="product-price">₹799</div>
-                </div>
+            <div class="promo-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%);">
+                <h3>Embroidered &<br>Hand-Stitched</h3>
+                <a href="category.html?cat=embroidered-clothes" class="btn small-btn" style="text-decoration:none;">Shop
+                    Clothing</a>
             </div>
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAZqy4uNX9_yihi4CXgNAhsSr7c9Q4f6MovYgs9Xe8A&s=10"
-                        alt="Upcycled Denim">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Upcycled Clothing</span>
-                    <h3 class="product-title">Sashiko Embroidered Jeans</h3>
-                    <div class="product-price">₹2,499</div>
-                </div>
-            </div>
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4_rZRO56o2R8ll_Fy1qnzC7fXqMm_IjfT0W_0IV1OdQ&s=10"
-                        alt="Floral Hoop">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Home Decor</span>
-                    <h3 class="product-title">Floral Fairy Light Hoop</h3>
-                    <div class="product-price">₹1,299</div>
-                </div>
-            </div>
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXr2u7o7lkBiPl-MEsNkGFGgLCDdQh0nF3o9S0PB3izA&s=10"
-                        alt="Yarn Wall Hanging">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Wall Art</span>
-                    <h3 class="product-title">Bright Yarn Flower Hanging</h3>
-                    <div class="product-price">₹999</div>
-                </div>
-            </div>
-            <!-- Product 5 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmvGxiNqCibZWaa070PMZ3JZGA3Fr4lz68cAi_iWoE0A&s=10"
-                        alt="Miniature Basket">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Miniatures</span>
-                    <h3 class="product-title">Tiny Woven Daisy Basket</h3>
-                    <div class="product-price">₹599</div>
-                </div>
-            </div>
-            <!-- Product 6 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdN7QGCSpJx-JLAZtb2LMZLi68He6hI_iyjX3yxROCfA&s=10"
-                        alt="Embroidered Beanie">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Accessories</span>
-                    <h3 class="product-title">Floral Embroidered Beanie</h3>
-                    <div class="product-price">₹699</div>
-                </div>
-            </div>
-            <!-- Product 7 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1_b2ZJsjCwOH9gJ1RFzYFCb0VxNj8YOmGjeJD2y1v0A&s=10"
-                        alt="Fabric Motif">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Applique</span>
-                    <h3 class="product-title">Hand-stitched Fabric Motifs</h3>
-                    <div class="product-price">₹349</div>
-                </div>
-            </div>
-            <!-- Product 8 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFDLuh12PswfHbASigaUtRXLglqQKclRBX2lL_2C_GHA&s=10"
-                        alt="Boro Pillow">
-                    <div class="product-overlay">
-                        <button class="btn add-to-cart">Add to Cart</button>
-                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <span class="product-category">Home Decor</span>
-                    <h3 class="product-title">Patchwork Boro Pillow</h3>
-                    <div class="product-price">₹1,499</div>
-                </div>
+            <div class="promo-card" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
+                <h3>Other<br>Handicrafts</h3>
+                <a href="category.html?cat=other-handicrafts" class="btn small-btn" style="text-decoration:none;">Shop
+                    Handicrafts</a>
             </div>
         </div>
     </section>
+
+    <!-- Popular Categories (Subcategories) -->
+    <section style="max-width: 1200px; margin: 0 auto; padding: 2rem 5%; text-align: center;">
+        <h2 style="font-family: var(--font-heading); color: var(--primary-dark); margin-bottom: 2rem;">Popular
+            Categories</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+            <a href="category.html?cat=terracotta-clay&subcat=pots" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Pots</a>
+            <a href="category.html?cat=embroidered-clothes&subcat=kurtis" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Kurtis</a>
+            <a href="category.html?cat=embroidered-clothes&subcat=sarees" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Sarees</a>
+            <a href="category.html?cat=other-handicrafts&subcat=jute-bags" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Jute
+                Bags</a>
+            <a href="category.html?cat=terracotta-clay&subcat=diyas" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Diyas</a>
+            <a href="category.html?cat=other-handicrafts&subcat=wooden-toys" class="subcat-pill"
+                style="padding:0.8rem 1.5rem; background:white; border:1px solid #ddd; border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Wooden
+                Toys</a>
+        </div>
+    </section>
+
+    <!-- Latest Crafts -->
+    <section id="latest-crafts" class="products">
+        <div class="section-title">
+            <h2>Latest Crafts</h2>
+            <p>Fresh additions from our talented artisans.</p>
+        </div>
+        <div id="latest-loading" style="text-align:center; padding:2rem; color:var(--primary);"><i
+                class="fas fa-spinner fa-spin"></i> Loading...</div>
+        <div class="product-grid" id="latest-grid" style="display:none;">
+            <!-- Dynamically populated via API -->
+        </div>
+    </section>
+
+    <!-- Script to fetch products -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : '/api';
+            try {
+                const res = await fetch(`${API_URL}/products`);
+                if (res.ok) {
+                    const products = await res.json();
+
+                    // Filter published only and sort by newest
+                    const published = products.filter(p => p.status === 'published');
+                    published.sort((a, b) => b.createdAt - a.createdAt);
+
+                    const latestGrid = document.getElementById('latest-grid');
+                    document.getElementById('latest-loading').style.display = 'none';
+
+                    if (published.length === 0) {
+                        latestGrid.parentElement.innerHTML += '<p style="text-align:center; color:#999; margin-bottom:3rem;">No products available. <a href="seller.html">Add the first one!</a></p>';
+                    } else {
+                        latestGrid.style.display = 'grid';
+                        // Show top 8
+                        latestGrid.innerHTML = published.slice(0, 8).map(p => {
+                            const formattedSub = p.subcategoryName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                            const originalHtml = p.originalPrice ? `<span style="text-decoration:line-through; color:#aaa; font-size:0.9rem;">₹${p.originalPrice}</span>` : '';
+                            return \`
+                                <div class="product-card" style="box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; background:white;">
+                                    <div class="product-image" style="height:250px; background:#f9f9f9;">
+                                        <img src="\${p.image || 'img/placeholder.png'}" alt="\${p.name}" style="width:100%; height:100%; object-fit:cover;">
+                                    </div>
+                                    <div class="product-info" style="padding:1.5rem; display:flex; flex-direction:column; flex:1;">
+                                        <span style="font-size:0.8rem; color:var(--primary); font-weight:600; text-transform:uppercase; margin-bottom:0.5rem;">\${formattedSub}</span>
+                                        <h3 style="font-family:var(--font-heading); font-size:1.2rem; color:var(--text-main); margin-bottom:0.5rem; flex:1;">\${p.name}</h3>
+                                        <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem;">
+                                            <span style="font-size:1.2rem; font-weight:600;">₹\${p.price}</span>
+                                            \${originalHtml}
+                                        </div>
+                                        <a href="product.html?id=\${p.id}" style="display:block; text-align:center; padding:0.8rem; border:1px solid var(--primary); color:var(--primary); border-radius:50px; text-decoration:none; font-weight:500;">View Details</a>
+                                    </div>
+                                </div>
+                            \`;
+                        }).join('');
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load products on homepage", err);
+                document.getElementById('latest-loading').innerHTML = 'Failed to load products. Please check server.';
+            }
+        });
+    </script>
 
     <!-- Footer -->
     <footer>
