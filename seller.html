@@ -253,6 +253,13 @@
             background: #e74c3c;
         }
     </style>
+    <!-- Apply theme instantly to prevent flash -->
+    <script>
+        const savedTheme = localStorage.getItem('anu_theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 </head>
 <body>
     <!-- Navbar -->
@@ -510,6 +517,37 @@
 
         // Init
         document.addEventListener('DOMContentLoaded', loadCategories);
+    </script>
+    <script>
+        // --- Theme System ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (themeToggleBtn) {
+            const themeIcon = themeToggleBtn.querySelector('i');
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+            }
+            
+            const saved = localStorage.getItem('anu_theme') || 'light';
+            updateThemeIcon(saved);
+
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                if (newTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+                
+                localStorage.setItem('anu_theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+        }
     </script>
 </body>
 </html>
