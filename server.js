@@ -257,8 +257,8 @@ app.get('/api/categories', (req, res) => {
     res.json(CATEGORIES);
 });
 
-// Fallback to index.html for SPA if needed
-app.get('*', (req, res) => {
+// Fallback to index.html for root
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
