@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard | Anu Atelier</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-container {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        .add-craft-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 4rem;
+        }
+        .add-craft-card h3 { margin-bottom: 1.5rem; }
+        .form-row {
+            display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
+        }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: var(--font-body);
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+        .my-crafts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">Anu<span>Atelier</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" style="font-weight: 500; color: var(--primary);"><i class="fas fa-arrow-left"></i> Back to Store</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Artisan Dashboard</h2>
+        </div>
+
+        <div class="add-craft-card">
+            <h3>Add New Craft</h3>
+            <form id="new-craft-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Craft Name</label>
+                        <input type="text" id="craft-name" placeholder="e.g. Handpainted Coasters" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="craft-price" placeholder="e.g. 499" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Image URL</label>
+                    <input type="url" id="craft-image" placeholder="https://images.unsplash.com/..." required>
+                </div>
+                <button type="submit" class="btn primary-btn">Publish Craft</button>
+            </form>
+        </div>
+
+        <div class="section-title" style="text-align: left; margin-bottom: 2rem;">
+            <h2>Your Listed Crafts</h2>
+            <p>Crafts you add will appear here and on the main store front page.</p>
+        </div>
+        
+        <div class="my-crafts-grid" id="my-crafts-list">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('new-craft-form');
+            const list = document.getElementById('my-crafts-list');
+
+            function renderCrafts() {
+                const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
+                list.innerHTML = '';
+                if(crafts.length === 0) {
+                    list.innerHTML = '<p style="color:var(--text-muted);">No crafts listed yet. Add your first craft above!</p>';
+                    return;
+                }
+                crafts.forEach(craft => {
+                    list.innerHTML += `
+                        <div class="product-card" style="box-shadow:var(--shadow-sm); border-radius:var(--radius); overflow:hidden; background:var(--white);">
+                            <div class="product-image" style="height:250px;">
+                                <img src="${craft.image}" alt="${craft.name}" style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                            <div class="product-info" style="padding:1rem;">
+                                <h3 style="font-size:1.1rem; margin-bottom:0.3rem;">${craft.name}</h3>
+                                <div style="color:var(--primary); font-weight:600;">₹${craft.price}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('craft-name').value;
+                const price = document.getElementById('craft-price').value;
+                const image = document.getElementById('craft-image').value;
+
+                const crafts = JSON.parse(localStorage.getItem('addedCrafts')) || [];
+                crafts.push({ name, price, image });
+                localStorage.setItem('addedCrafts', JSON.stringify(crafts));
+
+                form.reset();
+                renderCrafts();
+                alert('Craft added successfully! Check the main store page.');
+            });
+
+            renderCrafts();
+        });
+    </script>
+</body>
+</html>

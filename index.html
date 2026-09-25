@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anu Atelier | Handcrafted Goods & Clothing</title>
+    <meta name="description" content="Discover unique handcrafted items, hand-stitched clothing, and bespoke artisan creations.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">Anu<span>Atelier</span></a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for handmade magic...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Crafts</a></li>
+            <li><a href="#">Clothing</a></li>
+            <li><a href="#">Stories</a></li>
+        </ul>
+        <div class="nav-icons" style="align-items: center;">
+            <a href="seller.html" target="_blank" class="btn small-btn" style="margin-right:0.5rem; padding: 0.5rem 1rem; text-decoration:none;"><i class="fas fa-plus"></i> Add Craft</a>
+            <button class="icon" id="open-profile-btn" style="background:none; border:none; cursor:pointer;" aria-label="Account"><i class="far fa-user"></i></button>
+            <a href="#" class="icon cart-icon" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="badge">3</span></a>
+        </div>
+    </nav>
+
+    <!-- Popup Modal -->
+    <div id="welcome-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-banner">
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&w=600&q=80" alt="Welcome Offer">
+            </div>
+            <div class="modal-text">
+                <h2>Welcome to Anu Atelier! ✨</h2>
+                <p>Get 20% off your first handcrafted purchase.</p>
+                <button class="btn primary-btn">Claim Offer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Categories (Flipkart/Blinkit Style) -->
+    <div class="quick-categories-container">
+        <div class="quick-categories">
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-gift"></i></div>
+                <span>For You</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-scissors"></i></div>
+                <span>Upcycled</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-shapes"></i></div>
+                <span>Applique</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                <span>Embroidery</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-image"></i></div>
+                <span>Wall Art</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-lightbulb"></i></div>
+                <span>Decor Lights</span>
+            </div>
+            <div class="quick-cat-item">
+                <div class="cat-icon"><i class="fas fa-box-open"></i></div>
+                <span>Miniatures</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Massive Banner (Blinkit Style) -->
+    <section class="massive-banner-section">
+        <div class="massive-banner">
+            <div class="banner-text">
+                <h2>Stock up on artisanal magic ✨</h2>
+                <p>Discover upcycled denim, colorful applique pouches, and glowing floral hoops</p>
+                <button class="btn banner-btn">Explore Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secondary Promo Row -->
+    <section class="promo-cards-row">
+        <div class="promo-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%);">
+            <h3>Sashiko &<br>Upcycled</h3>
+            <button class="btn small-btn">Shop Denim</button>
+        </div>
+        <div class="promo-card" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+            <h3>Applique<br>Pouches</h3>
+            <button class="btn small-btn">Shop Bags</button>
+        </div>
+        <div class="promo-card" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
+            <h3>Floral Hoop<br>Lights</h3>
+            <button class="btn small-btn">Shop Decor</button>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="shop" class="products">
+        <div class="section-title">
+            <h2>Featured Finds</h2>
+            <p>Discover this week's most loved handcrafted items.</p>
+        </div>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=500&q=80" alt="Applique Pouch">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Pouches & Bags</span>
+                    <h3 class="product-title">Colorful Applique Pouch</h3>
+                    <div class="product-price">₹799</div>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Upcycled Denim">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Upcycled Clothing</span>
+                    <h3 class="product-title">Sashiko Embroidered Jeans</h3>
+                    <div class="product-price">₹2,499</div>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1517502474163-9f89345c2250?auto=format&fit=crop&w=500&q=80" alt="Floral Hoop">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Home Decor</span>
+                    <h3 class="product-title">Floral Fairy Light Hoop</h3>
+                    <div class="product-price">₹1,299</div>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1588661609805-f9a86377e8a9?auto=format&fit=crop&w=500&q=80" alt="Yarn Wall Hanging">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Wall Art</span>
+                    <h3 class="product-title">Bright Yarn Flower Hanging</h3>
+                    <div class="product-price">₹999</div>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=500&q=80" alt="Miniature Basket">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Miniatures</span>
+                    <h3 class="product-title">Tiny Woven Daisy Basket</h3>
+                    <div class="product-price">₹599</div>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=500&q=80" alt="Embroidered Beanie">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Accessories</span>
+                    <h3 class="product-title">Floral Embroidered Beanie</h3>
+                    <div class="product-price">₹699</div>
+                </div>
+            </div>
+            <!-- Product 7 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1605298818835-eb9e8bb37e72?auto=format&fit=crop&w=500&q=80" alt="Fabric Motif">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Applique</span>
+                    <h3 class="product-title">Hand-stitched Fabric Motifs</h3>
+                    <div class="product-price">₹349</div>
+                </div>
+            </div>
+            <!-- Product 8 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=500&q=80" alt="Boro Pillow">
+                    <div class="product-overlay">
+                        <button class="btn add-to-cart">Add to Cart</button>
+                        <button class="icon-btn wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Home Decor</span>
+                    <h3 class="product-title">Patchwork Boro Pillow</h3>
+                    <div class="product-price">₹1,499</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>Anu<span>Atelier</span></h2>
+                <p>Bringing you the finest handcrafted goods from artisans around the world.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Shop</h4>
+                <a href="#">Clothing</a>
+                <a href="#">Jewelry</a>
+                <a href="#">Home & Living</a>
+                <a href="#">Art & Collectibles</a>
+            </div>
+            <div class="footer-links">
+                <h4>About</h4>
+                <a href="#">Our Story</a>
+                <a href="#">Meet the Artisans</a>
+                <a href="#">Sustainability</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Join the Community</h4>
+                <p>Subscribe for updates on new artisan drops.</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Email address">
+                    <button><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Anu Atelier. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-profile">&times;</button>
+            <div class="modal-text" style="text-align: left;">
+                <h2>Edit Profile</h2>
+                <p style="margin-bottom:1rem;">Update your artisan details.</p>
+                <form id="profile-form" style="display:flex; flex-direction:column; gap:1rem;">
+                    <input type="text" placeholder="Full Name" required style="padding:0.8rem; border-radius:8px; border:1px solid #ccc; font-family:var(--font-body); outline:none;" value="Anu Designer">
+                    <input type="email" placeholder="Email Address" required style="padding:0.8rem; border-radius:8px; border:1px solid #ccc; font-family:var(--font-body); outline:none;" value="anu@atelier.com">
+                    <textarea placeholder="Bio" rows="3" style="padding:0.8rem; border-radius:8px; border:1px solid #ccc; font-family:var(--font-body); outline:none;">Passionate artisan creating unique handcrafted goods with love and tradition.</textarea>
+                    <button type="submit" class="btn primary-btn" style="width:100%; margin-top:0.5rem;">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
