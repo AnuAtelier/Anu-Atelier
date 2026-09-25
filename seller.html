@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Craft | Anu Atelier</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-components.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -496,7 +497,31 @@
                     showToast(data.error || 'Failed to publish', true);
                 }
             } catch (err) {
-                showToast('Network error. Please try again.', true);
+                // FALLBACK for static deployments without backend (e.g. Vercel)
+                console.warn("Backend unavailable, falling back to local memory storage.");
+                
+                payload.id = 'prod_' + Date.now();
+                payload.createdAt = Date.now();
+                
+                const catElement = catSelect.options[catSelect.selectedIndex];
+                const subElement = subCatSelect.options[subCatSelect.selectedIndex];
+                
+                payload.categoryName = catElement ? catElement.text : '';
+                payload.subcategoryName = subElement ? subElement.text : '';
+
+                const localFallback = JSON.parse(localStorage.getItem('anu_products_fallback') || '[]');
+                localFallback.unshift(payload);
+                localStorage.setItem('anu_products_fallback', JSON.stringify(localFallback));
+                
+                showToast('Craft published successfully! (Saved Locally)');
+                form.reset();
+                removeBtn.click();
+                subCatSelect.disabled = true;
+                subCatSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                
+                setTimeout(() => {
+                    window.location.href = `category.html?cat=${payload.categoryId}`;
+                }, 2000);
             } finally {
                 submitBtn.innerHTML = '<i class="fas fa-magic"></i> Publish Craft';
                 submitBtn.disabled = false;

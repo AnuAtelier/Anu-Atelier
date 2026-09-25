@@ -339,7 +339,7 @@ ul {
     box-shadow: var(--shadow-md);
 }
 .promo-card h3 {
-    font-size: 1.5rem; margin-bottom: 1.5rem; line-height: 1.2;
+    font-size: 1.5rem; margin-bottom: 1.5rem; line-height: 1.2; color: #2d3436;
 }
 .small-btn {
     background: rgba(255,255,255,0.7);
@@ -348,6 +348,10 @@ ul {
     font-size: 0.9rem; border-radius: 50px;
     border: none; cursor: pointer;
     font-weight: 600; transition: var(--transition);
+}
+.promo-card .small-btn {
+    color: #2d3436;
+}
 }
 .small-btn:hover {
     background: var(--white);

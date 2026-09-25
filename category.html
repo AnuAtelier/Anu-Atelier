@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category | Anu Atelier</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-components.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -271,13 +272,14 @@
         async function init() {
             try {
                 // Fetch config & products in parallel
-                const [catRes, prodRes] = await Promise.all([
-                    fetch(`${API_URL}/categories`),
-                    fetch(`${API_URL}/products`)
+                // Use global fetchProducts for fallback resilience
+                const [catRes, prodData] = await Promise.all([
+                    fetch(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api/categories' : '/api/categories').catch(() => ({ json: () => ({}) })),
+                    fetchProducts()
                 ]);
                 
                 categoriesData = await catRes.json();
-                allProducts = await prodRes.json();
+                allProducts = prodData;
                 
                 renderPage();
             } catch (err) {
