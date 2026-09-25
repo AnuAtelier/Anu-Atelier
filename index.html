@@ -143,12 +143,12 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const latestGrid = document.getElementById('latest-grid');
             const loading = document.getElementById('latest-loading');
-            
+
             // globalProducts is populated by script.js
             const products = await fetchProducts();
             const published = products.filter(p => p.status === 'published');
             published.sort((a, b) => b.createdAt - a.createdAt);
-            
+
             loading.style.display = 'none';
 
             if (published.length === 0) {
@@ -232,20 +232,20 @@
                     themeIcon.className = 'fas fa-moon';
                 }
             }
-            
+
             const saved = localStorage.getItem('anu_theme') || 'light';
             updateThemeIcon(saved);
 
             themeToggleBtn.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
                 const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
+
                 if (newTheme === 'dark') {
                     document.documentElement.setAttribute('data-theme', 'dark');
                 } else {
                     document.documentElement.removeAttribute('data-theme');
                 }
-                
+
                 localStorage.setItem('anu_theme', newTheme);
                 updateThemeIcon(newTheme);
             });
