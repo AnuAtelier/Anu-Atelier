@@ -78,3 +78,17 @@ export function assertRateLimit(key: string, options: RateLimitOptions): void {
     });
   }
 }
+
+/**
+ * Standard Rate Limit Presets
+ */
+export const RATE_LIMIT_PRESETS = {
+  COUPON_CHECK: { windowMs: 60 * 1000, maxRequests: 10, keyPrefix: 'rl_coupon' },
+  PINCODE_CHECK: { windowMs: 60 * 1000, maxRequests: 30, keyPrefix: 'rl_pin' },
+  SEARCH_SUGGESTIONS: { windowMs: 60 * 1000, maxRequests: 60, keyPrefix: 'rl_search' },
+  CONTACT_ENQUIRY: { windowMs: 60 * 60 * 1000, maxRequests: 5, keyPrefix: 'rl_contact' },
+  REVIEW_SUBMIT: { windowMs: 60 * 60 * 1000, maxRequests: 5, keyPrefix: 'rl_review' },
+  PAYMENT_CREATE: { windowMs: 10 * 60 * 1000, maxRequests: 10, keyPrefix: 'rl_pay_create' },
+  AUTH_ATTEMPT: { windowMs: 15 * 60 * 1000, maxRequests: 5, keyPrefix: 'rl_auth' },
+};
+

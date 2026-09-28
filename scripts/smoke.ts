@@ -272,6 +272,24 @@ async function runSmokeTests() {
     }
   });
 
+  record('Hardening & Production SOPs', 'Verifies B7 security headers, runbook, backup, and go-live checklist', () => {
+    const vercelConfig = path.resolve(process.cwd(), 'vercel.json');
+    if (!fs.existsSync(vercelConfig)) throw new Error('Missing vercel.json');
+    const content = fs.readFileSync(vercelConfig, 'utf8');
+    if (!content.includes('Strict-Transport-Security')) throw new Error('Missing HSTS header');
+    if (!content.includes('Content-Security-Policy-Report-Only')) throw new Error('Missing CSP Report-Only header');
+
+    const backupScript = path.resolve(process.cwd(), 'scripts/backup.sh');
+    if (!fs.existsSync(backupScript)) throw new Error('Missing backup.sh');
+
+    const requiredDocs = ['docs/SECURITY.md', 'docs/RUNBOOK.md', 'docs/GO_LIVE.md'];
+    for (const doc of requiredDocs) {
+      if (!fs.existsSync(path.resolve(process.cwd(), doc))) {
+        throw new Error(`Missing ${doc}`);
+      }
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');

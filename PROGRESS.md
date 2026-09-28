@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B6 (Admin Operations & Growth) – Completed, Awaiting Approval  
-**Next Phase:** B7 (Hardening & Go-Live)
+**Current Phase:** B7 (Hardening & Go-Live) – Completed! (All Phases B0-B7 Complete)  
+**Next Step:** Awaiting User Approval for Final Go-Live Cutover & Merge to Main
 
 ---
 
@@ -83,9 +83,14 @@
   - [x] Admin & Growth test suite (`tests/b6_admin.test.ts`, 14/14 tests passing; 92 total).
   - [x] Documented in `docs/B6_ADMIN_REPORT.md`.
 
-- [ ] **B7 – Hardening & Go-Live**
-  - [ ] Security audit: rate limits, CAPTCHA, HTTP security headers.
-  - [ ] Supabase Security & Performance advisor verification.
-  - [ ] Database backup & restore drill.
-  - [ ] Production project cutover checklist (`anu-atelier-prod`).
+- [x] **B7 – Hardening & Go-Live**
+  - [x] Security audit: rate limits, CAPTCHA, HTTP security headers (`vercel.json`, `shared/rateLimiter.ts`, `shared/captcha.ts`).
+  - [x] Supabase Security & Performance advisor verification (`docs/SECURITY.md`).
+  - [x] Database backup & restore drill (`scripts/backup.sh`, `./scripts/backup.sh --verify`).
+  - [x] Light load benchmark (`scripts/load_test.ts`, `npm run test:load`, 0 errors, sub-ms latencies).
+  - [x] Operational runbook & SOPs (`docs/RUNBOOK.md`).
+  - [x] Production cutover checklist & rollback plan (`docs/GO_LIVE.md`).
+  - [x] Hardening test suite (`tests/b7_hardening.test.ts`, 10/10 tests passing; 102 total).
+  - [x] Documented in `docs/B7_HARDENING_REPORT.md`.
+
 

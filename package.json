@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:razorpay": "tsx scripts/razorpay_test.ts",
+    "test:load": "tsx scripts/load_test.ts",
     "smoke": "tsx scripts/smoke.ts"
   },
   "repository": {
