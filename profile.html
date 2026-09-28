@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile | Anu Atelier</title>
-    
+
     <!-- Apply theme instantly to prevent flash -->
     <script>
         const savedTheme = localStorage.getItem('anu_theme') || 'light';
@@ -12,9 +13,11 @@
             document.documentElement.setAttribute('data-theme', 'dark');
         }
     </script>
-    
+
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -39,37 +42,45 @@
             overflow: hidden;
             border: 1px solid var(--border-color);
         }
+
         .empty-state::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background: radial-gradient(circle, var(--secondary) 0%, transparent 40%);
             opacity: 0.5;
             z-index: 0;
             pointer-events: none;
         }
+
         .empty-content {
             position: relative;
             z-index: 1;
         }
+
         .empty-icon {
             font-size: 4rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
             text-shadow: 0 4px 15px rgba(255, 71, 126, 0.3);
         }
+
         .empty-state h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--text-main);
         }
+
         .empty-state p {
             color: var(--text-muted);
             margin-bottom: 2rem;
             font-size: 1.1rem;
             max-width: 500px;
-            margin-left: auto; margin-right: auto;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* --- Profile View (Hero Card) --- */
@@ -87,52 +98,68 @@
             margin-bottom: 2rem;
             border: 1px solid var(--border-color);
         }
+
         .profile-hero::after {
             content: '✨';
             position: absolute;
-            top: 20px; right: 30px;
+            top: 20px;
+            right: 30px;
             font-size: 2rem;
             opacity: 0.3;
         }
+
         .profile-hero-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             border: 4px solid var(--white);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             background: var(--bg-card);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 4rem; color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--text-muted);
             overflow: hidden;
             flex-shrink: 0;
             position: relative;
         }
+
         .profile-hero-photo img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+
         .profile-hero-info {
             flex: 1;
         }
+
         .profile-hero-info h1 {
             font-family: var(--font-heading);
             font-size: 2.5rem;
             color: var(--text-main);
             margin-bottom: 0.5rem;
         }
+
         .profile-hero-info p {
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
         }
+
         .verified-badge {
             display: inline-flex;
-            align-items: center; gap: 0.5rem;
+            align-items: center;
+            gap: 0.5rem;
             background: rgba(46, 204, 113, 0.15);
             color: #27ae60;
             padding: 0.5rem 1rem;
             border-radius: 50px;
-            font-size: 0.9rem; font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
+
         .unverified-badge {
             background: rgba(231, 76, 60, 0.15);
             color: #e74c3c;
@@ -147,32 +174,58 @@
             margin-bottom: 2rem;
             border: 1px solid var(--border-color);
         }
+
         .completion-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
-        .completion-header h3 { font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .completion-header h3 {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .progress-bar-container {
-            width: 100%; height: 8px;
+            width: 100%;
+            height: 8px;
             background: var(--bg-input);
             border-radius: 50px;
             overflow: hidden;
             margin-bottom: 1.5rem;
         }
+
         .progress-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary) 0%, #ff6b81 100%);
             border-radius: 50px;
             transition: width 1s ease-out;
         }
+
         .checklist {
-            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
+
         .check-item {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-size: 0.9rem; color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
-        .check-item.done { color: #2ecc71; }
-        .check-item.pending { color: var(--text-muted); }
+
+        .check-item.done {
+            color: #2ecc71;
+        }
+
+        .check-item.pending {
+            color: var(--text-muted);
+        }
 
         /* --- Info Grid --- */
         .info-grid {
@@ -181,6 +234,7 @@
             gap: 2rem;
             margin-bottom: 3rem;
         }
+
         .info-card {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -189,21 +243,36 @@
             border: 1px solid var(--border-color);
             position: relative;
         }
+
         .info-card h3 {
             font-size: 1.1rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
-            display: flex; align-items: center; gap: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+
         .info-row {
             margin-bottom: 1.2rem;
         }
-        .info-row:last-child { margin-bottom: 0; }
-        .info-label {
-            font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;
+
+        .info-row:last-child {
+            margin-bottom: 0;
         }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .info-value {
-            font-size: 1.05rem; font-weight: 500; color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-main);
         }
 
         /* --- Edit Mode --- */
@@ -214,37 +283,58 @@
             padding: 3rem;
             border: 1px solid var(--border-color);
         }
+
         .edit-section {
             margin-bottom: 3rem;
             padding-bottom: 2rem;
             border-bottom: 1px dashed var(--border-color);
         }
+
         .edit-section:last-child {
-            margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
+
         .edit-section-header {
             margin-bottom: 1.5rem;
         }
+
         .edit-section-header h3 {
             color: var(--primary);
             font-size: 1.2rem;
-            display: flex; align-items: center; gap: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             margin-bottom: 0.3rem;
         }
+
         .edit-section-header p {
             color: var(--text-muted);
             font-size: 0.9rem;
         }
+
         .form-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
+
         .form-group {
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
         }
+
         .form-group label {
-            font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
         }
-        .form-group input, .form-group textarea {
+
+        .form-group input,
+        .form-group textarea {
             padding: 1rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -254,31 +344,51 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        .form-group input:focus, .form-group textarea:focus {
+
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
             background: var(--bg-card);
             box-shadow: 0 0 0 3px rgba(255, 71, 126, 0.1);
         }
-        
+
         .photo-upload-group {
-            display: flex; align-items: center; gap: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
+
         .edit-photo-preview {
-            width: 100px; height: 100px; border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
             background: var(--bg-input);
             border: 2px dashed var(--border-color);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; font-size: 2rem; color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 2rem;
+            color: var(--text-muted);
         }
+
         .edit-photo-preview img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        
+
         .mobile-input-group {
-            display: flex; gap: 1rem; align-items: flex-start;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
         }
-        .mobile-input-group .form-group { flex: 1; margin-bottom: 0;}
+
+        .mobile-input-group .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
 
         /* --- Buttons --- */
         .btn-premium {
@@ -290,14 +400,18 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            display: inline-flex; align-items: center; gap: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
             box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
             transition: all 0.3s ease;
         }
+
         .btn-premium:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 107, 129, 0.4);
         }
+
         .btn-outline {
             background: transparent;
             color: var(--text-main);
@@ -309,6 +423,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .btn-outline:hover {
             background: var(--bg-input);
             border-color: var(--text-muted);
@@ -316,56 +431,82 @@
 
         /* --- OTP Modal Premium --- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             z-index: 2000;
-            opacity: 0; pointer-events: none;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
+
         .modal-overlay.active {
-            opacity: 1; pointer-events: all;
+            opacity: 1;
+            pointer-events: all;
         }
+
         .modal-content {
             background: var(--bg-card);
             border-radius: 20px;
-            width: 90%; max-width: 450px;
+            width: 90%;
+            max-width: 450px;
             overflow: hidden;
             box-shadow: var(--shadow-lg);
             transform: translateY(20px);
             transition: transform 0.3s ease;
             position: relative;
         }
+
         .modal-overlay.active .modal-content {
             transform: translateY(0);
         }
+
         .modal-header {
-            background: linear-gradient(135deg, var(--secondary) 0%, rgba(255,71,126,0.15) 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, rgba(255, 71, 126, 0.15) 100%);
             padding: 2.5rem 2rem 1.5rem;
             text-align: center;
             position: relative;
             border-bottom: 1px solid var(--border-color);
         }
+
         .modal-icon {
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             background: var(--white);
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
             margin: 0 auto 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
+
         .modal-body {
             padding: 2rem;
             text-align: center;
         }
+
         .otp-inputs {
-            display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
         }
+
         .otp-inputs input {
-            width: 45px; height: 55px;
-            font-size: 1.5rem; text-align: center;
+            width: 45px;
+            height: 55px;
+            font-size: 1.5rem;
+            text-align: center;
             border-radius: 12px;
             border: 2px solid var(--border-color);
             background: var(--bg-input);
@@ -373,14 +514,21 @@
             font-family: var(--font-body);
             transition: all 0.2s;
         }
+
         .otp-inputs input:focus {
-            outline: none; border-color: var(--primary);
+            outline: none;
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(255, 71, 126, 0.1);
         }
+
         .error-msg {
-            color: #ff4757; background: rgba(255, 71, 87, 0.1);
-            padding: 0.8rem; border-radius: 8px; margin-bottom: 1.5rem;
-            font-size: 0.9rem; display: none;
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: none;
         }
 
         /* --- Theme Toggle --- */
@@ -388,13 +536,17 @@
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             font-size: 1.1rem;
             transition: all 0.3s ease;
         }
+
         .theme-toggle:hover {
             background: var(--secondary);
             color: var(--primary);
@@ -402,28 +554,66 @@
 
         /* --- Toast --- */
         .toast {
-            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            background: #2D3436; color: white;
-            padding: 1rem 2rem; border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: flex; align-items: center; gap: 0.8rem;
-            font-weight: 500; font-size: 0.95rem; z-index: 3000;
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2D3436;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            z-index: 3000;
             transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        [data-theme="dark"] .toast { background: #3b232c; border: 1px solid var(--primary); }
-        .toast.show { bottom: 30px; }
-        .toast.success { border-left: 4px solid #2ecc71; }
-        .toast.error { border-left: 4px solid #e74c3c; }
 
-        .hidden { display: none !important; }
+        [data-theme="dark"] .toast {
+            background: #3b232c;
+            border: 1px solid var(--primary);
+        }
+
+        .toast.show {
+            bottom: 30px;
+        }
+
+        .toast.success {
+            border-left: 4px solid #2ecc71;
+        }
+
+        .toast.error {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .hidden {
+            display: none !important;
+        }
 
         @media (max-width: 768px) {
-            .profile-hero { flex-direction: column; text-align: center; gap: 1.5rem; padding: 2rem; }
-            .form-row { grid-template-columns: 1fr; gap: 0; }
-            .mobile-input-group { flex-direction: column; align-items: stretch; }
+            .profile-hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+                padding: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .mobile-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -431,24 +621,27 @@
             <a href="index.html">Anu<span>Atelier</span></a>
         </div>
         <div class="nav-links">
-            <a href="index.html" style="font-weight: 500; color: var(--primary);"><i class="fas fa-arrow-left"></i> Back to Store</a>
+            <a href="index.html" style="font-weight: 500; color: var(--primary);"><i class="fas fa-arrow-left"></i> Back
+                to Store</a>
         </div>
         <div class="nav-icons" style="align-items: center; gap: 1rem; display: flex;">
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
                 <i class="fas fa-moon"></i>
             </button>
-            <a href="seller.html" class="btn small-btn" style="text-decoration:none;"><i class="fas fa-plus"></i> Add Craft</a>
+            <a href="seller.html" class="btn small-btn" style="text-decoration:none;"><i class="fas fa-plus"></i> Add
+                Craft</a>
         </div>
     </nav>
 
     <div class="profile-container">
-        
+
         <!-- EMPTY STATE -->
         <div id="state-empty" class="empty-state hidden">
             <div class="empty-content">
                 <i class="fas fa-user-circle empty-icon"></i>
                 <h2>Welcome to AnuAtelier ✨</h2>
-                <p>Create your profile and make your handmade shopping experience personal. Track orders, save favorites, and connect with artisans.</p>
+                <p>Create your profile and make your handmade shopping experience personal. Track orders, save
+                    favorites, and connect with artisans.</p>
                 <button id="btn-create-profile" class="btn-premium">Create Your Profile</button>
             </div>
         </div>
@@ -513,7 +706,8 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">City, State - Pincode</div>
-                        <div class="info-value"><span id="view-city">-</span>, <span id="view-state">-</span> - <span id="view-pincode">-</span></div>
+                        <div class="info-value"><span id="view-city">-</span>, <span id="view-state">-</span> - <span
+                                id="view-pincode">-</span></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Country</div>
@@ -524,7 +718,8 @@
                 <div class="info-card">
                     <h3><i class="fas fa-quote-left"></i> About</h3>
                     <div class="info-row">
-                        <div class="info-value" id="view-bio" style="font-style:italic; color:var(--text-muted);">-</div>
+                        <div class="info-value" id="view-bio" style="font-style:italic; color:var(--text-muted);">-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -533,12 +728,13 @@
         <!-- EDIT STATE -->
         <div id="state-edit" class="hidden">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem;">
-                <h2 style="font-size:2rem;"><i class="fas fa-user-edit" style="color:var(--primary);"></i> Edit Profile</h2>
+                <h2 style="font-size:2rem;"><i class="fas fa-user-edit" style="color:var(--primary);"></i> Edit Profile
+                </h2>
                 <button id="btn-cancel-top" class="btn-outline">Cancel</button>
             </div>
 
             <form id="profile-form" class="edit-form-card">
-                
+
                 <div class="edit-section">
                     <div class="edit-section-header">
                         <h3>Profile Photo</h3>
@@ -550,8 +746,11 @@
                         </div>
                         <div>
                             <input type="file" id="input-photo" accept="image/*" style="display:none;">
-                            <button type="button" class="btn-outline" onclick="document.getElementById('input-photo').click()" style="padding: 0.6rem 1.2rem;">Choose Image</button>
-                            <button type="button" class="btn-outline" id="btn-remove-photo" style="display:none; padding: 0.6rem 1.2rem; margin-left:0.5rem; color:#e74c3c; border-color:#e74c3c;">Remove</button>
+                            <button type="button" class="btn-outline"
+                                onclick="document.getElementById('input-photo').click()"
+                                style="padding: 0.6rem 1.2rem;">Choose Image</button>
+                            <button type="button" class="btn-outline" id="btn-remove-photo"
+                                style="display:none; padding: 0.6rem 1.2rem; margin-left:0.5rem; color:#e74c3c; border-color:#e74c3c;">Remove</button>
                         </div>
                     </div>
                 </div>
@@ -588,7 +787,8 @@
                             <input type="text" id="input-mobile" placeholder="e.g. 9876543210" required>
                         </div>
                         <div style="margin-top: 1.8rem; display:flex; align-items:center;">
-                            <button type="button" id="btn-verify-mobile" class="btn-outline" style="color:var(--primary); border-color:var(--primary);">Verify Number</button>
+                            <button type="button" id="btn-verify-mobile" class="btn-outline"
+                                style="color:var(--primary); border-color:var(--primary);">Verify Number</button>
                             <div id="mobile-verify-status" style="margin-left: 1rem;"></div>
                         </div>
                     </div>
@@ -636,15 +836,17 @@
     <!-- OTP Modal Premium -->
     <div id="otp-modal" class="modal-overlay">
         <div class="modal-content">
-            <button id="close-otp" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; color:var(--text-muted); cursor:pointer; z-index:10;">&times;</button>
+            <button id="close-otp"
+                style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; color:var(--text-muted); cursor:pointer; z-index:10;">&times;</button>
             <div class="modal-header">
                 <div class="modal-icon"><i class="fas fa-mobile-alt"></i></div>
                 <h2 style="color:var(--text-main); font-size:1.5rem; margin-bottom:0.5rem;">Verify Mobile</h2>
-                <p style="color:var(--text-muted); font-size:0.95rem;">Enter the 6-digit code sent to <br><span id="otp-target-number" style="font-weight:600; color:var(--primary);"></span></p>
+                <p style="color:var(--text-muted); font-size:0.95rem;">Enter the 6-digit code sent to <br><span
+                        id="otp-target-number" style="font-weight:600; color:var(--primary);"></span></p>
             </div>
             <div class="modal-body">
                 <div id="otp-error-info" class="error-msg"></div>
-                
+
                 <div class="otp-inputs">
                     <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code">
                     <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric">
@@ -653,12 +855,15 @@
                     <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric">
                     <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric">
                 </div>
-                
-                <button id="btn-submit-otp" class="btn-premium" style="width:100%; margin-bottom:1.5rem;">Verify Code</button>
-                
+
+                <button id="btn-submit-otp" class="btn-premium" style="width:100%; margin-bottom:1.5rem;">Verify
+                    Code</button>
+
                 <p style="font-size:0.9rem; color:var(--text-muted);">
-                    Didn't receive code? 
-                    <button id="btn-resend-otp" style="background:none; border:none; color:var(--primary); font-weight:600; cursor:pointer;" disabled>Resend in <span id="otp-timer">30</span>s</button>
+                    Didn't receive code?
+                    <button id="btn-resend-otp"
+                        style="background:none; border:none; color:var(--primary); font-weight:600; cursor:pointer;"
+                        disabled>Resend in <span id="otp-timer">30</span>s</button>
                 </p>
             </div>
         </div>
@@ -673,7 +878,7 @@
         // --- Theme System ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeIcon = themeToggleBtn.querySelector('i');
-        
+
         function updateThemeIcon(theme) {
             if (theme === 'dark') {
                 themeIcon.className = 'fas fa-sun';
@@ -681,19 +886,19 @@
                 themeIcon.className = 'fas fa-moon';
             }
         }
-        
+
         updateThemeIcon(savedTheme);
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
+
             if (newTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
             }
-            
+
             localStorage.setItem('anu_theme', newTheme);
             updateThemeIcon(newTheme);
         });
@@ -702,10 +907,10 @@
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.className = 'toast show ' + type;
-            
+
             let icon = type === 'success' ? '<i class="fas fa-check-circle" style="color:#2ecc71; font-size:1.2rem;"></i>' : '<i class="fas fa-exclamation-circle" style="color:#e74c3c; font-size:1.2rem;"></i>';
             toast.innerHTML = `${icon} <span>${message}</span>`;
-            
+
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
@@ -719,7 +924,7 @@
         const stateEmpty = document.getElementById('state-empty');
         const stateView = document.getElementById('state-view');
         const stateEdit = document.getElementById('state-edit');
-        
+
         let currentProfileData = null;
         let tempPhotoDataUrl = null;
         let isMobileVerified = false;
@@ -732,7 +937,7 @@
                 try {
                     currentProfileData = JSON.parse(savedData);
                     showState('view');
-                } catch(e) {
+                } catch (e) {
                     showState('empty');
                 }
             } else {
@@ -761,7 +966,7 @@
         function populateView() {
             if (!currentProfileData) return;
             const d = currentProfileData;
-            
+
             // Hero
             document.getElementById('view-name').textContent = d.fullName;
             const photoEl = document.getElementById('view-photo');
@@ -770,7 +975,7 @@
             } else {
                 photoEl.innerHTML = `<i class="far fa-user"></i>`;
             }
-            
+
             const badge = document.getElementById('view-mobile-status');
             if (d.mobileVerified) {
                 badge.className = 'verified-badge';
@@ -800,7 +1005,7 @@
             ];
             let filledCount = 0;
             let checklistHtml = '';
-            
+
             fields.forEach(f => {
                 const isFilled = d[f.key] && d[f.key].trim() !== '';
                 if (isFilled) filledCount++;
@@ -810,7 +1015,7 @@
                     </div>
                 `;
             });
-            
+
             const pct = Math.round((filledCount / fields.length) * 100);
             document.getElementById('completion-percent').textContent = `${pct}%`;
             setTimeout(() => document.getElementById('completion-bar').style.width = `${pct}%`, 100);
@@ -821,7 +1026,7 @@
             const d = currentProfileData;
             document.getElementById('profile-form').reset();
             tempPhotoDataUrl = null;
-            
+
             if (d) {
                 document.getElementById('input-name').value = d.fullName || '';
                 document.getElementById('input-email').value = d.email || '';
@@ -832,10 +1037,10 @@
                 document.getElementById('input-state').value = d.state || '';
                 document.getElementById('input-pincode').value = d.pincode || '';
                 document.getElementById('input-country').value = d.country || 'India';
-                
+
                 if (d.profilePhoto) setPhotoPreview(d.profilePhoto);
                 else setPhotoPreview(null);
-                
+
                 isMobileVerified = !!(d.mobileVerified && d.mobile);
                 verifiedMobileNumber = d.mobile || null;
                 updateVerifyUI();
@@ -846,7 +1051,7 @@
                 updateVerifyUI();
             }
         }
-        
+
         function setPhotoPreview(url) {
             tempPhotoDataUrl = url;
             const preview = document.getElementById('edit-photo-preview');
@@ -879,7 +1084,7 @@
             btn.disabled = true;
             btn.style.color = 'var(--text-muted)';
             clearInterval(otpTimerInterval);
-            
+
             otpTimerInterval = setInterval(() => {
                 seconds--;
                 span.textContent = seconds;
@@ -895,7 +1100,7 @@
         function setupListeners() {
             document.getElementById('btn-create-profile').onclick = () => showState('edit');
             document.getElementById('btn-edit-profile').onclick = () => showState('edit');
-            
+
             const cancel = () => { currentProfileData ? showState('view') : showState('empty') };
             document.getElementById('btn-cancel-top').onclick = cancel;
             document.getElementById('btn-cancel-bottom').onclick = cancel;
@@ -930,7 +1135,7 @@
             document.getElementById('profile-form').onsubmit = (e) => {
                 e.preventDefault();
                 const mobile = document.getElementById('input-mobile').value.trim();
-                
+
                 if (mobile && !isMobileVerified) {
                     // Just prompt for warning in UI, wait no, let's use a nice confirm replacement? browser confirm is okay for this edge case.
                     if (!confirm("Your mobile number is not verified. Save anyway?")) return;
@@ -963,13 +1168,13 @@
             const otpModal = document.getElementById('otp-modal');
             const otpInputs = document.querySelectorAll('.otp-inputs input');
             const errBox = document.getElementById('otp-error-info');
-            
+
             document.getElementById('close-otp').onclick = () => otpModal.classList.remove('active');
-            
-            document.getElementById('btn-verify-mobile').onclick = async function() {
+
+            document.getElementById('btn-verify-mobile').onclick = async function () {
                 const mobile = document.getElementById('input-mobile').value.trim();
                 if (!mobile) return showToast('Please enter mobile number', 'error');
-                
+
                 const btn = this;
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
@@ -982,7 +1187,7 @@
                         body: JSON.stringify({ phone: mobile })
                     });
                     const data = await res.json();
-                    
+
                     btn.innerHTML = originalText;
                     btn.disabled = false;
 
@@ -1021,14 +1226,14 @@
             });
 
             // Verify Submit
-            document.getElementById('btn-submit-otp').onclick = async function() {
+            document.getElementById('btn-submit-otp').onclick = async function () {
                 const code = Array.from(otpInputs).map(i => i.value).join('');
                 if (code.length !== 6) {
                     errBox.textContent = 'Enter 6-digit code';
                     errBox.style.display = 'block';
                     return;
                 }
-                
+
                 const btn = this;
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
@@ -1043,15 +1248,15 @@
                         body: JSON.stringify({ phone: mobile, otp: code })
                     });
                     const data = await res.json();
-                    
+
                     if (res.ok) {
                         isMobileVerified = true;
                         verifiedMobileNumber = mobile;
                         updateVerifyUI();
-                        
+
                         btn.innerHTML = '<i class="fas fa-check"></i> Verified!';
                         btn.style.background = '#2ecc71';
-                        
+
                         setTimeout(() => {
                             otpModal.classList.remove('active');
                             btn.innerHTML = originalText;
@@ -1078,4 +1283,5 @@
         document.addEventListener('DOMContentLoaded', initProfile);
     </script>
 </body>
+
 </html>

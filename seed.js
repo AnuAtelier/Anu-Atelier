@@ -4,14 +4,14 @@ const path = require('path');
 const initialProducts = [
     {
         id: "prod_1",
-        name: "A Cute Little Girl Hand Stitching Clothes",
+        name: ".",
         description: "A beautiful handcrafted representation of a little girl stitching clothes.",
-        price: 500,
+        price: 499,
         categoryId: "embroidered-clothes",
         categoryName: "Embroidered & Hand-Stitched",
         subcategoryId: "kurtis",
         subcategoryName: "Kurtis",
-        image: "img/placeholder.png",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsTRyROcOR6uyNs9Z5Fv9-eyIYdjHtCNrlk7vHaWakRRXWnhhuZsEWsUE&s=10",
         stock: 10,
         status: "published",
         createdAt: Date.now() - 100000
@@ -20,7 +20,7 @@ const initialProducts = [
         id: "prod_2",
         name: "Colorful Applique Pouch",
         description: "A vibrant handmade applique pouch.",
-        price: 799,
+        price: 800,
         categoryId: "other-handicrafts",
         categoryName: "Other Handicrafts",
         subcategoryId: "jute-bags",

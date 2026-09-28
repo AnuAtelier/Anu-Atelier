@@ -2,7 +2,7 @@
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : '/api';
 
 const FALLBACK_PRODUCTS = [
-    { id: "prod_1", name: "A Cute Little Girl Hand Stitching Clothes", price: 500, categoryId: "embroidered-clothes", subcategoryId: "kurtis", image: "img/placeholder.png", status: "published", categoryName: "Embroidered & Hand-Stitched" },
+    { id: "prod_1", name: "A Cute Little Girl Hand Stitching Clothes", price: 499, categoryId: "embroidered-clothes", subcategoryId: "kurtis", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsTRyROcOR6uyNs9Z5Fv9-eyIYdjHtCNrlk7vHaWakRRXWnhhuZsEWsUE&s=10", status: "published", categoryName: "Embroidered & Hand-Stitched" },
     { id: "prod_2", name: "Colorful Applique Pouch", price: 799, categoryId: "other-handicrafts", subcategoryId: "jute-bags", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpijLGyKIV-d9VrEGbWzLLHe44J1P3BFvgHJq4E9d7gA&s=10", status: "published", categoryName: "Other Handicrafts" },
     { id: "prod_3", name: "Sashiko Embroidered Jeans", price: 2499, categoryId: "embroidered-clothes", subcategoryId: "jackets", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAZqy4uNX9_yihi4CXgNAhsSr7c9Q4f6MovYgs9Xe8A&s=10", status: "published", categoryName: "Embroidered & Hand-Stitched" },
     { id: "prod_4", name: "Floral Fairy Light Hoop", price: 1299, categoryId: "other-handicrafts", subcategoryId: "macrame-hangings", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4_rZRO56o2R8ll_Fy1qnzC7fXqMm_IjfT0W_0IV1OdQ&s=10", status: "published", categoryName: "Other Handicrafts" },
@@ -58,9 +58,9 @@ function saveCart() {
 
 function addToCart(productId, productInfo = null) {
     let product = globalProducts.find(p => String(p.id) === String(productId));
-    if (!product && productInfo) product = productInfo; 
+    if (!product && productInfo) product = productInfo;
     if (!product) return showToast('Product not found.', 'error');
-    
+
     const existing = cart.find(item => String(item.id) === String(product.id));
     if (existing) {
         existing.qty += 1;
@@ -111,11 +111,11 @@ function injectCartDrawer() {
         </div>
     </div>`;
     document.body.insertAdjacentHTML('beforeend', drawerHtml);
-    
+
     document.getElementById('close-cart').onclick = toggleCart;
     document.getElementById('cart-drawer-overlay').onclick = toggleCart;
     document.getElementById('btn-checkout').onclick = () => {
-        if(cart.length === 0) return showToast('Cart is empty', 'error');
+        if (cart.length === 0) return showToast('Cart is empty', 'error');
         showToast('Proceeding to checkout...');
     };
 }
@@ -124,13 +124,13 @@ function renderCartDrawer() {
     const container = document.getElementById('cart-items-container');
     const subtotalEl = document.getElementById('cart-subtotal');
     if (!container) return;
-    
+
     if (cart.length === 0) {
         container.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-bag"></i><p>Your cart is empty.</p></div>';
         subtotalEl.textContent = '₹0';
         return;
     }
-    
+
     let subtotal = 0;
     container.innerHTML = cart.map(item => {
         subtotal += item.price * item.qty;
@@ -153,7 +153,7 @@ function renderCartDrawer() {
 }
 
 function toggleCart(e) {
-    if(e) e.preventDefault();
+    if (e) e.preventDefault();
     document.getElementById('cart-drawer').classList.toggle('open');
     document.getElementById('cart-drawer-overlay').classList.toggle('show');
 }
@@ -164,17 +164,17 @@ function injectSearchPanels() {
     const searchBars = document.querySelectorAll('.search-bar');
     searchBars.forEach(bar => {
         const input = bar.querySelector('input');
-        if(!input) return;
-        
+        if (!input) return;
+
         // Wrap input and create panel
         bar.style.position = 'relative';
         const panel = document.createElement('div');
         panel.className = 'search-panel';
         panel.innerHTML = '<div class="search-results"></div>';
         bar.appendChild(panel);
-        
+
         const resultsContainer = panel.querySelector('.search-results');
-        
+
         input.addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase().trim();
             if (q.length < 2) {
@@ -182,14 +182,14 @@ function injectSearchPanels() {
                 return;
             }
             panel.style.display = 'block';
-            
-            const matches = globalProducts.filter(p => 
-                (p.name && p.name.toLowerCase().includes(q)) || 
+
+            const matches = globalProducts.filter(p =>
+                (p.name && p.name.toLowerCase().includes(q)) ||
                 (p.categoryName && p.categoryName.toLowerCase().includes(q)) ||
                 (p.subcategoryName && p.subcategoryName.toLowerCase().includes(q)) ||
                 (p.description && p.description.toLowerCase().includes(q))
             );
-            
+
             if (matches.length === 0) {
                 resultsContainer.innerHTML = `<div class="search-empty">No crafts found for "${q}"</div>`;
             } else {
@@ -205,16 +205,16 @@ function injectSearchPanels() {
                 `).join('') + `<a href="category.html?search=${encodeURIComponent(q)}" class="search-view-all">View all results &rarr;</a>`;
             }
         });
-        
+
         input.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter' && input.value.trim().length > 1) {
+            if (e.key === 'Enter' && input.value.trim().length > 1) {
                 window.location.href = `category.html?search=${encodeURIComponent(input.value.trim())}`;
             }
         });
-        
+
         // Close when clicking outside
         document.addEventListener('click', (e) => {
-            if(!bar.contains(e.target)) panel.style.display = 'none';
+            if (!bar.contains(e.target)) panel.style.display = 'none';
         });
     });
 }
@@ -224,7 +224,7 @@ function injectSearchPanels() {
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Fetch products to warm up cache
     await fetchProducts();
-    
+
     // 2. Setup Cart
     injectCartDrawer();
     updateCartBadges();
@@ -232,16 +232,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.cart-icon').forEach(icon => {
         icon.addEventListener('click', toggleCart);
     });
-    
+
     // 3. Setup Search
     injectSearchPanels();
-    
+
     // 4. Attach generic Add to Cart buttons
     document.addEventListener('click', (e) => {
-        if(e.target.closest('.add-to-cart')) {
+        if (e.target.closest('.add-to-cart')) {
             const btn = e.target.closest('.add-to-cart');
             const card = btn.closest('.product-card');
-            if(card) {
+            if (card) {
                 const img = card.querySelector('img').src;
                 const name = card.querySelector('.product-title, h3').textContent;
                 const priceText = card.querySelector('.product-price').textContent;
@@ -253,10 +253,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 5. Wishlist toggle
     document.addEventListener('click', (e) => {
-        if(e.target.closest('.wishlist')) {
+        if (e.target.closest('.wishlist')) {
             const btn = e.target.closest('.wishlist');
             const icon = btn.querySelector('i');
-            if(icon.classList.contains('far')) {
+            if (icon.classList.contains('far')) {
                 icon.classList.replace('far', 'fas');
                 icon.style.color = 'var(--primary)';
                 showToast('Added to Wishlist!');
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (claimBtn) claimBtn.onclick = () => {
             modal.classList.remove('active');
             const shop = document.querySelector('#shop');
-            if(shop) shop.scrollIntoView({ behavior: 'smooth' });
+            if (shop) shop.scrollIntoView({ behavior: 'smooth' });
         };
     }
 });
