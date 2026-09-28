@@ -6,7 +6,6 @@ import {
   ShieldCheck,
   HeartHandshake,
   MessageCircle,
-  Mail,
   MapPin,
   ArrowUp,
   Globe,
@@ -33,9 +32,6 @@ const LANGUAGES = [
 ];
 
 export const Footer: React.FC = () => {
-  const [emailInput, setEmailInput] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
   // Country & Language preference state
   const [selectedCountry, setSelectedCountry] = useState(() => {
     return localStorage.getItem('anu_country') || 'IN';
@@ -56,14 +52,6 @@ export const Footer: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (emailInput) {
-      setIsSubscribed(true);
-      setEmailInput('');
-    }
-  };
 
   const handleSavePreferences = (countryCode: string, langCode: string) => {
     setSelectedCountry(countryCode);
@@ -175,18 +163,6 @@ export const Footer: React.FC = () => {
                 <span>WhatsApp: +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}</span>
               </a>
 
-              {/* Email Address - White Color in Brackets as requested */}
-              <div className="flex items-center gap-1.5 text-white">
-                <Mail className="h-3.5 w-3.5 text-pink-400 flex-shrink-0" />
-                <span className="text-stone-300">Email:</span>
-                <a
-                  href={`mailto:${DEFAULT_SITE_SETTINGS.supportEmail}`}
-                  className="text-white hover:text-pink-300 font-bold tracking-wide transition-colors"
-                >
-                  [{DEFAULT_SITE_SETTINGS.supportEmail}]
-                </a>
-              </div>
-
               <div className="flex items-center gap-1.5 text-stone-300">
                 <MapPin className="h-3.5 w-3.5 text-pink-400 flex-shrink-0" />
                 <span>Uttar Pradesh, India</span>
@@ -257,65 +233,26 @@ export const Footer: React.FC = () => {
                   Helpline: +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}
                 </a>
               </li>
-              <li>
-                <span className="text-xs text-stone-300 block pt-0.5">
-                  Email Support:{' '}
-                  <a
-                    href={`mailto:${DEFAULT_SITE_SETTINGS.supportEmail}`}
-                    className="text-white font-bold hover:text-pink-300 transition-colors"
-                  >
-                    [{DEFAULT_SITE_SETTINGS.supportEmail}]
-                  </a>
-                </span>
-              </li>
             </ul>
           </div>
 
-          {/* Artisan Drops / Newsletter Column */}
-          <div>
+          {/* Region & Language Preferences Column */}
+          <div className="space-y-2">
             <h4 className="font-heading font-bold text-sm mb-1.5 text-white tracking-wide">
-              Artisan Drops
+              Region & Language
             </h4>
             <p className="text-xs text-stone-300 mb-2 leading-snug">
-              Get notified when our artisans release limited handmade craft batches.
+              Choose your country, currency and preferred language for Anu Atelier.
             </p>
 
-            {isSubscribed ? (
-              <div className="p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs font-semibold">
-                ✨ Subscribed! You will be notified on drops.
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-1.5">
-                <div className="flex gap-1.5">
-                  <input
-                    type="email"
-                    required
-                    value={emailInput}
-                    onChange={(e) => setEmailInput(e.target.value)}
-                    placeholder="[ Enter your email address ]"
-                    className="flex-1 px-3 py-1.5 text-xs rounded-full border border-stone-600 bg-stone-900 text-white placeholder-white focus:outline-none focus:border-white transition-all font-medium"
-                  />
-                  <button
-                    type="submit"
-                    className="px-3.5 py-1.5 text-xs font-bold text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] rounded-full transition-all shadow-xs flex-shrink-0"
-                  >
-                    Join
-                  </button>
-                </div>
-                <p className="text-[11px] text-white font-medium">
-                  Email support: <span className="text-white font-bold">[{DEFAULT_SITE_SETTINGS.supportEmail}]</span>
-                </p>
-              </form>
-            )}
-
             {/* Language & Country Switcher Button */}
-            <div className="pt-2 border-t border-stone-800/80 mt-2">
+            <div className="pt-1">
               <button
                 type="button"
                 onClick={() => setIsPreferenceModalOpen(true)}
-                className="w-full py-1.5 px-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white hover:border-pink-400 text-xs font-semibold flex items-center justify-between transition-all"
+                className="w-full py-2 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white hover:border-pink-400 text-xs font-semibold flex items-center justify-between transition-all cursor-pointer"
               >
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <Globe className="h-3.5 w-3.5 text-pink-400" />
                   <span>
                     {currentCountry.flag} {currentCountry.name} • {currentLang.native}
