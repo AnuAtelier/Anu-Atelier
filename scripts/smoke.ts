@@ -220,6 +220,31 @@ async function runSmokeTests() {
     }
   });
 
+  record('Database Migrations', 'Verifies 006_fulfilment_and_post_purchase.sql and RPCs', () => {
+    const migrationPath = path.resolve(process.cwd(), 'supabase/migrations/006_fulfilment_and_post_purchase.sql');
+    if (!fs.existsSync(migrationPath)) throw new Error('Missing 006_fulfilment_and_post_purchase.sql');
+    const content = fs.readFileSync(migrationPath, 'utf8');
+
+    if (!content.includes('ALTER TABLE public.shipments ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on shipments table');
+    }
+    if (!content.includes('ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on invoices table');
+    }
+    if (!content.includes('ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on reviews table');
+    }
+    if (!content.includes('public.get_order_tracking(')) {
+      throw new Error('Missing get_order_tracking RPC');
+    }
+    if (!content.includes('public.submit_review(')) {
+      throw new Error('Missing submit_review RPC');
+    }
+    if (!content.includes('public.admin_update_shipment(')) {
+      throw new Error('Missing admin_update_shipment RPC');
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');

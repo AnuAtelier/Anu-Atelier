@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B4 (Payments - Razorpay & COD) – Completed, Awaiting Approval  
-**Next Phase:** B5 (Fulfilment & Post-Purchase)
+**Current Phase:** B5 (Fulfilment & Post-Purchase) – Completed, Awaiting Approval  
+**Next Phase:** B6 (Admin Operations & Growth)
 
 ---
 
@@ -62,12 +62,14 @@
   - [x] Payments test suite (`tests/b4_payments.test.ts`, 14/14 tests passing; 66 total).
   - [x] Documented in `docs/B4_PAYMENTS_REPORT.md`.
 
-- [ ] **B5 – Fulfilment & Post-Purchase**
-  - [ ] Shipment tracking & status timeline updates.
-  - [ ] Return and replacement requests workflow.
-  - [ ] GST tax invoice PDF generation & storage in private bucket.
-  - [ ] Email sender background worker via Resend API.
-  - [ ] Customer reviews system with verified buyer badge & helpful votes.
+- [x] **B5 – Fulfilment & Post-Purchase**
+  - [x] Shipment tracking & status timeline updates (`shipments`, `get_order_tracking`).
+  - [x] Return and replacement requests workflow (`returns`, `request_return`).
+  - [x] GST tax invoice sequential numbering & intra/inter-state tax calculation (`invoices`, `/api/invoices/download`).
+  - [x] Email sender background worker via Resend API (`/api/cron/send-emails`, `shared/emailTemplates.ts`).
+  - [x] Customer reviews system with verified buyer badge & helpful votes (`reviews`, `submit_review`, `vote_review_helpful`).
+  - [x] Fulfilment test suite (`tests/b5_fulfilment.test.ts`, 12/12 tests passing; 78 total).
+  - [x] Documented in `docs/B5_FULFILMENT_REPORT.md`.
 
 - [ ] **B6 – Admin Operations & Growth**
   - [ ] Admin management RPCs & order dispatch tools.
