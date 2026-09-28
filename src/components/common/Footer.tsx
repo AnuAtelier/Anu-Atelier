@@ -13,6 +13,7 @@ import {
   Check,
 } from 'lucide-react';
 import { DEFAULT_SITE_SETTINGS } from '../../constants';
+import { WhatsAppIcon } from './WhatsAppFloat';
 
 const COUNTRIES = [
   { code: 'IN', name: 'India', currency: 'INR (₹)', flag: '🇮🇳' },
@@ -167,9 +168,9 @@ export const Footer: React.FC = () => {
                 href={`https://wa.me/91${DEFAULT_SITE_SETTINGS.whatsappNumber}?text=Hi%20Anu%20Atelier,%20I%20have%20an%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+                className="inline-flex items-center gap-1.5 font-semibold text-[#25D366] hover:text-emerald-300 transition-colors"
               >
-                <MessageCircle className="h-3.5 w-3.5 text-emerald-400" />
+                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
                 <span>WhatsApp: +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}</span>
               </a>
 

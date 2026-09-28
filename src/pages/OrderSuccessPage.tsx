@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CheckCircle, Truck, Package, MessageCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, Truck, Package, ArrowRight } from 'lucide-react';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
+import { WhatsAppIcon } from '../components/common/WhatsAppFloat';
 
 export const OrderSuccessPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -65,9 +66,9 @@ export const OrderSuccessPage: React.FC = () => {
           href={`https://wa.me/91${DEFAULT_SITE_SETTINGS.whatsappNumber}?text=Hi%20Anu%20Atelier,%20I%20have%20an%20inquiry%20regarding%20my%20order%20${id || ''}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-emerald-300 bg-emerald-50/80 hover:bg-emerald-100/80 text-xs sm:text-sm font-semibold text-emerald-800 flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+          className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-[#25D366]/40 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-xs sm:text-sm font-bold text-emerald-900 flex items-center justify-center gap-2 shadow-xs cursor-pointer transition-all"
         >
-          <MessageCircle className="h-4 w-4 text-emerald-600" />
+          <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
           <span>WhatsApp Updates</span>
         </a>
       </div>
