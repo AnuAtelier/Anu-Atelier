@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B0 (Audit & Architecture) – Completed, Awaiting Approval  
-**Next Phase:** B1 (Foundation & Security Baseline)
+**Current Phase:** B1 (Foundation & Security Baseline) – Completed, Awaiting Approval  
+**Next Phase:** B2 (Catalog & Discovery)
 
 ---
 
@@ -20,16 +20,18 @@
   - [x] 7 Clarification questions with safe dev placeholder defaults prepared.
   - [x] Documented in `docs/B0_AUDIT_AND_ARCHITECTURE.md`.
 
-- [ ] **B1 – Foundation & Security Baseline**
-  - [ ] Directory layout (`supabase/`, `api/`, `shared/`, `tests/`, `scripts/`, `docs/`).
-  - [ ] Migration workflow, PostgreSQL extensions, custom ENUMs, helper functions.
-  - [ ] `profiles` table + signup trigger + role enforcement + `is_admin()`.
-  - [ ] Row-Level Security (RLS) default-deny baseline on all tables.
-  - [ ] Supabase Storage buckets & strict access policies.
-  - [ ] Audit-log infrastructure (`audit_log` table & trigger).
-  - [ ] `site_settings` table & schema validation.
-  - [ ] Vitest setup & RLS test suite.
-  - [ ] Serverless health check `/api/health`.
+- [x] **B1 – Foundation & Security Baseline**
+  - [x] Directory layout (`supabase/`, `api/`, `shared/`, `tests/`, `scripts/`, `docs/`).
+  - [x] Migration workflow, PostgreSQL extensions, custom ENUMs, helper functions.
+  - [x] `profiles` table + signup trigger + role enforcement + `is_admin()`.
+  - [x] Row-Level Security (RLS) default-deny baseline on all tables.
+  - [x] Supabase Storage buckets & strict access policies.
+  - [x] Audit-log infrastructure (`audit_log` table & trigger).
+  - [x] `site_settings` table & schema validation.
+  - [x] Vitest setup & RLS test suite (24/24 tests passing).
+  - [x] Serverless health check `/api/health`.
+  - [x] Developer smoke test suite (`scripts/smoke.ts`, 8/8 passing).
+  - [x] Documented in `docs/B1_FOUNDATION_REPORT.md`.
 
 - [ ] **B2 – Catalog & Discovery**
   - [ ] Categories, artisans, products, variants, media, highlights, specs, offers, pincodes.
