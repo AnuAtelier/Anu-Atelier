@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Phone, Mail, MapPin, CheckCircle, ShieldCheck, Edit3, LogOut, Plus, LogIn } from 'lucide-react';
+import { User, Phone, Mail, MapPin, CheckCircle, ShieldCheck, Edit3, LogOut, LogIn } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
 
@@ -113,15 +113,6 @@ export const ProfilePage: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap gap-2 justify-center sm:justify-end">
-          {isAdmin && (
-            <Link
-              to="/admin/add-craft"
-              className="px-4 py-2 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Add Craft</span>
-            </Link>
-          )}
 
           <button
             onClick={() => setIsEditing(!isEditing)}
