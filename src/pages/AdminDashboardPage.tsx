@@ -121,19 +121,24 @@ export const AdminDashboardPage: React.FC = () => {
     <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-bold border border-pink-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-[var(--primary)]" />
-              <span>Anushka's Storefront Admin</span>
-            </span>
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl p-1 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-md flex-shrink-0">
+            <img src="/logo-icon.jpg" alt="Anu Atelier Logo" className="w-full h-full rounded-xl object-cover bg-white" />
           </div>
-          <h1 className="font-heading text-3xl font-bold text-[var(--text-main)]">
-            Artisan & Order Management
-          </h1>
-          <p className="text-xs sm:text-sm text-[var(--text-muted)]">
-            Manage your authentic craft catalog, track customer orders, and update store settings.
-          </p>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-bold border border-pink-300">
+                <ShieldCheck className="h-3.5 w-3.5 text-[var(--primary)]" />
+                <span>Anu Atelier Admin Studio</span>
+              </span>
+            </div>
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+              Artisan & Order Management
+            </h1>
+            <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+              Manage your authentic craft catalog, track customer orders, and dispatch live shipments.
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">

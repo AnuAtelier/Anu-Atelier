@@ -142,11 +142,23 @@ export const Footer: React.FC = () => {
       <div className="bg-[#141416] text-white">
         <div className="max-w-7xl mx-auto py-5 sm:py-6 px-4 sm:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {/* Brand & Information Column */}
-          <div className="space-y-2">
-            <Link to="/" className="inline-block">
-              <span className="font-heading text-xl font-bold tracking-tight text-white">
-                Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
-              </span>
+          <div className="space-y-3">
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-md flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="/logo-icon.jpg"
+                  alt="Anu Atelier Logo"
+                  className="w-full h-full rounded-full object-cover bg-white"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-heading text-xl font-bold tracking-tight text-white leading-tight">
+                  Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
+                </span>
+                <span className="text-[10px] tracking-widest uppercase font-medium text-stone-400">
+                  Artisan Studio &bull; Handmade India
+                </span>
+              </div>
             </Link>
             <p className="text-xs text-stone-300 leading-normal line-clamp-2">
               Authentic handmade Indian crafts, terracotta pottery, and artisan-stitched fashion directly to your doorstep.

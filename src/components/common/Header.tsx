@@ -86,10 +86,22 @@ export const Header: React.FC = () => {
         className="backdrop-blur-md border-b px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4 transition-colors"
       >
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-1 group flex-shrink-0">
-          <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 transition-opacity">
-            Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
-          </span>
+        <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-xs group-hover:scale-105 transition-transform duration-300">
+            <img
+              src="/logo-icon.jpg"
+              alt="Anu Atelier Logo"
+              className="w-full h-full rounded-full object-cover bg-white"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-tight transition-opacity">
+              Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
+            </span>
+            <span className="text-[9px] tracking-widest uppercase font-medium text-[var(--text-muted)] hidden sm:block">
+              Artisan Studio
+            </span>
+          </div>
         </Link>
 
         {/* Search Bar (Desktop) */}

@@ -177,11 +177,21 @@ export const CheckoutPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       <div className="border-b border-[var(--border-color)] pb-4">
-        <h1 className="font-heading text-3xl font-bold text-[var(--text-main)]">
-          Checkout
-        </h1>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-xs flex-shrink-0">
+            <img src="/logo-icon.jpg" alt="Anu Atelier" className="w-full h-full rounded-full object-cover bg-white" />
+          </div>
+          <div>
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[var(--primary)]">
+              Official Anu Atelier Checkout
+            </span>
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)] leading-tight">
+              Secure Checkout
+            </h1>
+          </div>
+        </div>
         <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
-          Complete your order with secure delivery across India. Free delivery above ₹100!
+          Complete your order with authentic handcrafted packaging & secure delivery across India. Free delivery above ₹999!
         </p>
       </div>
 

@@ -56,6 +56,17 @@ export const HeroBanner: React.FC = () => {
                 <p className="font-heading text-lg sm:text-xl font-bold drop-shadow-sm">100% Genuine Khadi & Terracotta</p>
               </div>
             </div>
+
+            {/* Studio Seal Badge */}
+            <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-lg border border-pink-100 flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-xs flex-shrink-0">
+                <img src="/logo-icon.jpg" alt="Anu Atelier Seal" className="w-full h-full rounded-full object-cover bg-white" />
+              </div>
+              <div className="pr-1 text-left hidden xs:block sm:block">
+                <p className="text-[11px] font-bold text-gray-900 leading-none">Anu Atelier</p>
+                <p className="text-[9px] text-[var(--primary)] font-semibold mt-0.5">Original Studio</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -72,6 +72,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       financial_year: '2026-27',
       seller: {
         legal_name: 'Anu Atelier Crafts LLP',
+        trade_name: 'Anu Atelier',
+        logo_url: '/logo-full.jpg',
         address: 'Artisan Workshop, Gorakhpur, Uttar Pradesh, India - 273001',
         state: 'Uttar Pradesh',
         state_code: originStateCode,

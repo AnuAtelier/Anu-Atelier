@@ -52,8 +52,15 @@ export const RegisterPage: React.FC = () => {
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 py-12">
         <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-6 sm:p-8 shadow-lg-soft">
           <div className="text-center mb-6">
-            <Link to="/" className="inline-block mb-2 group">
-              <span className="font-heading text-3xl font-bold tracking-tight text-[var(--text-main)]">
+            <Link to="/" className="inline-flex flex-col items-center mb-3 group">
+              <div className="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-md mb-2 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="/logo-icon.jpg"
+                  alt="Anu Atelier Logo"
+                  className="w-full h-full rounded-full object-cover bg-white"
+                />
+              </div>
+              <span className="font-heading text-2xl font-bold tracking-tight text-[var(--text-main)]">
                 Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
               </span>
             </Link>
