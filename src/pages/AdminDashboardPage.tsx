@@ -143,7 +143,7 @@ export const AdminDashboardPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-[var(--primary-dark)] text-xs font-bold border border-pink-300 dark:border-pink-800">
+            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-bold border border-pink-300">
               <ShieldCheck className="h-3.5 w-3.5 text-[var(--primary)]" />
               <span>Anushka's Storefront Admin</span>
             </span>

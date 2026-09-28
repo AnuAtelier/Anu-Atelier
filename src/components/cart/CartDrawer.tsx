@@ -87,7 +87,7 @@ export const CartDrawer: React.FC = () => {
             </span>
             <span className="text-[var(--primary-dark)] font-bold">{progressPercent}%</span>
           </div>
-          <div className="w-full bg-white dark:bg-black/20 h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-white h-2 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-500 rounded-full"
               style={{ width: `${progressPercent}%` }}

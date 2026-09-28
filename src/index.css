@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
   --color-primary: var(--primary);
@@ -66,40 +65,6 @@
   color-scheme: light;
 }
 
-[data-theme="dark"] {
-  /* Brand Palette (Dark - slightly enhanced contrast) */
-  --primary: #f0628f;
-  --primary-dark: #ff769e;
-  --primary-hover: #ff4081;
-  --secondary: #3b232c;
-  --accent: #b388ff;
-
-  /* Surfaces & Backgrounds - Premium Plum Charcoal */
-  --bg-color: #120f14;
-  --bg-card: #1b161d;
-  --bg-input: #241d27;
-  --header-bg: rgba(27, 22, 29, 0.85);
-  --header-border: rgba(255, 255, 255, 0.08);
-
-  /* Typography */
-  --text-main: #f5eef2;
-  --text-muted: #b9aab3;
-  --white: #1b161d;
-  /* Fixed dark mode issue: sections using var(--white) now become dark surface! */
-
-  /* Borders */
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
-
-  /* Shadows */
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.65);
-  color-scheme: dark;
-}
-
-
-
 html {
   scroll-behavior: smooth;
 }
@@ -110,14 +75,9 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
-  transition: background-color 0.2s ease, color 0.2s ease;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-[data-theme="dark"] img {
-  filter: brightness(0.94);
 }
 
 h1,

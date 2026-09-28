@@ -7,8 +7,6 @@ import {
   ClipboardList,
   Settings,
   Store,
-  Sun,
-  Moon,
   LogOut,
   Menu,
   X,
@@ -17,7 +15,6 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
-import { useThemeStore } from '../../store/useThemeStore';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -27,7 +24,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  const { theme, toggleTheme } = useThemeStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const pathname = location.pathname;
@@ -87,7 +83,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </span>
           </Link>
           <div className="flex items-center gap-1.5 mt-1.5">
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-[var(--primary-dark)] text-[10px] font-bold tracking-wide uppercase border border-pink-300 dark:border-pink-800">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-[10px] font-bold tracking-wide uppercase border border-pink-300">
               <ShieldCheck className="h-3 w-3 text-[var(--primary)]" />
               <span>Admin Suite</span>
             </span>
@@ -168,35 +164,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </div>
         </div>
 
-        {/* Action Buttons: Dark Mode & Logout */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="flex-1 py-2 px-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-[var(--text-main)] text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs"
-            title="Toggle Dark / Light Theme"
-          >
-            {theme === 'dark' ? (
-              <>
-                <Sun className="h-3.5 w-3.5 text-amber-400" />
-                <span>Light</span>
-              </>
-            ) : (
-              <>
-                <Moon className="h-3.5 w-3.5 text-indigo-500" />
-                <span>Dark</span>
-              </>
-            )}
-          </button>
-
-          <button
-            onClick={handleLogout}
-            className="py-2 px-3 rounded-xl border border-red-200 dark:border-red-950 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-2xs"
-            title="Sign Out of Admin"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            <span>Logout</span>
-          </button>
-        </div>
+        {/* Action Button: Logout */}
+        <button
+          onClick={handleLogout}
+          className="w-full py-2.5 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs"
+          title="Sign Out of Admin"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Sign Out</span>
+        </button>
       </div>
     </div>
   );

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { useThemeStore } from '../store/useThemeStore';
-import { Lock, Mail, User, Phone, Eye, EyeOff, ArrowRight, ArrowLeft, Sun, Moon } from 'lucide-react';
+import { Lock, Mail, User, Phone, Eye, EyeOff, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { signupWithEmail, isLoading, error } = useAuthStore();
-  const { theme, toggleTheme } = useThemeStore();
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,16 +47,6 @@ export const RegisterPage: React.FC = () => {
           <ArrowLeft className="h-4 w-4" />
           <span>Return to Storefront</span>
         </Link>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="w-9 h-9 rounded-full flex items-center justify-center border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] hover:text-[var(--primary)] transition-all shadow-2xs"
-            title="Toggle Dark / Light Theme"
-          >
-            {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-500" />}
-          </button>
-        </div>
       </nav>
 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 py-12">
@@ -78,7 +66,7 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           {(formError || error) && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs">
+            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs">
               {formError || error}
             </div>
           )}

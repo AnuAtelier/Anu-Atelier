@@ -59,7 +59,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-sm ${
             isLiked
               ? 'bg-rose-500 text-white'
-              : 'bg-white/80 dark:bg-black/40 text-[var(--text-main)] hover:bg-white dark:hover:bg-black/60'
+              : 'bg-white/90 text-[var(--text-main)] hover:bg-white'
           }`}
         >
           <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
@@ -90,7 +90,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </button>
           <Link
             to={`/product/${product.slug || product.id}`}
-            className="p-2 rounded-full bg-white/90 dark:bg-zinc-800 text-[var(--text-main)] hover:bg-white text-xs flex items-center justify-center shadow-md transition-transform hover:scale-105"
+            className="p-2 rounded-full bg-white/90 text-[var(--text-main)] hover:bg-white text-xs flex items-center justify-center shadow-md transition-transform hover:scale-105"
           >
             <Eye className="h-3.5 w-3.5" />
           </Link>
@@ -107,7 +107,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </span>
 
             {product.rating && (
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold text-[10px]">
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 font-bold text-[10px]">
                 <Star className="h-2.5 w-2.5 fill-current" />
                 {product.rating}
               </span>
@@ -131,7 +131,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 ₹{product.originalPrice}
               </span>
             )}
-            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold ml-auto">
+            <span className="text-[10px] text-emerald-600 font-semibold ml-auto">
               Free Delivery
             </span>
           </div>

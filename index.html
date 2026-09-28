@@ -18,20 +18,12 @@
         rel="stylesheet" />
 
 
-    <!-- Prevent Dark/Light theme flash -->
+    <!-- Enforce clean light theme -->
     <script>
-        (function () {
-            try {
-                const saved = localStorage.getItem('anu_theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const theme = saved || (prefersDark ? 'dark' : 'light');
-                if (theme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                }
-            } catch (e) { }
-        })();
+        try {
+            localStorage.removeItem('anu_theme');
+            document.documentElement.setAttribute('data-theme', 'light');
+        } catch (e) { }
     </script>
 </head>
 

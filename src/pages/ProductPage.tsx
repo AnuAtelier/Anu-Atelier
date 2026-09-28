@@ -146,7 +146,7 @@ export const ProductPage: React.FC = () => {
                 className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-md ${
                   isLiked
                     ? 'bg-rose-500 text-white'
-                    : 'bg-white/80 dark:bg-black/50 text-[var(--text-main)] hover:bg-white'
+                    : 'bg-white/90 text-[var(--text-main)] hover:bg-white'
                 }`}
               >
                 <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
@@ -154,7 +154,7 @@ export const ProductPage: React.FC = () => {
               <button
                 onClick={handleShare}
                 aria-label="Share craft"
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/80 dark:bg-black/50 text-[var(--text-main)] backdrop-blur-md shadow-md hover:bg-white transition-all"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/90 text-[var(--text-main)] backdrop-blur-md shadow-md hover:bg-white transition-all"
               >
                 <Share2 className="h-4 w-4" />
               </button>
@@ -179,7 +179,7 @@ export const ProductPage: React.FC = () => {
           {/* Ratings & Sold Count */}
           <div className="flex items-center gap-3 text-xs sm:text-sm">
             {product.rating && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 font-bold">
                 <Star className="h-3.5 w-3.5 fill-current" />
                 <span>{product.rating}</span>
                 <span className="text-[var(--text-muted)] font-normal">
@@ -188,7 +188,7 @@ export const ProductPage: React.FC = () => {
               </div>
             )}
             {product.soldCount && (
-              <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+              <span className="text-emerald-600 font-medium">
                 • {product.soldCount}+ bought this month
               </span>
             )}
@@ -206,7 +206,7 @@ export const ProductPage: React.FC = () => {
                 </span>
               )}
               {discountPercent && (
-                <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-bold text-emerald-600">
                   Save ₹{product.originalPrice! - product.price} ({discountPercent}% off)
                 </span>
               )}

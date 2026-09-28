@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
             href={`https://wa.me/91${DEFAULT_SITE_SETTINGS.whatsappNumber}?text=Hi%20Anu%20Atelier,%20I%20have%20an%20inquiry.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:underline"
           >
             <MessageCircle className="h-4 w-4" />
             WhatsApp: +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}

@@ -57,17 +57,6 @@ export const HeroBanner: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* Floating Pill Badge */}
-          <div className="absolute -bottom-4 -left-4 sm:bottom-6 sm:-left-6 bg-[var(--bg-card)] border border-[var(--border-color)] py-2.5 px-4 rounded-2xl shadow-lg flex items-center gap-3 backdrop-blur-md">
-            <div className="w-10 h-10 rounded-full bg-emerald-500/15 text-emerald-600 flex items-center justify-center font-bold text-sm">
-              ₹0
-            </div>
-            <div>
-              <p className="text-xs font-bold text-[var(--text-main)]">Free Delivery</p>
-              <p className="text-[11px] text-[var(--text-muted)]">On all orders above ₹100</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

@@ -7,7 +7,7 @@ export const PromoCardsRow: React.FC = () => {
     <section className="py-12 px-4 sm:px-8 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Card 1 */}
-        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-50 dark:from-[#2a1722] dark:via-[#1e141a] dark:to-[#171115] border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
+        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-50 border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
           <div className="space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[var(--primary)]">
               Festive Edit
@@ -31,9 +31,9 @@ export const PromoCardsRow: React.FC = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 dark:from-[#281c15] dark:via-[#1d1612] dark:to-[#171115] border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
+        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
               Artisan Stitched
             </span>
             <h3 className="font-heading text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-snug">
@@ -55,9 +55,9 @@ export const PromoCardsRow: React.FC = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-emerald-50 via-teal-50 to-emerald-100/40 dark:from-[#13241b] dark:via-[#111c16] dark:to-[#171115] border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
+        <div className="relative rounded-3xl p-8 bg-gradient-to-br from-emerald-50 via-teal-50 to-emerald-100/40 border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between min-h-[220px]">
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
               Eco-Friendly
             </span>
             <h3 className="font-heading text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-snug">

@@ -405,8 +405,8 @@ export const CheckoutPage: React.FC = () => {
             {/* Coupon Code Section */}
             <div className="pt-3 border-t border-[var(--border-color)]">
               {appliedCoupon ? (
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-xs">
-                  <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold">
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
+                  <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
                     <Tag className="h-3.5 w-3.5" />
                     <span>Coupon '{appliedCoupon.code}' applied (-₹{appliedCoupon.discount})</span>
                   </div>

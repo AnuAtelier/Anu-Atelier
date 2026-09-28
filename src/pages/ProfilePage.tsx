@@ -84,12 +84,12 @@ export const ProfilePage: React.FC = () => {
               {fullName}
             </h1>
             {isAdmin ? (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-950/60 text-[var(--primary-dark)] border border-pink-300 dark:border-pink-800 text-xs font-bold mx-auto sm:mx-0 shadow-sm">
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-pink-100 text-[var(--primary-dark)] border border-pink-300 text-xs font-bold mx-auto sm:mx-0 shadow-sm">
                 <ShieldCheck className="h-3.5 w-3.5 text-[var(--primary)]" />
                 <span>Store Owner & Admin</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mx-auto sm:mx-0">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 text-xs font-semibold mx-auto sm:mx-0">
                 <CheckCircle className="h-3 w-3" />
                 <span>Verified Buyer</span>
               </span>
@@ -133,7 +133,7 @@ export const ProfilePage: React.FC = () => {
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-full border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-full border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
           >
             <LogOut className="h-3.5 w-3.5" />
             <span>Logout</span>

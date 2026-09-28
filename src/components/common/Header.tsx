@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, Sun, Moon, Plus, User, X } from 'lucide-react';
-import { useThemeStore } from '../../store/useThemeStore';
+import { Search, ShoppingBag, Heart, Plus, User, X } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { useProductStore } from '../../store/useProductStore';
@@ -10,7 +9,6 @@ import { DEFAULT_SITE_SETTINGS } from '../../constants';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useThemeStore();
   const { getTotalItems, toggleDrawer } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
   const { products } = useProductStore();
@@ -193,15 +191,6 @@ export const Header: React.FC = () => {
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Dark / Light Mode Toggle */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle Dark Mode"
-            className="w-9 h-9 rounded-full flex items-center justify-center border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-all"
-          >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-
           {/* Add Craft Button (Admin Shortcut) */}
           {isAdmin && (
             <Link

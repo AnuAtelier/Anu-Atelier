@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { useThemeStore } from '../store/useThemeStore';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, ArrowLeft, Sun, Moon, Sparkles, UserCheck } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, ArrowLeft, Sparkles, UserCheck } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { loginWithEmail, loginWithDemo, isLoading, error } = useAuthStore();
-  const { theme, toggleTheme } = useThemeStore();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -56,16 +54,6 @@ export const LoginPage: React.FC = () => {
           <ArrowLeft className="h-4 w-4" />
           <span>Return to Storefront</span>
         </Link>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="w-9 h-9 rounded-full flex items-center justify-center border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] hover:text-[var(--primary)] transition-all shadow-2xs"
-            title="Toggle Dark / Light Theme"
-          >
-            {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-500" />}
-          </button>
-        </div>
       </nav>
 
       {/* Main Login Card Area */}
@@ -90,7 +78,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Admin Prompt Highlight Banner */}
           {isAdminRequired && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-800 text-[var(--primary-dark)] text-xs flex items-start gap-2.5">
+            <div className="mb-6 p-3.5 rounded-2xl bg-pink-50 border border-pink-200 text-[var(--primary-dark)] text-xs flex items-start gap-2.5">
               <ShieldCheck className="h-4 w-4 text-[var(--primary)] flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold">Store Admin Access Required</p>
@@ -103,7 +91,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Error Alert */}
           {(formError || error) && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
+            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
               <span>{formError || error}</span>
             </div>
           )}
@@ -176,7 +164,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleDemoLogin('admin')}
-              className="w-full py-3 px-4 rounded-2xl border-2 border-pink-400/40 bg-pink-50 dark:bg-pink-950/40 text-[var(--primary-dark)] hover:bg-pink-100 dark:hover:bg-pink-900/60 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs"
+              className="w-full py-3 px-4 rounded-2xl border-2 border-pink-400/40 bg-pink-50 text-[var(--primary-dark)] hover:bg-pink-100 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs"
             >
               <ShieldCheck className="h-4 w-4 text-[var(--primary)]" />
               <span>Login as Anushka (Admin: anushka32199@gmail.com)</span>
