@@ -10,6 +10,7 @@ interface AuthState {
   loginWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signupWithEmail: (email: string, password: string, fullName: string, phone?: string) => Promise<{ success: boolean; error?: string }>;
   loginWithDemo: (role: 'admin' | 'customer') => void;
+  updateProfile: (updates: Partial<UserProfile>) => void;
   logout: () => Promise<void>;
 }
 
@@ -96,6 +97,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
 
     set({ user: null, isLoading: false });
+  },
+
+  updateProfile: (updates: Partial<UserProfile>) => {
+    const current = get().user;
+    if (!current) return;
+    const updated = { ...current, ...updates };
+    set({ user: updated });
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+    } catch (e) {
+      console.warn('Failed to save updated profile to localStorage', e);
+    }
   },
 
   loginWithEmail: async (email: string, password: string) => {
