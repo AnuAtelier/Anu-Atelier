@@ -1,49 +1,49 @@
 import { create } from 'zustand';
 import { Product } from '../types';
 import { INITIAL_PRODUCTS } from '../constants';
+import { catalogService } from '../services/catalogService';
 
 interface ProductState {
   products: Product[];
-  addProduct: (product: Product) => void;
+  isLoading: boolean;
+  loadProducts: () => Promise<void>;
+  addProduct: (product: Product) => Promise<void>;
   updateProduct: (id: string, updates: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   getProductBySlugOrId: (identifier: string) => Product | undefined;
 }
 
-const getStoredProducts = (): Product[] => {
-  if (typeof window === 'undefined') return INITIAL_PRODUCTS;
-  try {
-    const saved = localStorage.getItem('anu_published_products');
-    if (!saved) return INITIAL_PRODUCTS;
-    const custom: Product[] = JSON.parse(saved);
-    // Combine custom with initial products avoiding duplicates
-    const customIds = new Set(custom.map((p) => p.id));
-    const merged = [...custom, ...INITIAL_PRODUCTS.filter((p) => !customIds.has(p.id))];
-    return merged;
-  } catch (e) {
-    return INITIAL_PRODUCTS;
-  }
-};
-
 export const useProductStore = create<ProductState>((set, get) => ({
-  products: getStoredProducts(),
+  products: catalogService.getLocalFallbackProducts(),
+  isLoading: false,
 
-  addProduct: (product) => {
-    set((state) => {
-      const updated = [product, ...state.products];
-      if (typeof window !== 'undefined') {
-        const custom = updated.filter((p) => p.id.startsWith('custom_') || !INITIAL_PRODUCTS.some((ip) => ip.id === p.id));
-        localStorage.setItem('anu_published_products', JSON.stringify(custom));
-      }
-      return { products: updated };
-    });
+  loadProducts: async () => {
+    set({ isLoading: true });
+    try {
+      const fetched = await catalogService.fetchProducts();
+      set({ products: fetched, isLoading: false });
+    } catch (err) {
+      console.error('Failed to load products:', err);
+      set({ isLoading: false });
+    }
+  },
+
+  addProduct: async (product) => {
+    // 1. Optimistic update
+    set((state) => ({ products: [product, ...state.products] }));
+    // 2. Publish to backend
+    await catalogService.publishCraft(product);
   },
 
   updateProduct: (id, updates) => {
     set((state) => {
-      const updated = state.products.map((p) => (p.id === id ? { ...p, ...updates, updatedAt: Date.now() } : p));
+      const updated = state.products.map((p) =>
+        p.id === id ? { ...p, ...updates, updatedAt: Date.now() } : p
+      );
       if (typeof window !== 'undefined') {
-        const custom = updated.filter((p) => p.id.startsWith('custom_') || !INITIAL_PRODUCTS.some((ip) => ip.id === p.id));
+        const custom = updated.filter(
+          (p) => p.id.startsWith('custom_') || !INITIAL_PRODUCTS.some((ip) => ip.id === p.id)
+        );
         localStorage.setItem('anu_published_products', JSON.stringify(custom));
       }
       return { products: updated };
@@ -54,7 +54,9 @@ export const useProductStore = create<ProductState>((set, get) => ({
     set((state) => {
       const updated = state.products.filter((p) => p.id !== id);
       if (typeof window !== 'undefined') {
-        const custom = updated.filter((p) => p.id.startsWith('custom_') || !INITIAL_PRODUCTS.some((ip) => ip.id === p.id));
+        const custom = updated.filter(
+          (p) => p.id.startsWith('custom_') || !INITIAL_PRODUCTS.some((ip) => ip.id === p.id)
+        );
         localStorage.setItem('anu_published_products', JSON.stringify(custom));
       }
       return { products: updated };
@@ -68,3 +70,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
     );
   },
 }));
+
+// Load live products on app launch
+if (typeof window !== 'undefined') {
+  useProductStore.getState().loadProducts().catch(() => {});
+}

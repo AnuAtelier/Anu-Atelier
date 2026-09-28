@@ -4,9 +4,9 @@ import { ShieldCheck, Truck, ArrowRight, CheckCircle2, CreditCard, Banknote, Sma
 import confetti from 'canvas-confetti';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
-import { Order } from '../types';
+import { orderService } from '../services/orderService';
+import { catalogService } from '../services/catalogService';
 
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,6 +23,13 @@ export const CheckoutPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'card'>('cod');
   const [isPlacing, setIsPlacing] = useState(false);
 
+  // Live Pincode Verification State
+  const [pincodeStatus, setPincodeStatus] = useState<{
+    serviceable?: boolean;
+    city?: string;
+    codAvailable?: boolean;
+  }>({});
+
   // Coupon state
   const [couponInput, setCouponInput] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
@@ -35,28 +42,48 @@ export const CheckoutPage: React.FC = () => {
     }
   }, [user]);
 
-  const subtotal = getSubtotal();
-  const deliveryFee = getDeliveryFee();
+  // Live PIN Code Validation via Backend RPC
+  useEffect(() => {
+    if (pincode.length === 6) {
+      catalogService.checkPincode(pincode).then((res) => {
+        setPincodeStatus({
+          serviceable: res.serviceable,
+          city: res.city,
+          codAvailable: res.codAvailable,
+        });
+        if (res.city && (!city || city === 'Lucknow')) setCity(res.city);
+        if (res.state && (!state || state === 'Uttar Pradesh')) setState(res.state);
+      });
+    }
+  }, [pincode]);
 
-  // Calculate discount
+  const subtotal = getSubtotal();
+  let deliveryFee = subtotal >= 999 ? 0 : getDeliveryFee();
+
+  // Calculate discount & totals
   const discountAmount = appliedCoupon ? appliedCoupon.discount : 0;
+  if (appliedCoupon?.code === 'FREESHIP') {
+    deliveryFee = 0;
+  }
   const total = Math.max(0, subtotal - discountAmount + deliveryFee);
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     setCouponError(null);
     const code = couponInput.trim().toUpperCase();
 
-    if (code === 'ANU10') {
-      const discount = Math.round(subtotal * 0.1);
-      setAppliedCoupon({ code: 'ANU10', discount });
-      setCouponInput('');
-    } else if (code === 'FIRST50') {
-      const discount = Math.min(subtotal, 50);
-      setAppliedCoupon({ code: 'FIRST50', discount });
+    const totals = await orderService.calculateTotals(
+      items,
+      code,
+      pincode,
+      paymentMethod === 'cod' ? 'cod' : 'razorpay'
+    );
+
+    if (totals.discountRupees > 0 || code === 'FREESHIP') {
+      setAppliedCoupon({ code, discount: totals.discountRupees });
       setCouponInput('');
     } else {
-      setCouponError('Invalid coupon code. Try ANU10 or FIRST50.');
+      setCouponError('Invalid coupon. Try WELCOME10, FESTIVE200, or FREESHIP.');
     }
   };
 
@@ -88,23 +115,9 @@ export const CheckoutPage: React.FC = () => {
     e.preventDefault();
     setIsPlacing(true);
 
-    const orderId = `ANU-${Date.now().toString().slice(-6)}`;
-    const newOrder: Order = {
-      id: orderId,
-      createdAt: Date.now(),
-      items: items.map((i) => ({
-        id: i.id,
-        productId: i.productId,
-        name: i.name,
-        price: i.price,
-        image: i.image,
-        qty: i.qty,
-      })),
-      subtotal,
-      discount: discountAmount,
-      deliveryFee,
-      total,
-      shippingAddress: {
+    try {
+      const isOnline = paymentMethod === 'upi' || paymentMethod === 'card';
+      const address = {
         id: 'addr_default',
         name: fullName,
         phone,
@@ -113,70 +126,52 @@ export const CheckoutPage: React.FC = () => {
         areaLandmark,
         city,
         state,
-        type: 'Home',
+        type: 'Home' as const,
         isDefault: true,
-      },
-      paymentMethod,
-      paymentStatus: paymentMethod === 'cod' ? 'pending' : 'completed',
-      status: 'Placed',
-    };
+      };
 
-    // 1. Save in local storage
-    try {
-      const existing = JSON.parse(localStorage.getItem('anu_orders') || '[]');
-      localStorage.setItem('anu_orders', JSON.stringify([newOrder, ...existing]));
-    } catch (err) {}
-
-    // 2. Sync to Supabase if configured
-    if (isSupabaseConfigured) {
-      try {
-        const { data: orderData } = await supabase.from('orders').insert({
-          order_number: orderId,
-          user_id: user?.id || null,
-          customer_name: fullName,
-          customer_email: user?.email || `${phone}@customer.anuatelier.com`,
-          customer_phone: phone,
-          shipping_address: newOrder.shippingAddress,
-          subtotal,
-          shipping_fee: deliveryFee,
-          discount: discountAmount,
-          total,
-          payment_method: paymentMethod,
-          payment_status: paymentMethod === 'cod' ? 'pending' : 'paid',
-          order_status: 'pending',
-        }).select().single();
-
-        if (orderData?.id) {
-          await supabase.from('order_items').insert(
-            items.map((item) => ({
-              order_id: orderData.id,
-              product_id: item.productId,
-              product_name: item.name,
-              price: item.price,
-              quantity: item.qty,
-              image_url: item.image,
-            }))
-          );
-        }
-      } catch (err) {
-        console.warn('Supabase order creation warning:', err);
-      }
-    }
-
-    // 3. Trigger celebration confetti
-    try {
-      confetti({
-        particleCount: 90,
-        spread: 75,
-        origin: { y: 0.6 },
+      const placeResult = await orderService.placeOrder({
+        userId: user?.id,
+        items,
+        shippingAddress: address,
+        paymentMethod: isOnline ? 'razorpay' : 'cod',
+        couponCode: appliedCoupon?.code,
       });
-    } catch (err) {}
 
-    setTimeout(() => {
+      if (!placeResult.success) {
+        alert(placeResult.error || 'Failed to place order.');
+        setIsPlacing(false);
+        return;
+      }
+
+      const orderNumber = placeResult.orderNumber || `AA-26-${Date.now().toString().slice(-6)}`;
+
+      if (isOnline) {
+        // Trigger Razorpay Checkout Modal
+        await orderService.initiateRazorpayPayment(orderNumber, total, {
+          name: fullName,
+          email: user?.email || `${phone}@customer.anuatelier.com`,
+          phone,
+        });
+      }
+
+      // Celebration confetti
+      try {
+        confetti({
+          particleCount: 90,
+          spread: 75,
+          origin: { y: 0.6 },
+        });
+      } catch (err) {}
+
       clearCart();
       setIsPlacing(false);
-      navigate(`/order-success/${orderId}`);
-    }, 600);
+      navigate(`/order-success/${orderNumber}`);
+    } catch (err: any) {
+      console.error('Checkout error:', err);
+      setIsPlacing(false);
+      alert(err.message || 'An error occurred during checkout.');
+    }
   };
 
   return (

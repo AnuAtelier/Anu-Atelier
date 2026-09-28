@@ -23,7 +23,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   initialize: async () => {
     set({ isLoading: true, error: null });
 
-    // 1. If Supabase is configured with real credentials
+    // 1. If Supabase is configured with credentials
     if (isSupabaseConfigured) {
       try {
         const { data: { session } } = await supabase.auth.getSession();
@@ -53,14 +53,23 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           // Listen to auth changes
           supabase.auth.onAuthStateChange(async (_event, newSession) => {
             if (newSession?.user) {
+              const { data: p } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', newSession.user.id)
+                .single();
+
               const isNewAdmin =
+                p?.role === 'admin' ||
                 newSession.user.email?.toLowerCase() === 'anushka32199@gmail.com';
+
               set({
                 user: {
                   id: newSession.user.id,
                   email: newSession.user.email || '',
-                  fullName: newSession.user.user_metadata?.full_name || 'Artisan Friend',
+                  fullName: p?.full_name || newSession.user.user_metadata?.full_name || 'Artisan Friend',
                   role: isNewAdmin ? 'admin' : 'customer',
+                  avatarUrl: p?.avatar_url,
                 },
               });
             } else {
@@ -105,13 +114,43 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           return { success: false, error: error.message };
         }
 
-        const isAdmin = trimmedEmail === 'anushka32199@gmail.com';
+        // Fetch verified profile from database
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', data.user.id)
+          .single();
+
+        const isAdmin =
+          profile?.role === 'admin' ||
+          trimmedEmail === 'anushka32199@gmail.com';
+
         const userProfile: UserProfile = {
           id: data.user.id,
           email: data.user.email || trimmedEmail,
-          fullName: data.user.user_metadata?.full_name || (isAdmin ? 'Anushka (Admin)' : 'Customer'),
+          fullName: profile?.full_name || data.user.user_metadata?.full_name || (isAdmin ? 'Anushka (Admin)' : 'Customer'),
           role: isAdmin ? 'admin' : 'customer',
+          avatarUrl: profile?.avatar_url,
+          phone: profile?.phone,
         };
+
+        // Merge local guest cart to server cart on login
+        try {
+          const localCart = localStorage.getItem('anu_cart');
+          if (localCart) {
+            const items = JSON.parse(localCart);
+            if (items.length > 0) {
+              await supabase.rpc('merge_guest_cart', {
+                p_local_items: items.map((it: any) => ({
+                  product_id: it.productId || it.id,
+                  quantity: it.qty,
+                })),
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('Cart merge notice:', e);
+        }
 
         set({ user: userProfile, isLoading: false });
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userProfile));

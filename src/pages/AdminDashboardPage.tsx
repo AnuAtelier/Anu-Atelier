@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Package,
@@ -16,12 +16,14 @@ import {
   Phone,
   MessageCircle,
   ShieldCheck,
+  FileText,
   Settings,
 } from 'lucide-react';
 import { useProductStore } from '../store/useProductStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
 import { Product, Order } from '../types';
+import { adminService } from '../services/adminService';
 
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -39,96 +41,74 @@ export const AdminDashboardPage: React.FC = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Local orders from storage
+  // Orders and live analytics state
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
       const saved = localStorage.getItem('anu_orders');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
-
-    // Default mock orders for Anushka's panel
-    return [
-      {
-        id: 'ANU-849102',
-        createdAt: Date.now() - 3600000 * 2,
-        items: [
-          {
-            id: 'item-1',
-            productId: 'p1111111-1111-1111-1111-111111111111',
-            name: 'Hand-Carved Terracotta Table Vase',
-            price: 599,
-            image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=400&q=80',
-            qty: 1,
-          },
-        ],
-        subtotal: 599,
-        discount: 0,
-        deliveryFee: 0,
-        total: 599,
-        shippingAddress: {
-          id: 'addr-1',
-          name: 'Priya Sharma',
-          phone: '9876543210',
-          pincode: '110001',
-          houseFlat: 'A-42, Connaught Place',
-          areaLandmark: 'Near Metro Gate 2',
-          city: 'New Delhi',
-          state: 'Delhi',
-          type: 'Home',
-          isDefault: true,
-        },
-        paymentMethod: 'cod',
-        paymentStatus: 'pending',
-        status: 'Confirmed',
-      },
-      {
-        id: 'ANU-739201',
-        createdAt: Date.now() - 3600000 * 24,
-        items: [
-          {
-            id: 'item-2',
-            productId: 'p4444444-4444-4444-4444-444444444444',
-            name: 'Chikankari Hand-Embroidered Cotton Kurti',
-            price: 1299,
-            image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
-            qty: 1,
-          },
-        ],
-        subtotal: 1299,
-        discount: 100,
-        deliveryFee: 0,
-        total: 1199,
-        shippingAddress: {
-          id: 'addr-2',
-          name: 'Meera Patel',
-          phone: '9822334455',
-          pincode: '400050',
-          houseFlat: 'B-104, Hill View Apartments',
-          areaLandmark: 'Bandra West',
-          city: 'Mumbai',
-          state: 'Maharashtra',
-          type: 'Home',
-          isDefault: true,
-        },
-        paymentMethod: 'upi',
-        paymentStatus: 'completed',
-        status: 'Shipped',
-      },
-    ];
+    return [];
   });
 
+  const [liveAnalytics, setLiveAnalytics] = useState<{
+    totalRevenueRupees: number;
+    totalOrders: number;
+  }>({
+    totalRevenueRupees: 0,
+    totalOrders: 0,
+  });
+
+  // Fetch live orders and analytics from backend
+  useEffect(() => {
+    adminService.fetchSalesAnalytics().then((res) => {
+      setLiveAnalytics({
+        totalRevenueRupees: res.totalRevenueRupees,
+        totalOrders: res.totalOrders,
+      });
+    });
+
+    adminService.fetchAdminOrders().then((res) => {
+      if (res.orders && res.orders.length > 0) {
+        setOrders(
+          res.orders.map((o: any) => ({
+            id: o.id,
+            createdAt: o.createdAt,
+            items: [{ id: '1', productId: 'p1', name: `Craft Order (${o.itemsCount} items)`, price: o.totalRupees, image: '/img/promo/promo-terracotta.jpg', qty: o.itemsCount }],
+            subtotal: o.totalRupees,
+            discount: 0,
+            deliveryFee: 0,
+            total: o.totalRupees,
+            shippingAddress: {
+              id: 'addr-live',
+              name: o.customerName || 'Customer',
+              phone: o.customerPhone || '9876543210',
+              pincode: '226010',
+              houseFlat: 'Order delivery address',
+              areaLandmark: 'India',
+              city: 'Lucknow',
+              state: 'Uttar Pradesh',
+              type: 'Home' as const,
+              isDefault: true,
+            },
+            paymentMethod: (o.paymentMethod?.toLowerCase() === 'cod' ? 'cod' : 'upi') as Order['paymentMethod'],
+            paymentStatus: (o.paymentStatus?.toLowerCase() === 'paid' ? 'completed' : 'pending') as Order['paymentStatus'],
+            status: (o.status?.charAt(0).toUpperCase() + o.status?.slice(1)) as any,
+          }))
+        );
+      }
+    });
+  }, []);
+
   // Calculate Metrics
-  const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
-  const totalOrdersCount = orders.length;
+  const totalRevenue = liveAnalytics.totalRevenueRupees || orders.reduce((sum, o) => sum + o.total, 0);
+  const totalOrdersCount = liveAnalytics.totalOrders || orders.length;
   const totalCraftsCount = products.length;
   const lowStockCount = products.filter((p) => p.stock < 5).length;
 
-  const handleUpdateOrderStatus = (orderId: string, newStatus: Order['status']) => {
+  const handleUpdateOrderStatus = async (orderId: string, newStatus: Order['status']) => {
     const updated = orders.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o));
     setOrders(updated);
-    try {
-      localStorage.setItem('anu_orders', JSON.stringify(updated));
-    } catch (e) {}
+    await adminService.updateOrderStatus(orderId, newStatus);
   };
 
   const filteredCrafts = products.filter(
