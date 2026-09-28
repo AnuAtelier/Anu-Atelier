@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B3 (Cart to Order - COD First) – Completed, Awaiting Approval  
-**Next Phase:** B4 (Payments - Razorpay & COD)
+**Current Phase:** B4 (Payments - Razorpay & COD) – Completed, Awaiting Approval  
+**Next Phase:** B5 (Fulfilment & Post-Purchase)
 
 ---
 
@@ -52,13 +52,15 @@
   - [x] Cart to order test suite (`tests/b3_cart_order.test.ts`, 13/13 tests passing; 52 total).
   - [x] Documented in `docs/B3_CART_TO_ORDER_REPORT.md`.
 
-- [ ] **B4 – Payments (Razorpay & COD)**
-  - [ ] Razorpay order creation (`/api/payments/create`) with server-calculated amounts.
-  - [ ] Signature verification (`/api/payments/verify`) & raw body webhook handler (`/api/webhooks/razorpay`).
-  - [ ] Payment state machine & duplicate/mismatch handling.
-  - [ ] Unpaid order stock hold & expiry background job.
-  - [ ] Razorpay refund integration & refund ledger.
-  - [ ] Razorpay Test Mode verification script.
+- [x] **B4 – Payments (Razorpay & COD)**
+  - [x] Razorpay order creation (`/api/payments/create`) with server-calculated amounts.
+  - [x] Signature verification (`/api/payments/verify`) & raw body webhook handler (`/api/webhooks/razorpay`).
+  - [x] Payment state machine & duplicate/mismatch handling (`mark_order_paid`).
+  - [x] Unpaid order stock hold & expiry background job (`expire_unpaid_orders`, `/api/cron/expire-orders`).
+  - [x] Razorpay refund integration & refund ledger (`/api/admin/refunds`).
+  - [x] Razorpay Test Mode verification script (`scripts/razorpay_test.ts`, `npm run test:razorpay`).
+  - [x] Payments test suite (`tests/b4_payments.test.ts`, 14/14 tests passing; 66 total).
+  - [x] Documented in `docs/B4_PAYMENTS_REPORT.md`.
 
 - [ ] **B5 – Fulfilment & Post-Purchase**
   - [ ] Shipment tracking & status timeline updates.

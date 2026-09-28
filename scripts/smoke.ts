@@ -201,6 +201,25 @@ async function runSmokeTests() {
     }
   });
 
+  record('Database Migrations', 'Verifies 005_payments.sql and payment RPCs', () => {
+    const migrationPath = path.resolve(process.cwd(), 'supabase/migrations/005_payments.sql');
+    if (!fs.existsSync(migrationPath)) throw new Error('Missing 005_payments.sql');
+    const content = fs.readFileSync(migrationPath, 'utf8');
+
+    if (!content.includes('ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on payments table');
+    }
+    if (!content.includes('public.mark_order_paid(')) {
+      throw new Error('Missing mark_order_paid RPC');
+    }
+    if (!content.includes('public.mark_cod_collected(')) {
+      throw new Error('Missing mark_cod_collected RPC');
+    }
+    if (!content.includes('public.expire_unpaid_orders(')) {
+      throw new Error('Missing expire_unpaid_orders RPC');
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');

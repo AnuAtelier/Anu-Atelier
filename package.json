@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:razorpay": "tsx scripts/razorpay_test.ts",
     "smoke": "tsx scripts/smoke.ts"
   },
   "repository": {
