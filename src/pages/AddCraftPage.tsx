@@ -109,7 +109,7 @@ export const AddCraftPage: React.FC = () => {
 
     setIsSubmitting(false);
     alert('🎉 Craft published successfully! It is now live in the store.');
-    navigate('/');
+    navigate('/admin?tab=crafts');
   };
 
   return (

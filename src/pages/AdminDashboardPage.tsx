@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Package,
   ShoppingBag,
@@ -25,10 +25,18 @@ import { Product, Order } from '../types';
 
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuthStore();
   const { products, deleteProduct } = useProductStore();
 
-  const [activeTab, setActiveTab] = useState<'crafts' | 'orders' | 'settings'>('crafts');
+  const tabParam = searchParams.get('tab');
+  const activeTab: 'crafts' | 'orders' | 'settings' =
+    tabParam === 'orders' || tabParam === 'settings' ? tabParam : 'crafts';
+
+  const setActiveTab = (tab: 'crafts' | 'orders' | 'settings') => {
+    setSearchParams(tab === 'crafts' ? {} : { tab });
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
 
   // Local orders from storage

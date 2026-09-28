@@ -84,7 +84,8 @@
   /* Typography */
   --text-main: #f5eef2;
   --text-muted: #b9aab3;
-  --white: #1b161d; /* Fixed dark mode issue: sections using var(--white) now become dark surface! */
+  --white: #1b161d;
+  /* Fixed dark mode issue: sections using var(--white) now become dark surface! */
 
   /* Borders */
   --border-color: rgba(255, 255, 255, 0.08);
@@ -97,11 +98,7 @@
   color-scheme: dark;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 html {
   scroll-behavior: smooth;
@@ -123,7 +120,12 @@ body {
   filter: brightness(0.94);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   color: var(--text-main);
@@ -134,13 +136,16 @@ h1, h2, h3, h4, h5, h6 {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-color);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
