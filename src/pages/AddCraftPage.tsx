@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Upload, Sparkles, ArrowLeft, Image as ImageIcon, X } from 'lucide-react';
 import { CATEGORIES } from '../constants';
 import { useProductStore } from '../store/useProductStore';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Product } from '../types';
 
 export const AddCraftPage: React.FC = () => {
@@ -41,7 +42,7 @@ export const AddCraftPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !price || !categoryId || !subcategoryId) {
       alert('Please fill in all required fields');
@@ -85,11 +86,30 @@ export const AddCraftPage: React.FC = () => {
 
     addProduct(newCraft);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert('🎉 Craft published successfully! It is now live in the store.');
-      navigate('/');
-    }, 600);
+    if (isSupabaseConfigured) {
+      try {
+        await supabase.from('products').insert({
+          name: newCraft.name,
+          slug: newCraft.slug,
+          category_name: newCraft.categoryName,
+          subcategory_name: newCraft.subcategoryName,
+          price: newCraft.price,
+          original_price: newCraft.originalPrice,
+          stock: newCraft.stock,
+          badge: newCraft.badge,
+          description: newCraft.description,
+          images: [newCraft.image],
+          is_featured: false,
+          is_active: true,
+        });
+      } catch (err) {
+        console.warn('Supabase product sync warning:', err);
+      }
+    }
+
+    setIsSubmitting(false);
+    alert('🎉 Craft published successfully! It is now live in the store.');
+    navigate('/');
   };
 
   return (

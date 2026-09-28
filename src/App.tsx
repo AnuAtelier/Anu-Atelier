@@ -6,6 +6,8 @@ import { MobileNav } from './components/common/MobileNav';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { WhatsAppFloat } from './components/common/WhatsAppFloat';
 import { Toast } from './components/common/Toast';
+import { AdminRoute } from './components/common/AdminRoute';
+import { useAuthStore } from './store/useAuthStore';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -18,6 +20,8 @@ import { CheckoutPage } from './pages/CheckoutPage';
 import { OrderSuccessPage } from './pages/OrderSuccessPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { AddCraftPage } from './pages/AddCraftPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 // Auto scroll to top on route change
@@ -30,6 +34,12 @@ function ScrollToTop() {
 }
 
 export const App: React.FC = () => {
+  const initializeAuth = useAuthStore((state) => state.initialize);
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -46,8 +56,32 @@ export const App: React.FC = () => {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order-success/:id" element={<OrderSuccessPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/seller" element={<AddCraftPage />} />
-            <Route path="/admin/products/new" element={<AddCraftPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/seller"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/add-craft"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/products/new"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

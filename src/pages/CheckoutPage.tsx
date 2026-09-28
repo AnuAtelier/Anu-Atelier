@@ -1,28 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Truck, ArrowRight, CheckCircle2, CreditCard, Banknote, Smartphone } from 'lucide-react';
+import { ShieldCheck, Truck, ArrowRight, CheckCircle2, CreditCard, Banknote, Smartphone, Tag, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
 import { Order } from '../types';
 
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
-  const { items, getSubtotal, getDeliveryFee, getTotal, clearCart } = useCartStore();
+  const { user } = useAuthStore();
+  const { items, getSubtotal, getDeliveryFee, clearCart } = useCartStore();
 
-  const [fullName, setFullName] = useState('Anushka Singh');
-  const [phone, setPhone] = useState(DEFAULT_SITE_SETTINGS.whatsappNumber);
+  const [fullName, setFullName] = useState(user?.fullName || 'Anushka Singh');
+  const [phone, setPhone] = useState(user?.phone || DEFAULT_SITE_SETTINGS.whatsappNumber);
   const [houseFlat, setHouseFlat] = useState('Flat 402, Royal Residency');
-  const [areaLandmark, setAreaLandmark] = useState('Near Hanuman Temple, Gomti Nagar');
+  const [areaLandmark, setAreaLandmark] = useState('Near Gomti Riverfront');
   const [city, setCity] = useState('Lucknow');
   const [state, setState] = useState('Uttar Pradesh');
   const [pincode, setPincode] = useState('226010');
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'card'>('cod');
   const [isPlacing, setIsPlacing] = useState(false);
 
+  // Coupon state
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      if (user.fullName) setFullName(user.fullName);
+      if (user.phone) setPhone(user.phone);
+    }
+  }, [user]);
+
   const subtotal = getSubtotal();
   const deliveryFee = getDeliveryFee();
-  const total = getTotal();
+
+  // Calculate discount
+  const discountAmount = appliedCoupon ? appliedCoupon.discount : 0;
+  const total = Math.max(0, subtotal - discountAmount + deliveryFee);
+
+  const handleApplyCoupon = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCouponError(null);
+    const code = couponInput.trim().toUpperCase();
+
+    if (code === 'ANU10') {
+      const discount = Math.round(subtotal * 0.1);
+      setAppliedCoupon({ code: 'ANU10', discount });
+      setCouponInput('');
+    } else if (code === 'FIRST50') {
+      const discount = Math.min(subtotal, 50);
+      setAppliedCoupon({ code: 'FIRST50', discount });
+      setCouponInput('');
+    } else {
+      setCouponError('Invalid coupon code. Try ANU10 or FIRST50.');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponError(null);
+  };
 
   if (items.length === 0) {
     return (
@@ -31,11 +72,11 @@ export const CheckoutPage: React.FC = () => {
           Your cart is empty
         </h2>
         <p className="text-xs text-[var(--text-muted)]">
-          Please add items to your cart before proceeding to checkout.
+          Please add handcrafted items to your cart before proceeding to checkout.
         </p>
         <Link
           to="/"
-          className="inline-block px-6 py-2.5 rounded-full bg-[var(--primary)] text-white text-xs font-semibold"
+          className="inline-block px-6 py-2.5 rounded-full bg-[var(--primary)] text-white text-xs font-semibold hover:bg-[var(--primary-dark)] transition-all"
         >
           Return to Storefront
         </Link>
@@ -43,7 +84,7 @@ export const CheckoutPage: React.FC = () => {
     );
   }
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsPlacing(true);
 
@@ -60,7 +101,7 @@ export const CheckoutPage: React.FC = () => {
         qty: i.qty,
       })),
       subtotal,
-      discount: 0,
+      discount: discountAmount,
       deliveryFee,
       total,
       shippingAddress: {
@@ -80,26 +121,62 @@ export const CheckoutPage: React.FC = () => {
       status: 'Placed',
     };
 
-    // Save order in localStorage
+    // 1. Save in local storage
     try {
       const existing = JSON.parse(localStorage.getItem('anu_orders') || '[]');
       localStorage.setItem('anu_orders', JSON.stringify([newOrder, ...existing]));
-    } catch (e) {}
+    } catch (err) {}
 
-    // Trigger celebration confetti
+    // 2. Sync to Supabase if configured
+    if (isSupabaseConfigured) {
+      try {
+        const { data: orderData } = await supabase.from('orders').insert({
+          order_number: orderId,
+          user_id: user?.id || null,
+          customer_name: fullName,
+          customer_email: user?.email || `${phone}@customer.anuatelier.com`,
+          customer_phone: phone,
+          shipping_address: newOrder.shippingAddress,
+          subtotal,
+          shipping_fee: deliveryFee,
+          discount: discountAmount,
+          total,
+          payment_method: paymentMethod,
+          payment_status: paymentMethod === 'cod' ? 'pending' : 'paid',
+          order_status: 'pending',
+        }).select().single();
+
+        if (orderData?.id) {
+          await supabase.from('order_items').insert(
+            items.map((item) => ({
+              order_id: orderData.id,
+              product_id: item.productId,
+              product_name: item.name,
+              price: item.price,
+              quantity: item.qty,
+              image_url: item.image,
+            }))
+          );
+        }
+      } catch (err) {
+        console.warn('Supabase order creation warning:', err);
+      }
+    }
+
+    // 3. Trigger celebration confetti
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 90,
+        spread: 75,
         origin: { y: 0.6 },
       });
-    } catch (e) {}
+    } catch (err) {}
 
     setTimeout(() => {
       clearCart();
       setIsPlacing(false);
       navigate(`/order-success/${orderId}`);
-    }, 800);
+    }, 600);
   };
 
   return (
@@ -109,7 +186,7 @@ export const CheckoutPage: React.FC = () => {
           Checkout
         </h1>
         <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
-          Complete your order with secure delivery across India.
+          Complete your order with secure delivery across India. Free delivery above ₹100!
         </p>
       </div>
 
@@ -231,7 +308,7 @@ export const CheckoutPage: React.FC = () => {
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'cod'
                     ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-gray-300'
+                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -247,7 +324,7 @@ export const CheckoutPage: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-[var(--text-main)]">Cash on Delivery</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">Pay cash upon parcel delivery</p>
+                  <p className="text-[11px] text-[var(--text-muted)]">Pay cash upon parcel arrival</p>
                 </div>
               </label>
 
@@ -256,7 +333,7 @@ export const CheckoutPage: React.FC = () => {
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'upi'
                     ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-gray-300'
+                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -281,7 +358,7 @@ export const CheckoutPage: React.FC = () => {
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'card'
                     ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-gray-300'
+                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -304,7 +381,7 @@ export const CheckoutPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Order Summary & Place Order */}
+        {/* Right Column: Order Summary, Coupon & Place Order */}
         <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
           <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
             <h3 className="font-heading text-lg font-bold text-[var(--text-main)] border-b border-[var(--border-color)] pb-3">
@@ -325,13 +402,66 @@ export const CheckoutPage: React.FC = () => {
               ))}
             </div>
 
+            {/* Coupon Code Section */}
+            <div className="pt-3 border-t border-[var(--border-color)]">
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-xs">
+                  <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold">
+                    <Tag className="h-3.5 w-3.5" />
+                    <span>Coupon '{appliedCoupon.code}' applied (-₹{appliedCoupon.discount})</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    className="text-emerald-600 hover:text-emerald-800"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-1.5">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Coupon Code (e.g. ANU10)"
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value)}
+                      className="flex-1 px-3 py-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-xs text-[var(--text-main)] uppercase tracking-wider focus:outline-none focus:border-[var(--primary)]"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleApplyCoupon}
+                      className="px-4 py-1.5 rounded-xl bg-[var(--secondary)] text-[var(--primary-dark)] hover:bg-[var(--primary)] hover:text-white text-xs font-semibold transition-all"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  {couponError && (
+                    <p className="text-[11px] text-rose-500">{couponError}</p>
+                  )}
+                  <p className="text-[10px] text-[var(--text-muted)]">
+                    Use <strong className="text-[var(--primary)]">ANU10</strong> for 10% off or <strong className="text-[var(--primary)]">FIRST50</strong> for ₹50 off!
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Price Calculations */}
             <div className="space-y-2 text-xs text-[var(--text-muted)] pt-3 border-t border-[var(--border-color)]">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span className="font-semibold text-[var(--text-main)]">₹{subtotal}</span>
               </div>
+
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-emerald-600 font-semibold">
+                  <span>Coupon Discount</span>
+                  <span>-₹{discountAmount}</span>
+                </div>
+              )}
+
               <div className="flex justify-between">
-                <span>Shipping</span>
+                <span>Shipping (Free &gt; ₹100)</span>
                 <span>
                   {deliveryFee === 0 ? (
                     <span className="text-emerald-600 font-bold">FREE</span>
@@ -340,6 +470,7 @@ export const CheckoutPage: React.FC = () => {
                   )}
                 </span>
               </div>
+
               <div className="flex justify-between text-base font-bold text-[var(--text-main)] pt-2 border-t border-[var(--border-color)]">
                 <span>Grand Total</span>
                 <span className="text-[var(--primary)]">₹{total}</span>

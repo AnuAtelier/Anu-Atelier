@@ -5,6 +5,7 @@ import { useThemeStore } from '../../store/useThemeStore';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { useProductStore } from '../../store/useProductStore';
+import { useAuthStore } from '../../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../../constants';
 
 export const Header: React.FC = () => {
@@ -13,6 +14,9 @@ export const Header: React.FC = () => {
   const { getTotalItems, toggleDrawer } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
   const { products } = useProductStore();
+  const { user } = useAuthStore();
+
+  const isAdmin = user?.role === 'admin' || user?.email?.toLowerCase() === 'anushka32199@gmail.com';
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -199,13 +203,15 @@ export const Header: React.FC = () => {
           </button>
 
           {/* Add Craft Button (Admin Shortcut) */}
-          <Link
-            to="/admin/products/new"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full bg-[var(--secondary)] text-[var(--primary-dark)] hover:bg-[var(--primary)] hover:text-white transition-all shadow-sm"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Add Craft</span>
-          </Link>
+          {isAdmin && (
+            <Link
+              to="/admin/add-craft"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)] transition-all shadow-sm"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Add Craft</span>
+            </Link>
+          )}
 
           {/* Wishlist */}
           <Link
@@ -237,11 +243,17 @@ export const Header: React.FC = () => {
 
           {/* User Account / Profile */}
           <Link
-            to="/profile"
+            to={user ? "/profile" : "/login"}
             aria-label="My Account"
             className="w-9 h-9 rounded-full flex items-center justify-center text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
           >
-            <User className="h-5 w-5" />
+            {user ? (
+              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary-dark)] font-bold text-xs flex items-center justify-center border border-[var(--primary)]/30">
+                {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
+              </div>
+            ) : (
+              <User className="h-5 w-5" />
+            )}
           </Link>
         </div>
       </nav>

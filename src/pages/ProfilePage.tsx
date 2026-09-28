@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
-import { User, Phone, Mail, MapPin, CheckCircle, ShieldCheck, Edit3 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { User, Phone, Mail, MapPin, CheckCircle, ShieldCheck, Edit3, LogOut, Plus, LogIn } from 'lucide-react';
+import { useAuthStore } from '../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
 
 export const ProfilePage: React.FC = () => {
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
+
   const [isEditing, setIsEditing] = useState(false);
-  const [fullName, setFullName] = useState('Anushka Singh');
-  const [email, setEmail] = useState(DEFAULT_SITE_SETTINGS.supportEmail);
-  const [phone, setPhone] = useState(DEFAULT_SITE_SETTINGS.whatsappNumber);
+  const [fullName, setFullName] = useState(user?.fullName || 'Anushka (Owner & Artisan)');
+  const [email, setEmail] = useState(user?.email || DEFAULT_SITE_SETTINGS.supportEmail);
+  const [phone, setPhone] = useState(user?.phone || DEFAULT_SITE_SETTINGS.whatsappNumber);
   const [flat, setFlat] = useState('Flat 402, Royal Residency');
-  const [area, setArea] = useState('Near Hanuman Temple, Gomti Nagar');
+  const [area, setArea] = useState('Near Gomti Riverfront');
   const [city, setCity] = useState('Lucknow');
   const [state, setState] = useState('Uttar Pradesh');
   const [pincode, setPincode] = useState('226010');
+
+  useEffect(() => {
+    if (user) {
+      setFullName(user.fullName || '');
+      setEmail(user.email || '');
+      if (user.phone) setPhone(user.phone);
+    }
+  }, [user]);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,12 +32,50 @@ export const ProfilePage: React.FC = () => {
     alert('Profile updated successfully! 🌸');
   };
 
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-[70vh] max-w-md mx-auto px-4 py-16 text-center flex flex-col items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center mb-4 shadow-sm">
+          <User className="h-8 w-8" />
+        </div>
+        <h1 className="font-heading text-2xl font-bold text-[var(--text-main)] mb-2">
+          Sign In to Your Account
+        </h1>
+        <p className="text-sm text-[var(--text-muted)] mb-6">
+          Access your orders, saved addresses, or artisan craft management
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 w-full">
+          <Link
+            to="/login"
+            className="flex-1 py-3 px-6 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md transition-all flex items-center justify-center gap-2"
+          >
+            <LogIn className="h-4 w-4" />
+            <span>Sign In</span>
+          </Link>
+          <Link
+            to="/register"
+            className="flex-1 py-3 px-6 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-[var(--text-main)] text-sm font-medium transition-all flex items-center justify-center"
+          >
+            Register
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const isAdmin = user.role === 'admin' || user.email === 'anushka32199@gmail.com';
+
   return (
     <div className="max-w-4xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       {/* Profile Header Hero */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[var(--secondary)]/50 via-[var(--bg-card)] to-[var(--bg-card)] border border-[var(--border-color)] flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
-        <div className="w-24 h-24 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-heading text-3xl font-bold flex-shrink-0 shadow-md">
-          {fullName.charAt(0)}
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[var(--secondary)]/40 via-[var(--bg-card)] to-[var(--bg-card)] border border-[var(--border-color)] flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-heading text-3xl font-bold flex-shrink-0 shadow-md">
+          {fullName.charAt(0) || 'A'}
         </div>
 
         <div className="flex-1 text-center sm:text-left space-y-2">
@@ -32,14 +83,21 @@ export const ProfilePage: React.FC = () => {
             <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
               {fullName}
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mx-auto sm:mx-0">
-              <CheckCircle className="h-3 w-3" />
-              <span>Verified Account</span>
-            </span>
+            {isAdmin ? (
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-950/60 text-[var(--primary-dark)] border border-pink-300 dark:border-pink-800 text-xs font-bold mx-auto sm:mx-0 shadow-sm">
+                <ShieldCheck className="h-3.5 w-3.5 text-[var(--primary)]" />
+                <span>Store Owner & Admin</span>
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mx-auto sm:mx-0">
+                <CheckCircle className="h-3 w-3" />
+                <span>Verified Buyer</span>
+              </span>
+            )}
           </div>
 
           <p className="text-xs text-[var(--text-muted)]">
-            Member of Anu Atelier handcrafted community
+            {isAdmin ? 'Full administrative access to crafts & store orders' : 'Member of Anu Atelier handcrafted community'}
           </p>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-1 text-xs text-[var(--text-muted)]">
@@ -54,13 +112,33 @@ export const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <button
-          onClick={() => setIsEditing(!isEditing)}
-          className="px-4 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5 shadow-sm"
-        >
-          <Edit3 className="h-3.5 w-3.5" />
-          <span>{isEditing ? 'Cancel' : 'Edit Profile'}</span>
-        </button>
+        <div className="flex flex-wrap gap-2 justify-center sm:justify-end">
+          {isAdmin && (
+            <Link
+              to="/admin/add-craft"
+              className="px-4 py-2 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Add Craft</span>
+            </Link>
+          )}
+
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className="px-4 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5 shadow-sm transition-all"
+          >
+            <Edit3 className="h-3.5 w-3.5" />
+            <span>{isEditing ? 'Cancel' : 'Edit'}</span>
+          </button>
+
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded-full border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
       {/* Profile Details or Edit Form */}
