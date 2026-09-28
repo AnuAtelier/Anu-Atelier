@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { MobileNav } from './components/common/MobileNav';
@@ -38,9 +38,35 @@ function ScrollToTop() {
 }
 
 const AppContent: React.FC = () => {
-  const { pathname } = useLocation();
-  const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/seller');
+  const location = useLocation();
+  const { pathname } = location;
+  const { user, isLoading } = useAuthStore();
 
+  const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/seller');
+  const isAuthRoute = pathname === '/login' || pathname === '/register';
+
+  // 1. Clean Standalone Auth Layout: NO Navbar, NO Footer, NO MobileNav, NO WhatsAppFloat
+  if (isAuthRoute) {
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    );
+  }
+
+  // 2. Admin Route Protection: If not admin, ask for login immediately (redirect to /login?from=admin)
+  if (isAdminRoute && !isLoading && (!user || user.role !== 'admin')) {
+    return (
+      <Navigate
+        to="/login?from=admin"
+        state={{ from: location }}
+        replace
+      />
+    );
+  }
+
+  // 3. Dedicated Admin Layout: Sidebar navigation, NO Customer Navbar/Footer
   if (isAdminRoute) {
     return (
       <AdminLayout>
@@ -83,6 +109,7 @@ const AppContent: React.FC = () => {
     );
   }
 
+  // 4. Customer Storefront Layout: WITH Header, Footer, MobileNav, CartDrawer, WhatsAppFloat
   return (
     <div className="flex flex-col min-h-screen bg-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
       <Header />
@@ -97,8 +124,6 @@ const AppContent: React.FC = () => {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-success/:id" element={<OrderSuccessPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
