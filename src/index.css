@@ -1,4 +1,25 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-bg-color: var(--bg-color);
+  --color-bg-card: var(--bg-card);
+  --color-bg-input: var(--bg-input);
+  --color-border-color: var(--border-color);
+  --color-border-hover: var(--border-hover);
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+  --shadow-sm-soft: 0 2px 8px rgba(44, 42, 41, 0.05);
+  --shadow-md-soft: 0 8px 24px rgba(44, 42, 41, 0.08);
+  --shadow-lg-soft: 0 16px 48px rgba(44, 42, 41, 0.12);
+}
 
 :root {
   /* Brand Palette (Light) */
