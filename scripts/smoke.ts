@@ -176,6 +176,31 @@ async function runSmokeTests() {
     }
   });
 
+  record('Database Migrations', 'Verifies 004_cart_to_order.sql and atomic RPCs', () => {
+    const migrationPath = path.resolve(process.cwd(), 'supabase/migrations/004_cart_to_order.sql');
+    if (!fs.existsSync(migrationPath)) throw new Error('Missing 004_cart_to_order.sql');
+    const content = fs.readFileSync(migrationPath, 'utf8');
+
+    if (!content.includes('ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on orders table');
+    }
+    if (!content.includes('ALTER TABLE public.inventory_ledger ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on inventory_ledger table');
+    }
+    if (!content.includes('public.calculate_totals(')) {
+      throw new Error('Missing calculate_totals RPC');
+    }
+    if (!content.includes('public.place_order(')) {
+      throw new Error('Missing place_order RPC');
+    }
+    if (!content.includes('public.cancel_order(')) {
+      throw new Error('Missing cancel_order RPC');
+    }
+    if (!content.includes('WELCOME10') || !content.includes('FESTIVE200')) {
+      throw new Error('Seeded coupons missing in migration');
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');

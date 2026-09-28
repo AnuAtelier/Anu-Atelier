@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B2 (Catalog & Discovery) – Completed, Awaiting Approval  
-**Next Phase:** B3 (Cart to Order - COD First)
+**Current Phase:** B3 (Cart to Order - COD First) – Completed, Awaiting Approval  
+**Next Phase:** B4 (Payments - Razorpay & COD)
 
 ---
 
@@ -42,13 +42,15 @@
   - [x] Catalog test suite (`tests/b2_catalog.test.ts`, 15/15 tests passing; 39 total).
   - [x] Documented in `docs/B2_CATALOG_REPORT.md`.
 
-- [ ] **B3 – Cart to Order (COD First)**
-  - [ ] Address validation (6-digit PIN, Indian mobile, state list).
-  - [ ] Server-side cart management & guest-to-user cart merging.
-  - [ ] Coupon engine & `calculate_totals` pricing function (integer paise).
-  - [ ] Concurrency-safe atomic `place_order` with inventory ledger.
-  - [ ] Order cancellation & restocking triggers.
-  - [ ] Transactional email queue (`email_outbox`).
+- [x] **B3 – Cart to Order (COD First)**
+  - [x] Address validation (6-digit PIN, Indian mobile, max 10 trigger, default trigger).
+  - [x] Server-side cart management & guest-to-user cart merging (`merge_guest_cart`).
+  - [x] Coupon engine & `calculate_totals` pricing function (integer paise, largest-remainder distribution).
+  - [x] Concurrency-safe atomic `place_order` with inventory ledger & row-level locking.
+  - [x] Order cancellation & restocking triggers (`cancel_order`).
+  - [x] Transactional email queue (`email_outbox`).
+  - [x] Cart to order test suite (`tests/b3_cart_order.test.ts`, 13/13 tests passing; 52 total).
+  - [x] Documented in `docs/B3_CART_TO_ORDER_REPORT.md`.
 
 - [ ] **B4 – Payments (Razorpay & COD)**
   - [ ] Razorpay order creation (`/api/payments/create`) with server-calculated amounts.

@@ -131,3 +131,52 @@ export const productCreateSchema = z
     path: ['price_paise'],
   });
 
+export const addressCreateSchema = z.object({
+  full_name: z.string().trim().min(2, 'Name must be at least 2 characters').max(100),
+  phone: indianPhoneSchema,
+  address_line1: z.string().trim().min(5, 'Address line 1 must be at least 5 characters').max(200),
+  address_line2: z.string().trim().max(200).optional().nullable(),
+  landmark: z.string().trim().max(100).optional().nullable(),
+  city: z.string().trim().min(2).max(100),
+  state: z.string().trim().min(2).max(100),
+  state_code: z.string().trim().length(2, 'State code must be 2 characters (e.g. 09)'),
+  pincode: indianPincodeSchema,
+  address_type: z.enum(['home', 'work', 'other']).default('home'),
+  is_default: z.boolean().default(false),
+});
+
+export const cartItemInputSchema = z.object({
+  product_id: z.string().uuid('Invalid product ID'),
+  variant_id: z.string().uuid('Invalid variant ID').optional().nullable(),
+  quantity: z.number().int().min(1, 'Quantity must be at least 1').max(10, 'Maximum 10 units per craft allowed'),
+  personalization_note: z.string().trim().max(250, 'Personalization note cannot exceed 250 characters').optional().nullable(),
+  is_gift: z.boolean().default(false),
+});
+
+export const calculateTotalsInputSchema = z.object({
+  items: z.array(cartItemInputSchema).min(1, 'At least one item is required'),
+  coupon_code: z.string().trim().optional().nullable(),
+  pincode: indianPincodeSchema.optional().nullable(),
+  payment_method: z.enum(['cod', 'upi', 'card', 'netbanking', 'wallet']).default('cod'),
+  is_gift: z.boolean().default(false),
+});
+
+export const placeOrderInputSchema = z.object({
+  items: z.array(cartItemInputSchema).min(1, 'Order must contain at least one item'),
+  customer_name: z.string().trim().min(2).max(100),
+  customer_email: z.string().trim().email('Invalid email address'),
+  customer_phone: indianPhoneSchema,
+  shipping_address: addressCreateSchema,
+  payment_method: z.enum(['cod', 'upi', 'card', 'netbanking', 'wallet']),
+  coupon_code: z.string().trim().optional().nullable(),
+  is_gift: z.boolean().default(false),
+  gift_message: z.string().trim().max(300).optional().nullable(),
+  attribution: z.record(z.unknown()).default({}),
+});
+
+export const cancelOrderInputSchema = z.object({
+  order_id: z.string().uuid('Invalid order ID'),
+  reason: z.string().trim().min(5, 'Cancellation reason must be at least 5 characters').max(300),
+});
+
+

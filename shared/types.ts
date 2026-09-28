@@ -359,3 +359,159 @@ export interface ProductDetailResult {
   redirect_from?: string | null;
 }
 
+export interface Address {
+  id: string;
+  user_id: string;
+  full_name: string;
+  phone: string;
+  address_line1: string;
+  address_line2?: string | null;
+  landmark?: string | null;
+  city: string;
+  state: string;
+  state_code: string;
+  pincode: string;
+  address_type: 'home' | 'work' | 'other';
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CartItem {
+  id: string;
+  cart_id: string;
+  product_id: string;
+  variant_id?: string | null;
+  quantity: number;
+  personalization_note?: string | null;
+  is_gift: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Coupon {
+  id: string;
+  code: string;
+  description?: string | null;
+  discount_type: 'percent' | 'flat' | 'free_delivery';
+  discount_value_paise: Paise;
+  max_discount_paise?: Paise | null;
+  min_order_paise: Paise;
+  starts_at: string;
+  expires_at: string;
+  usage_limit_total?: number | null;
+  usage_limit_per_user: number;
+  used_count: number;
+  is_first_order_only: boolean;
+  scope: 'all' | 'category' | 'product';
+  scope_id?: string | null;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface OrderItem {
+  id: string;
+  order_id: string;
+  product_id: string;
+  variant_id?: string | null;
+  product_title: string;
+  variant_title?: string | null;
+  sku?: string | null;
+  image_url?: string | null;
+  hsn_code: string;
+  gst_rate_percent: number;
+  mrp_paise: Paise;
+  unit_price_paise: Paise;
+  quantity: number;
+  discount_paise: Paise;
+  line_total_paise: Paise;
+  tax_paise: Paise;
+  personalization_note?: string | null;
+  created_at: string;
+}
+
+export interface Order {
+  id: string;
+  order_number: string;
+  idempotency_key?: string | null;
+  user_id?: string | null;
+  status: OrderStatus;
+  payment_status: PaymentStatus;
+  payment_method: PaymentMethod;
+  subtotal_mrp_paise: Paise;
+  subtotal_sale_paise: Paise;
+  discount_paise: Paise;
+  coupon_id?: string | null;
+  coupon_code?: string | null;
+  coupon_discount_paise: Paise;
+  delivery_fee_paise: Paise;
+  cod_fee_paise: Paise;
+  gift_wrap_fee_paise: Paise;
+  total_tax_paise: Paise;
+  total_paise: Paise;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  shipping_address: Record<string, unknown>;
+  billing_address?: Record<string, unknown> | null;
+  is_gift: boolean;
+  gift_message?: string | null;
+  payment_expires_at?: string | null;
+  attribution?: Record<string, unknown>;
+  placed_at: string;
+  cancelled_at?: string | null;
+  cancellation_reason?: string | null;
+  created_at: string;
+  updated_at: string;
+  items?: OrderItem[];
+}
+
+export interface CalculateTotalsResult {
+  items: Array<{
+    product_id: string;
+    variant_id?: string | null;
+    title: string;
+    sku?: string | null;
+    quantity: number;
+    mrp_paise: Paise;
+    unit_price_paise: Paise;
+    line_total_paise: Paise;
+    hsn_code: string;
+    gst_rate_percent: number;
+    is_free_delivery: boolean;
+  }>;
+  item_count: number;
+  subtotal_mrp_paise: Paise;
+  subtotal_sale_paise: Paise;
+  product_discount_paise: Paise;
+  coupon_code?: string | null;
+  coupon_id?: string | null;
+  coupon_discount_paise: Paise;
+  coupon_error?: string | null;
+  delivery_fee_paise: Paise;
+  cod_fee_paise: Paise;
+  gift_wrap_fee_paise: Paise;
+  total_tax_paise: Paise;
+  grand_total_paise: Paise;
+  savings_paise: Paise;
+  free_delivery_progress: {
+    threshold_paise: Paise;
+    needed_paise: Paise;
+    is_free: boolean;
+  };
+  error?: string;
+}
+
+export interface PlaceOrderResult {
+  success: boolean;
+  order_id: string;
+  order_number: string;
+  status: OrderStatus;
+  payment_status: PaymentStatus;
+  payment_method: PaymentMethod;
+  grand_total_paise: Paise;
+  payment_expires_at?: string | null;
+  is_duplicate?: boolean;
+}
+
+
