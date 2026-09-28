@@ -163,3 +163,199 @@ export type StorageBucketName =
   | 'return-media'
   | 'invoices'
   | 'site-assets';
+
+export interface Category {
+  id: string;
+  parent_id?: string | null;
+  name: string;
+  slug: string;
+  description?: string | null;
+  image_url?: string | null;
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Artisan {
+  id: string;
+  name: string;
+  slug: string;
+  bio?: string | null;
+  photo_url?: string | null;
+  location: string;
+  craft_speciality: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  short_description?: string | null;
+  description: string;
+  category_id: string;
+  artisan_id?: string | null;
+  mrp_paise: Paise;
+  price_paise: Paise;
+  sku?: string | null;
+  stock: number;
+  low_stock_threshold: number;
+  weight_grams?: number | null;
+  dimensions_cm?: string | null;
+  handmade_lead_days: number;
+  cod_allowed: boolean;
+  is_free_delivery: boolean;
+  delivery_days_override?: number | null;
+  is_returnable: boolean;
+  replacement_days_override?: number | null;
+  badges: string[];
+  tags: string[];
+  materials?: string | null;
+  care_instructions?: string | null;
+  hsn_code: string;
+  gst_rate_percent: number;
+  country_of_origin: string;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  status: ProductStatus;
+  published_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductImage {
+  id: string;
+  product_id: string;
+  image_url: string;
+  alt_text?: string | null;
+  display_order: number;
+  is_primary: boolean;
+  created_at: string;
+}
+
+export interface ProductVariant {
+  id: string;
+  product_id: string;
+  title: string;
+  sku?: string | null;
+  color_name?: string | null;
+  color_hex?: string | null;
+  size?: string | null;
+  price_paise_override?: Paise | null;
+  mrp_paise_override?: Paise | null;
+  stock: number;
+  image_url?: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductHighlight {
+  id: string;
+  product_id: string;
+  icon_key: string;
+  title: string;
+  display_order: number;
+}
+
+export interface ProductSpec {
+  id: string;
+  product_id: string;
+  key: string;
+  value: string;
+  display_order: number;
+}
+
+export interface ProductOffer {
+  id: string;
+  product_id: string;
+  sale_price_paise: Paise;
+  label: string;
+  starts_at: string;
+  ends_at: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface ProductStats {
+  product_id: string;
+  average_rating: number;
+  reviews_count: number;
+  ratings_count: number;
+  rating_1_count: number;
+  rating_2_count: number;
+  rating_3_count: number;
+  rating_4_count: number;
+  rating_5_count: number;
+  bought_count: number;
+  updated_at: string;
+}
+
+export interface PincodeInfo {
+  pincode: string;
+  city: string;
+  state: string;
+  state_code: string;
+  is_serviceable: boolean;
+  is_cod_allowed: boolean;
+  min_delivery_days: number;
+  max_delivery_days: number;
+  zone: string;
+}
+
+export interface ProductListItem {
+  id: string;
+  title: string;
+  slug: string;
+  short_description?: string | null;
+  category_name: string;
+  category_slug: string;
+  artisan_name?: string | null;
+  artisan_location?: string | null;
+  mrp_paise: Paise;
+  price_paise: Paise;
+  primary_image_url?: string | null;
+  stock: number;
+  is_free_delivery: boolean;
+  cod_allowed: boolean;
+  badges: string[];
+  tags: string[];
+  average_rating: number;
+  reviews_count: number;
+  active_offer_label?: string | null;
+  active_offer_sale_price_paise?: Paise | null;
+  published_at: string;
+}
+
+export interface ProductDetailResult {
+  product: Product & {
+    category_name: string;
+    category_slug: string;
+    artisan_name?: string | null;
+    artisan_bio?: string | null;
+    artisan_photo_url?: string | null;
+    artisan_location?: string | null;
+    artisan_craft_speciality?: string | null;
+  };
+  images: ProductImage[];
+  variants: ProductVariant[];
+  highlights: ProductHighlight[];
+  specs: ProductSpec[];
+  stats: ProductStats;
+  active_offer?: ProductOffer | null;
+  related_products: Array<{
+    id: string;
+    title: string;
+    slug: string;
+    mrp_paise: Paise;
+    price_paise: Paise;
+    primary_image_url?: string | null;
+    average_rating: number;
+    reviews_count: number;
+  }>;
+  redirect_from?: string | null;
+}
+

@@ -142,6 +142,40 @@ async function runSmokeTests() {
     }
   });
 
+  record('Database Migrations', 'Verifies 002_catalog_and_discovery.sql and RPCs', () => {
+    const migrationPath = path.resolve(process.cwd(), 'supabase/migrations/002_catalog_and_discovery.sql');
+    if (!fs.existsSync(migrationPath)) throw new Error('Missing 002_catalog_and_discovery.sql');
+    const content = fs.readFileSync(migrationPath, 'utf8');
+
+    if (!content.includes('ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;')) {
+      throw new Error('RLS not enabled on products table');
+    }
+    if (!content.includes('public.list_products(')) {
+      throw new Error('Missing list_products RPC');
+    }
+    if (!content.includes('public.search_products(')) {
+      throw new Error('Missing search_products RPC');
+    }
+    if (!content.includes('public.get_product_detail(')) {
+      throw new Error('Missing get_product_detail RPC');
+    }
+  });
+
+  record('Database Migrations', 'Verifies 003_seed_dev_catalog.sql contains 9 items', () => {
+    const seedPath = path.resolve(process.cwd(), 'supabase/migrations/003_seed_dev_catalog.sql');
+    if (!fs.existsSync(seedPath)) throw new Error('Missing 003_seed_dev_catalog.sql');
+    const content = fs.readFileSync(seedPath, 'utf8');
+
+    if (!content.includes('terracotta-clay') || !content.includes('embroidered-clothing')) {
+      throw new Error('Categories missing in seed migration');
+    }
+    const allMatches = content.match(/'c0000000-0000-0000-0000-00000000000\d'/g) || [];
+    const productsCount = new Set(allMatches).size;
+    if (productsCount !== 9) {
+      throw new Error(`Expected 9 distinct seeded products, found ${productsCount}`);
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');

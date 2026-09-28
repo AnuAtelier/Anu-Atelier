@@ -74,3 +74,60 @@ export const siteSettingsSchema = z.object({
   returns: returnSettingsSchema,
   general: generalSettingsSchema,
 });
+
+export const productListFilterSchema = z.object({
+  category_slug: z.string().trim().optional(),
+  min_price_paise: paiseSchema.optional(),
+  max_price_paise: paiseSchema.optional(),
+  in_stock: z.boolean().optional(),
+  sort: z.enum(['newest', 'price_asc', 'price_desc', 'rating', 'popularity']).default('newest'),
+  limit: z.number().int().min(1).max(50).default(20),
+  cursor_published_at: z.string().datetime().optional(),
+  cursor_id: z.string().uuid().optional(),
+});
+
+export const productSearchFilterSchema = z.object({
+  query: z.string().trim().min(1, 'Search query cannot be empty'),
+  category_slug: z.string().trim().optional(),
+  sort: z.enum(['relevance', 'price_asc', 'price_desc']).default('relevance'),
+  limit: z.number().int().min(1).max(50).default(20),
+  offset: z.number().int().min(0).default(0),
+});
+
+export const productCreateSchema = z
+  .object({
+    title: z.string().trim().min(3, 'Title must be at least 3 characters').max(200),
+    slug: z.string().trim().min(3).max(200).regex(/^[a-z0-9-]+$/, 'Slug must be kebab-case'),
+    short_description: z.string().trim().max(300).optional(),
+    description: z.string().trim().min(20, 'Description must be at least 20 characters'),
+    category_id: z.string().uuid('Invalid category ID'),
+    artisan_id: z.string().uuid().optional().nullable(),
+    mrp_paise: paiseSchema.min(100, 'MRP must be at least ₹1 (100 paise)'),
+    price_paise: paiseSchema.min(100, 'Price must be at least ₹1 (100 paise)'),
+    sku: z.string().trim().optional().nullable(),
+    stock: z.number().int().min(0).default(0),
+    low_stock_threshold: z.number().int().min(0).default(3),
+    weight_grams: z.number().int().positive().optional().nullable(),
+    dimensions_cm: z.string().trim().optional().nullable(),
+    handmade_lead_days: z.number().int().min(0).default(0),
+    cod_allowed: z.boolean().default(true),
+    is_free_delivery: z.boolean().default(false),
+    delivery_days_override: z.number().int().positive().optional().nullable(),
+    is_returnable: z.boolean().default(true),
+    replacement_days_override: z.number().int().min(0).optional().nullable(),
+    badges: z.array(z.string().trim()).default([]),
+    tags: z.array(z.string().trim()).default([]),
+    materials: z.string().trim().optional().nullable(),
+    care_instructions: z.string().trim().optional().nullable(),
+    hsn_code: z.string().trim().default('6912'),
+    gst_rate_percent: z.number().min(0).max(28).default(5.0),
+    country_of_origin: z.string().trim().default('India'),
+    meta_title: z.string().trim().optional().nullable(),
+    meta_description: z.string().trim().optional().nullable(),
+    status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  })
+  .refine((data) => data.price_paise <= data.mrp_paise, {
+    message: 'Selling price cannot exceed MRP (mrp_paise)',
+    path: ['price_paise'],
+  });
+

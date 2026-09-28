@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B1 (Foundation & Security Baseline) – Completed, Awaiting Approval  
-**Next Phase:** B2 (Catalog & Discovery)
+**Current Phase:** B2 (Catalog & Discovery) – Completed, Awaiting Approval  
+**Next Phase:** B3 (Cart to Order - COD First)
 
 ---
 
@@ -33,12 +33,14 @@
   - [x] Developer smoke test suite (`scripts/smoke.ts`, 8/8 passing).
   - [x] Documented in `docs/B1_FOUNDATION_REPORT.md`.
 
-- [ ] **B2 – Catalog & Discovery**
-  - [ ] Categories, artisans, products, variants, media, highlights, specs, offers, pincodes.
-  - [ ] Database publish rules & slug uniqueness redirects.
-  - [ ] Full-text + trigram search RPCs (`search_products`, `list_products`, `get_product_detail`).
-  - [ ] Trigger-maintained `product_stats` (ratings, review count, bought count).
-  - [ ] Idempotent seed data migration for dev environment.
+- [x] **B2 – Catalog & Discovery**
+  - [x] Categories, artisans, products, variants, media, highlights, specs, offers, pincodes.
+  - [x] Database publish rules & slug uniqueness redirects.
+  - [x] Full-text + trigram search RPCs (`search_products`, `list_products`, `get_product_detail`).
+  - [x] Trigger-maintained `product_stats` (ratings, review count, bought count).
+  - [x] Idempotent seed data migration for dev environment (`003_seed_dev_catalog.sql`).
+  - [x] Catalog test suite (`tests/b2_catalog.test.ts`, 15/15 tests passing; 39 total).
+  - [x] Documented in `docs/B2_CATALOG_REPORT.md`.
 
 - [ ] **B3 – Cart to Order (COD First)**
   - [ ] Address validation (6-digit PIN, Indian mobile, state list).
