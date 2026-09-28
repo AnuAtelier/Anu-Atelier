@@ -161,51 +161,51 @@ export const AdminDashboardPage: React.FC = () => {
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Revenue */}
-        <div className="p-5 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-5 rounded-3xl bracket-emerald shadow-xs hover:shadow-md transition-all space-y-2">
+          <div className="flex items-center justify-between text-emerald-800 text-xs font-bold uppercase tracking-wider">
             <span>Total Sales</span>
-            <TrendingUp className="h-4 w-4 text-emerald-500" />
+            <TrendingUp className="h-4 w-4 text-emerald-600" />
           </div>
-          <p className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+          <p className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">
             ₹{totalRevenue.toLocaleString('en-IN')}
           </p>
-          <p className="text-[11px] text-emerald-600 font-medium">All completed & placed orders</p>
+          <p className="text-[11px] text-emerald-700 font-semibold">All completed & placed orders</p>
         </div>
 
         {/* Orders */}
-        <div className="p-5 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-5 rounded-3xl bracket-pink shadow-xs hover:shadow-md transition-all space-y-2">
+          <div className="flex items-center justify-between text-pink-800 text-xs font-bold uppercase tracking-wider">
             <span>Customer Orders</span>
-            <ShoppingBag className="h-4 w-4 text-[var(--primary)]" />
+            <ShoppingBag className="h-4 w-4 text-pink-600" />
           </div>
-          <p className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+          <p className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">
             {totalOrdersCount}
           </p>
-          <p className="text-[11px] text-[var(--text-muted)]">Active store purchases</p>
+          <p className="text-[11px] text-pink-700 font-semibold">Active store purchases</p>
         </div>
 
         {/* Active Crafts */}
-        <div className="p-5 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-5 rounded-3xl bracket-purple shadow-xs hover:shadow-md transition-all space-y-2">
+          <div className="flex items-center justify-between text-purple-800 text-xs font-bold uppercase tracking-wider">
             <span>Crafts in Catalog</span>
-            <Package className="h-4 w-4 text-indigo-500" />
+            <Package className="h-4 w-4 text-purple-600" />
           </div>
-          <p className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+          <p className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">
             {totalCraftsCount}
           </p>
-          <p className="text-[11px] text-[var(--text-muted)]">Published across 3 categories</p>
+          <p className="text-[11px] text-purple-700 font-semibold">Published across 3 categories</p>
         </div>
 
         {/* Low Stock Alert */}
-        <div className="p-5 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-5 rounded-3xl bracket-amber shadow-xs hover:shadow-md transition-all space-y-2">
+          <div className="flex items-center justify-between text-amber-800 text-xs font-bold uppercase tracking-wider">
             <span>Low Stock Items</span>
-            <AlertCircle className="h-4 w-4 text-amber-500" />
+            <AlertCircle className="h-4 w-4 text-amber-600" />
           </div>
-          <p className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+          <p className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">
             {lowStockCount}
           </p>
-          <p className="text-[11px] text-amber-600 font-medium">
+          <p className="text-[11px] text-amber-700 font-semibold">
             {lowStockCount > 0 ? 'Requires artisan replenishment' : 'Adequate inventory'}
           </p>
         </div>

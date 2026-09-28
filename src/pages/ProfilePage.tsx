@@ -117,8 +117,9 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       {/* Profile Header Hero */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[var(--secondary)]/40 via-[var(--bg-card)] to-[var(--bg-card)] border border-[var(--border-color)] flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-heading text-3xl font-bold flex-shrink-0 shadow-md">
+      {/* Profile Header Card */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-pink-500/15 via-purple-500/10 to-rose-500/10 backdrop-blur-md border border-pink-200/60 flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-pink-500 to-rose-600 text-white flex items-center justify-center font-heading text-3xl font-bold flex-shrink-0 shadow-md">
           {fullName.charAt(0) || 'A'}
         </div>
 
@@ -160,7 +161,7 @@ export const ProfilePage: React.FC = () => {
           {isAdmin && (
             <Link
               to="/admin"
-              className="px-4 py-2 rounded-full bg-[var(--primary)] text-white text-xs font-semibold hover:bg-[var(--primary-dark)] shadow-sm transition-all"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 text-white text-xs font-semibold hover:from-pink-600 hover:to-rose-700 shadow-sm transition-all"
             >
               Admin Dashboard
             </Link>
@@ -168,7 +169,7 @@ export const ProfilePage: React.FC = () => {
 
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="px-4 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5 shadow-sm transition-all"
+            className="px-4 py-2 rounded-full border border-pink-200 bg-white/80 hover:bg-white text-xs font-semibold text-gray-800 flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
           >
             <Edit3 className="h-3.5 w-3.5" />
             <span>{isEditing ? 'Cancel' : 'Edit'}</span>
@@ -176,7 +177,7 @@ export const ProfilePage: React.FC = () => {
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-full border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-full border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
           >
             <LogOut className="h-3.5 w-3.5" />
             <span>Logout</span>
@@ -185,7 +186,7 @@ export const ProfilePage: React.FC = () => {
       </div>
 
       {/* Orders Section */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white/90 via-rose-50/40 to-pink-50/30 backdrop-blur-md border border-pink-200/70 shadow-sm space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Package className="h-5 w-5 text-[var(--primary)]" />

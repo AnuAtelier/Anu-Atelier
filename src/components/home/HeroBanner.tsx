@@ -4,12 +4,12 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 export const HeroBanner: React.FC = () => {
   return (
-    <section className="relative overflow-hidden py-12 md:py-20 px-4 sm:px-8 bg-gradient-to-b from-[var(--secondary)]/30 via-[var(--bg-color)] to-[var(--bg-color)] transition-colors">
+    <section className="relative overflow-hidden py-12 md:py-20 px-4 sm:px-8 bg-gradient-to-b from-pink-500/10 via-rose-500/5 to-transparent transition-colors">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Text */}
         <div className="space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--secondary)] text-[var(--primary-dark)] text-xs font-semibold tracking-wide shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 text-[var(--primary)]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-300/60 backdrop-blur-xs text-pink-700 text-xs font-bold tracking-wide shadow-xs">
+            <Sparkles className="h-3.5 w-3.5 text-pink-600" />
             <span>Authentic Indian Handmade Crafts</span>
           </div>
 
@@ -25,7 +25,7 @@ export const HeroBanner: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
             <a
               href="#latest-crafts"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md-soft hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group cursor-pointer"
             >
               <span>Explore Collection</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -33,7 +33,7 @@ export const HeroBanner: React.FC = () => {
 
             <Link
               to="/category/terracotta-clay"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-[var(--text-main)] text-sm font-semibold transition-all text-center shadow-sm"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-orange-200/70 bg-orange-500/10 hover:bg-orange-500/20 text-orange-950 text-sm font-bold transition-all text-center shadow-xs backdrop-blur-xs cursor-pointer"
             >
               Terracotta Crafts
             </Link>
@@ -42,7 +42,7 @@ export const HeroBanner: React.FC = () => {
 
         {/* Right Hero Image Card */}
         <div className="relative mx-auto max-w-md lg:max-w-none w-full">
-          <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-3xl overflow-hidden shadow-lg-soft border border-[var(--border-color)]">
+          <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-3xl overflow-hidden shadow-lg-soft border border-pink-200/70 p-1.5 bg-white/60 backdrop-blur-md">
             <img
               src="/img/hero-artisan.jpg"
               alt="Smiling Indian craftswoman painting terracotta pottery in a sunny workshop"

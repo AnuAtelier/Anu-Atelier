@@ -197,9 +197,9 @@ export const CheckoutPage: React.FC = () => {
         {/* Left Column: Delivery Address & Payment Method */}
         <div className="lg:col-span-8 space-y-6">
           {/* Step 1: Address */}
-          <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
-            <h2 className="font-heading text-lg font-bold text-[var(--text-main)] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[var(--primary)] text-white text-xs flex items-center justify-center font-sans">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-white/90 via-sky-50/40 to-blue-50/20 backdrop-blur-md border border-sky-200/70 shadow-sm space-y-4">
+            <h2 className="font-heading text-lg font-bold text-gray-900 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-sans font-bold">
                 1
               </span>
               <span>Delivery Address</span>
@@ -297,9 +297,9 @@ export const CheckoutPage: React.FC = () => {
           </div>
 
           {/* Step 2: Payment Method */}
-          <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
-            <h2 className="font-heading text-lg font-bold text-[var(--text-main)] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[var(--primary)] text-white text-xs flex items-center justify-center font-sans">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-white/90 via-pink-50/40 to-rose-50/20 backdrop-blur-md border border-pink-200/70 shadow-sm space-y-4">
+            <h2 className="font-heading text-lg font-bold text-gray-900 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-pink-600 text-white text-xs flex items-center justify-center font-sans font-bold">
                 2
               </span>
               <span>Payment Option</span>
@@ -310,24 +310,24 @@ export const CheckoutPage: React.FC = () => {
               <label
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'cod'
-                    ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
+                    ? 'border-pink-500 bg-pink-500/15 shadow-xs'
+                    : 'border-pink-200/50 bg-white/70 hover:bg-pink-50/40'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <Banknote className="h-6 w-6 text-[var(--primary)]" />
+                  <Banknote className="h-6 w-6 text-pink-600" />
                   <input
                     type="radio"
                     name="payment"
                     value="cod"
                     checked={paymentMethod === 'cod'}
                     onChange={() => setPaymentMethod('cod')}
-                    className="accent-[var(--primary)]"
+                    className="accent-pink-600"
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[var(--text-main)]">Cash on Delivery</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">Pay cash upon parcel arrival</p>
+                  <p className="text-sm font-bold text-gray-900">Cash on Delivery</p>
+                  <p className="text-[11px] text-gray-600">Pay cash upon parcel arrival</p>
                 </div>
               </label>
 
@@ -335,8 +335,8 @@ export const CheckoutPage: React.FC = () => {
               <label
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'upi'
-                    ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
+                    ? 'border-emerald-500 bg-emerald-500/15 shadow-xs'
+                    : 'border-emerald-200/50 bg-white/70 hover:bg-emerald-50/40'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -347,12 +347,12 @@ export const CheckoutPage: React.FC = () => {
                     value="upi"
                     checked={paymentMethod === 'upi'}
                     onChange={() => setPaymentMethod('upi')}
-                    className="accent-[var(--primary)]"
+                    className="accent-emerald-600"
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[var(--text-main)]">UPI Instant Pay</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">GPay, PhonePe, Paytm</p>
+                  <p className="text-sm font-bold text-gray-900">UPI Instant Pay</p>
+                  <p className="text-[11px] text-gray-600">GPay, PhonePe, Paytm</p>
                 </div>
               </label>
 
@@ -360,24 +360,24 @@ export const CheckoutPage: React.FC = () => {
               <label
                 className={`p-4 rounded-2xl border cursor-pointer flex flex-col justify-between gap-3 transition-all ${
                   paymentMethod === 'card'
-                    ? 'border-[var(--primary)] bg-[var(--secondary)]/20'
-                    : 'border-[var(--border-color)] bg-[var(--bg-input)] hover:border-pink-300'
+                    ? 'border-purple-500 bg-purple-500/15 shadow-xs'
+                    : 'border-purple-200/50 bg-white/70 hover:bg-purple-50/40'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <CreditCard className="h-6 w-6 text-indigo-600" />
+                  <CreditCard className="h-6 w-6 text-purple-600" />
                   <input
                     type="radio"
                     name="payment"
                     value="card"
                     checked={paymentMethod === 'card'}
                     onChange={() => setPaymentMethod('card')}
-                    className="accent-[var(--primary)]"
+                    className="accent-purple-600"
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[var(--text-main)]">Credit / Debit Card</p>
-                  <p className="text-[11px] text-[var(--text-muted)]">Visa, Mastercard, RuPay</p>
+                  <p className="text-sm font-bold text-gray-900">Credit / Debit Card</p>
+                  <p className="text-[11px] text-gray-600">Visa, Mastercard, RuPay</p>
                 </div>
               </label>
             </div>
@@ -386,7 +386,7 @@ export const CheckoutPage: React.FC = () => {
 
         {/* Right Column: Order Summary, Coupon & Place Order */}
         <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
-          <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-white/90 via-purple-50/40 to-pink-50/30 backdrop-blur-md border border-purple-200/70 shadow-sm space-y-4">
             <h3 className="font-heading text-lg font-bold text-[var(--text-main)] border-b border-[var(--border-color)] pb-3">
               Order Summary ({items.reduce((s, i) => s + i.qty, 0)})
             </h3>

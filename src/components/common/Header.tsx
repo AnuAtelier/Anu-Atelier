@@ -115,9 +115,9 @@ export const Header: React.FC = () => {
                 setIsSearchOpen(true);
               }}
               onFocus={() => setIsSearchOpen(true)}
-              className="w-full pl-10 pr-10 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+              className="w-full pl-10 pr-10 py-2.5 rounded-full border border-pink-200/70 bg-white/70 backdrop-blur-md text-[var(--text-main)] text-sm focus:outline-none focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-gray-500 shadow-xs"
             />
-            <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[var(--text-muted)] pointer-events-none" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-pink-600/70 pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
@@ -216,11 +216,11 @@ export const Header: React.FC = () => {
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="relative w-9 h-9 rounded-full flex items-center justify-center text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
+            className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-200/60 flex items-center justify-center text-rose-700 transition-all shadow-xs"
           >
-            <Heart className="h-5 w-5" />
+            <Heart className="h-4.5 w-4.5" />
             {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-scale-in">
+              <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-scale-in shadow-xs">
                 {wishlistCount}
               </span>
             )}
@@ -230,11 +230,11 @@ export const Header: React.FC = () => {
           <button
             onClick={toggleDrawer}
             aria-label="Shopping Cart"
-            className="relative w-9 h-9 rounded-full flex items-center justify-center text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
+            className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-pink-500/15 hover:bg-pink-500/25 border border-pink-300/70 flex items-center justify-center text-pink-700 transition-all shadow-xs cursor-pointer"
           >
-            <ShoppingBag className="h-5 w-5" />
+            <ShoppingBag className="h-4.5 w-4.5" />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-[var(--primary)] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                 {cartCount}
               </span>
             )}
@@ -244,14 +244,14 @@ export const Header: React.FC = () => {
           <Link
             to={user ? "/profile" : "/login"}
             aria-label="My Account"
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 hover:bg-purple-500/20 border border-purple-200/60 flex items-center justify-center text-purple-700 transition-all shadow-xs"
           >
             {user ? (
-              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary-dark)] font-bold text-xs flex items-center justify-center border border-[var(--primary)]/30">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-xs">
                 {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
               </div>
             ) : (
-              <User className="h-5 w-5" />
+              <User className="h-4.5 w-4.5" />
             )}
           </Link>
         </div>

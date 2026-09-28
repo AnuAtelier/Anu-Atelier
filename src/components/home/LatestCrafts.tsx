@@ -35,43 +35,43 @@ export const LatestCrafts: React.FC = () => {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setSelectedFilter('all')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
               selectedFilter === 'all'
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-gray-900 hover:bg-[var(--bg-input)]'
+                ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md scale-105'
+                : 'bg-pink-500/10 text-pink-950 border border-pink-200/60 hover:bg-pink-500/20'
             }`}
           >
             All Crafts
           </button>
           <button
             onClick={() => setSelectedFilter('terracotta-clay')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
               selectedFilter === 'terracotta-clay'
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-gray-900 hover:bg-[var(--bg-input)]'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-md scale-105'
+                : 'bg-orange-500/10 text-orange-950 border border-orange-200/60 hover:bg-orange-500/20'
             }`}
           >
             Terracotta & Clay
           </button>
           <button
             onClick={() => setSelectedFilter('embroidered-clothes')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
               selectedFilter === 'embroidered-clothes'
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-gray-900 hover:bg-[var(--bg-input)]'
+                ? 'bg-gradient-to-r from-fuchsia-500 to-pink-600 text-white shadow-md scale-105'
+                : 'bg-fuchsia-500/10 text-fuchsia-950 border border-fuchsia-200/60 hover:bg-fuchsia-500/20'
             }`}
           >
             Clothing
           </button>
           <button
             onClick={() => setSelectedFilter('other-handicrafts')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
               selectedFilter === 'other-handicrafts'
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-gray-900 hover:bg-[var(--bg-input)]'
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md scale-105'
+                : 'bg-emerald-500/10 text-emerald-950 border border-emerald-200/60 hover:bg-emerald-500/20'
             }`}
           >
             Handicrafts

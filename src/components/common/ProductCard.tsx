@@ -41,10 +41,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div
       onClick={handleCardClick}
-      className="group relative flex flex-col rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] overflow-hidden transition-all duration-300 hover:shadow-md-soft hover:-translate-y-1 cursor-pointer"
+      className="group relative flex flex-col rounded-3xl bg-white/75 backdrop-blur-md border border-pink-200/50 hover:border-pink-400 hover:bg-white/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 cursor-pointer overflow-hidden"
     >
       {/* 4:5 Image Container */}
-      <div className="relative w-full aspect-[4/5] bg-[var(--bg-input)] overflow-hidden">
+      <div className="relative w-full aspect-[4/5] bg-pink-50/30 overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
@@ -68,7 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
           {product.badge && (
-            <span className="px-2.5 py-0.5 text-[10px] font-bold tracking-wider uppercase rounded-full bg-[var(--primary)] text-white shadow-sm">
+            <span className="px-2.5 py-0.5 text-[10px] font-bold tracking-wider uppercase rounded-full bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-sm">
               {product.badge}
             </span>
           )}
@@ -98,16 +98,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Product Details Content */}
-      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-2.5">
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-2.5 bg-gradient-to-b from-white/40 via-pink-50/20 to-rose-50/30">
         <div>
           {/* Subcategory & Rating row */}
           <div className="flex items-center justify-between gap-1 text-[11px] mb-1">
-            <span className="text-[var(--primary)] font-semibold uppercase tracking-wider truncate">
+            <span className="text-pink-600 font-bold uppercase tracking-wider truncate text-[10px] px-2 py-0.5 rounded-md bg-pink-500/10 border border-pink-200/50">
               {product.subcategoryName || product.categoryName}
             </span>
 
             {product.rating && (
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 font-bold text-[10px]">
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-700 font-bold text-[10px] border border-amber-200/50">
                 <Star className="h-2.5 w-2.5 fill-current" />
                 {product.rating}
               </span>
@@ -115,25 +115,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
 
           {/* Title */}
-          <h3 className="font-heading text-sm sm:text-base font-semibold text-[var(--text-main)] line-clamp-2 leading-snug group-hover:text-[var(--primary)] transition-colors">
+          <h3 className="font-heading text-sm sm:text-base font-semibold text-gray-900 line-clamp-2 leading-snug group-hover:text-[var(--primary)] transition-colors mt-1">
             {product.name}
           </h3>
         </div>
 
         <div>
-          {/* Price Row */}
-          <div className="flex items-baseline gap-2 mb-1.5">
-            <span className="text-base sm:text-lg font-bold text-[var(--text-main)]">
-              ₹{product.price}
-            </span>
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className="text-xs text-[var(--text-muted)] line-through">
-                ₹{product.originalPrice}
+          {/* Price Bracket Box */}
+          <div className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-r from-pink-500/10 via-rose-500/5 to-purple-500/10 border border-pink-200/50 mb-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-base sm:text-lg font-bold text-gray-900">
+                ₹{product.price}
               </span>
-            )}
-            <span className="text-[10px] text-emerald-600 font-semibold ml-auto">
-              Free Delivery
-            </span>
+              {product.originalPrice && product.originalPrice > product.price && (
+                <span className="text-xs text-gray-500 line-through">
+                  ₹{product.originalPrice}
+                </span>
+              )}
+              <span className="text-[10px] text-emerald-700 font-bold ml-auto px-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-200/60">
+                Free Delivery
+              </span>
+            </div>
           </div>
 
           {/* Touch / Mobile Action Button (Always visible on mobile) */}
