@@ -122,9 +122,7 @@ export const AdminDashboardPage: React.FC = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl p-1 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-md flex-shrink-0">
-            <img src="/logo-icon.jpg" alt="Anu Atelier Logo" className="w-full h-full rounded-xl object-cover bg-white" />
-          </div>
+          <img src="/logo.png" alt="Anu Atelier Logo" className="h-14 w-14 object-contain drop-shadow-sm flex-shrink-0" />
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-bold border border-pink-300">

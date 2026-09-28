@@ -177,10 +177,8 @@ export const CheckoutPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       <div className="border-b border-[var(--border-color)] pb-4">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-xs flex-shrink-0">
-            <img src="/logo-icon.jpg" alt="Anu Atelier" className="w-full h-full rounded-full object-cover bg-white" />
-          </div>
+        <div className="flex items-center gap-3.5 mb-2">
+          <img src="/logo.png" alt="Anu Atelier" className="h-12 w-12 object-contain drop-shadow-sm flex-shrink-0" />
           <div>
             <span className="text-[11px] font-bold tracking-widest uppercase text-[var(--primary)]">
               Official Anu Atelier Checkout

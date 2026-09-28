@@ -8,10 +8,8 @@ export const OrderSuccessPage: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto py-16 px-4 sm:px-8 text-center space-y-6">
-      <div className="relative mx-auto w-24 h-24 mb-2">
-        <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 shadow-lg flex items-center justify-center">
-          <img src="/logo-icon.jpg" alt="Anu Atelier" className="w-full h-full rounded-full object-cover bg-white" />
-        </div>
+      <div className="relative mx-auto w-24 h-24 mb-2 flex items-center justify-center">
+        <img src="/logo.png" alt="Anu Atelier" className="w-24 h-24 object-contain drop-shadow-md" />
         <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md border-2 border-white">
           <CheckCircle className="h-5 w-5" />
         </div>
