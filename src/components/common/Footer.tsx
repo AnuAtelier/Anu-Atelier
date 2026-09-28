@@ -97,97 +97,98 @@ export const Footer: React.FC = () => {
       )}
 
       {/* Trust Highlights Bar - Slim & Light */}
-      <div className="border-t-2 border-b border-[var(--border-color)] py-4 sm:py-5 px-4 sm:px-8 bg-[var(--bg-card)]">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
-              <Truck className="h-5 w-5" />
+      <div className="border-t border-b border-[var(--border-color)] py-2.5 sm:py-3 px-4 sm:px-6 bg-[var(--bg-card)]">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <Truck className="h-4 w-4" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-gray-900 leading-tight">Free Delivery</h4>
-              <p className="text-xs text-gray-600">On orders above ₹{DEFAULT_SITE_SETTINGS.freeDeliveryThreshold}</p>
+              <h4 className="text-xs font-bold text-gray-900 leading-tight">Free Delivery</h4>
+              <p className="text-[11px] text-gray-600">Above ₹{DEFAULT_SITE_SETTINGS.freeDeliveryThreshold}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
-              <RotateCcw className="h-5 w-5" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <RotateCcw className="h-4 w-4" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-gray-900 leading-tight">{DEFAULT_SITE_SETTINGS.replacementDays}-Day Returns</h4>
-              <p className="text-xs text-gray-600">Hassle-free replacement</p>
+              <h4 className="text-xs font-bold text-gray-900 leading-tight">{DEFAULT_SITE_SETTINGS.replacementDays}-Day Returns</h4>
+              <p className="text-[11px] text-gray-600">Hassle-free replacement</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
-              <HeartHandshake className="h-5 w-5" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <HeartHandshake className="h-4 w-4" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-gray-900 leading-tight">100% Handmade</h4>
-              <p className="text-xs text-gray-600">Direct from Indian artisans</p>
+              <h4 className="text-xs font-bold text-gray-900 leading-tight">100% Handmade</h4>
+              <p className="text-[11px] text-gray-600">Direct Indian artisans</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
-              <ShieldCheck className="h-5 w-5" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <ShieldCheck className="h-4 w-4" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-gray-900 leading-tight">Secure Payments</h4>
-              <p className="text-xs text-gray-600">UPI, Cards & COD</p>
+              <h4 className="text-xs font-bold text-gray-900 leading-tight">Secure Payments</h4>
+              <p className="text-[11px] text-gray-600">UPI, Cards & COD</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Full-width Back to Top Action Bar */}
+      {/* Slim Back to Top Action Bar */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="w-full py-2.5 bg-[#1a1a1d] hover:bg-[#26262b] text-white hover:text-pink-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 border-b border-stone-800 transition-colors tracking-wide cursor-pointer"
+        className="w-full py-1.5 bg-[#18181b] hover:bg-[#232328] text-white hover:text-pink-300 text-xs font-semibold flex items-center justify-center gap-1.5 border-b border-stone-800 transition-colors tracking-wide cursor-pointer"
       >
-        <ArrowUp className="h-4 w-4 text-[var(--primary)]" />
+        <ArrowUp className="h-3.5 w-3.5 text-[var(--primary)]" />
         <span>Back to top</span>
       </button>
 
-      {/* Main Footer Links & Information - Slim & Dark */}
+      {/* Main Footer Links & Information - Slim, Thin & Dark */}
       <div className="bg-[#141416] text-white">
-        <div className="max-w-7xl mx-auto py-8 sm:py-9 px-4 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
+        <div className="max-w-7xl mx-auto py-5 sm:py-6 px-4 sm:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {/* Brand & Information Column */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <Link to="/" className="inline-block">
-              <span className="font-heading text-2xl font-bold tracking-tight text-white">
+              <span className="font-heading text-xl font-bold tracking-tight text-white">
                 Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
               </span>
             </Link>
-            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
+            <p className="text-xs text-stone-300 leading-normal line-clamp-2">
               Authentic handmade Indian crafts, terracotta pottery, and artisan-stitched fashion directly to your doorstep.
             </p>
 
-            <div className="space-y-1.5 pt-1 text-xs sm:text-sm text-stone-300">
+            <div className="space-y-1 pt-1 text-xs text-stone-300">
               <a
                 href={`https://wa.me/91${DEFAULT_SITE_SETTINGS.whatsappNumber}?text=Hi%20Anu%20Atelier,%20I%20have%20an%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                <MessageCircle className="h-4 w-4 text-emerald-400" />
+                <MessageCircle className="h-3.5 w-3.5 text-emerald-400" />
                 <span>WhatsApp: +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}</span>
               </a>
 
-              {/* Email Address - Made explicitly in pure WHITE color as requested */}
+              {/* Email Address - White Color in Brackets as requested */}
               <div className="flex items-center gap-1.5 text-white">
-                <Mail className="h-3.5 w-3.5 text-pink-400" />
+                <Mail className="h-3.5 w-3.5 text-pink-400 flex-shrink-0" />
+                <span className="text-stone-300">Email:</span>
                 <a
                   href={`mailto:${DEFAULT_SITE_SETTINGS.supportEmail}`}
-                  className="text-white hover:text-pink-300 font-semibold underline underline-offset-2 transition-colors"
+                  className="text-white hover:text-pink-300 font-bold tracking-wide transition-colors"
                 >
-                  {DEFAULT_SITE_SETTINGS.supportEmail}
+                  [{DEFAULT_SITE_SETTINGS.supportEmail}]
                 </a>
               </div>
 
               <div className="flex items-center gap-1.5 text-stone-300">
-                <MapPin className="h-3.5 w-3.5 text-pink-400" />
+                <MapPin className="h-3.5 w-3.5 text-pink-400 flex-shrink-0" />
                 <span>Uttar Pradesh, India</span>
               </div>
             </div>
@@ -195,10 +196,10 @@ export const Footer: React.FC = () => {
 
           {/* Collections Column */}
           <div>
-            <h4 className="font-heading font-bold text-base sm:text-lg mb-3 text-white tracking-wide">
+            <h4 className="font-heading font-bold text-sm mb-2 text-white tracking-wide">
               Collections
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-stone-300">
+            <ul className="space-y-1 text-xs text-stone-300">
               <li>
                 <Link to="/category/terracotta-clay" className="hover:text-white hover:translate-x-1 inline-block transition-all">
                   Terracotta & Clay Items
@@ -229,10 +230,10 @@ export const Footer: React.FC = () => {
 
           {/* Customer Care Column */}
           <div>
-            <h4 className="font-heading font-bold text-base sm:text-lg mb-3 text-white tracking-wide">
+            <h4 className="font-heading font-bold text-sm mb-2 text-white tracking-wide">
               Customer Care
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-stone-300">
+            <ul className="space-y-1 text-xs text-stone-300">
               <li>
                 <Link to="/cart" className="hover:text-white hover:translate-x-1 inline-block transition-all">
                   My Cart & Orders
@@ -257,8 +258,14 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <span className="text-[11px] sm:text-xs text-white font-medium block pt-0.5">
-                  Email Support: <span className="text-white font-bold">{DEFAULT_SITE_SETTINGS.supportEmail}</span>
+                <span className="text-xs text-stone-300 block pt-0.5">
+                  Email Support:{' '}
+                  <a
+                    href={`mailto:${DEFAULT_SITE_SETTINGS.supportEmail}`}
+                    className="text-white font-bold hover:text-pink-300 transition-colors"
+                  >
+                    [{DEFAULT_SITE_SETTINGS.supportEmail}]
+                  </a>
                 </span>
               </li>
             </ul>
@@ -266,49 +273,49 @@ export const Footer: React.FC = () => {
 
           {/* Artisan Drops / Newsletter Column */}
           <div>
-            <h4 className="font-heading font-bold text-base sm:text-lg mb-3 text-white tracking-wide">
+            <h4 className="font-heading font-bold text-sm mb-1.5 text-white tracking-wide">
               Artisan Drops
             </h4>
-            <p className="text-xs sm:text-sm text-stone-300 mb-3 leading-relaxed">
+            <p className="text-xs text-stone-300 mb-2 leading-snug">
               Get notified when our artisans release limited handmade craft batches.
             </p>
 
             {isSubscribed ? (
-              <div className="p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs font-semibold">
+              <div className="p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs font-semibold">
                 ✨ Subscribed! You will be notified on drops.
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="space-y-2">
-                <div className="flex gap-2">
+              <form onSubmit={handleSubscribe} className="space-y-1.5">
+                <div className="flex gap-1.5">
                   <input
                     type="email"
                     required
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
-                    placeholder="Your email address"
-                    className="flex-1 px-3.5 py-2 text-xs sm:text-sm rounded-full border border-stone-600 bg-stone-900 text-white placeholder-white/80 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all font-medium"
+                    placeholder="[ Enter your email address ]"
+                    className="flex-1 px-3 py-1.5 text-xs rounded-full border border-stone-600 bg-stone-900 text-white placeholder-white focus:outline-none focus:border-white transition-all font-medium"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 text-xs sm:text-sm font-bold text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] rounded-full transition-all shadow-md flex-shrink-0"
+                    className="px-3.5 py-1.5 text-xs font-bold text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] rounded-full transition-all shadow-xs flex-shrink-0"
                   >
                     Join
                   </button>
                 </div>
-                <p className="text-[10px] sm:text-[11px] text-white/90 font-medium">
-                  Enter your email for authentic artisan updates.
+                <p className="text-[11px] text-white font-medium">
+                  Email support: <span className="text-white font-bold">[{DEFAULT_SITE_SETTINGS.supportEmail}]</span>
                 </p>
               </form>
             )}
 
             {/* Language & Country Switcher Button */}
-            <div className="pt-4 border-t border-stone-800/80 mt-4">
+            <div className="pt-2 border-t border-stone-800/80 mt-2">
               <button
                 type="button"
                 onClick={() => setIsPreferenceModalOpen(true)}
-                className="w-full py-2 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white hover:border-pink-400 text-xs font-semibold flex items-center justify-between transition-all"
+                className="w-full py-1.5 px-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white hover:border-pink-400 text-xs font-semibold flex items-center justify-between transition-all"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <Globe className="h-3.5 w-3.5 text-pink-400" />
                   <span>
                     {currentCountry.flag} {currentCountry.name} • {currentLang.native}
@@ -320,8 +327,8 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Copyright - Slim */}
-        <div className="border-t border-stone-800/80 py-3.5 sm:py-4 text-center text-xs text-stone-400 px-4 flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto gap-2">
+        {/* Bottom Copyright - Slim & Thin */}
+        <div className="border-t border-stone-800/80 py-2.5 text-center text-xs text-stone-400 px-4 flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto gap-2">
           <p>&copy; {new Date().getFullYear()} Anu Atelier. All handmade crafts proudly crafted by Indian Artisans 🇮🇳</p>
           <div className="flex items-center gap-4 text-xs text-stone-400">
             <button

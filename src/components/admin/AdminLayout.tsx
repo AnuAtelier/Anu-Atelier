@@ -150,15 +150,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Bottom User & System Controls */}
       <div className="p-4 border-t border-[var(--border-color)] bg-[var(--bg-input)]/40 space-y-3">
         {/* User Info Card */}
-        <div className="flex items-center gap-3 p-2.5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-xs">
-          <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-white font-heading font-bold text-base flex items-center justify-center shadow-xs flex-shrink-0">
+        <div className="flex items-center gap-3 p-2 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xs">
+          <div className="w-9 h-9 rounded-full bg-[var(--primary)] text-white font-heading font-bold text-sm flex items-center justify-center shadow-xs flex-shrink-0">
             {user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-gray-900 truncate">
+            <p className="text-xs font-bold text-gray-900 truncate">
               {user?.fullName || 'Anushka Singh'}
             </p>
-            <p className="text-xs text-gray-600 truncate">
+            <p className="text-[10px] text-gray-600 truncate">
               {user?.email || 'anushka32199@gmail.com'}
             </p>
           </div>
@@ -167,7 +167,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         {/* Action Button: Logout */}
         <button
           onClick={handleLogout}
-          className="w-full py-2.5 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-xs"
+          className="w-full py-2.5 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs"
           title="Sign Out of Admin"
         >
           <LogOut className="h-4 w-4" />
