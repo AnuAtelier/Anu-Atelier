@@ -1,256 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Discover exquisite handmade crafts, terracotta pottery, embroidered apparel, and unique home accents handcrafted by authentic Indian artisans at Anu Atelier." />
+    <title>Anu Atelier | Handcrafted Magic & Indian Artistry</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anu Atelier | Handcrafted Goods & Clothing</title>
-    <meta name="description"
-        content="Discover unique handcrafted items, hand-stitched clothing, and bespoke artisan creations.">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles-components.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Apply theme instantly to prevent flash -->
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Prevent Dark/Light theme flash -->
     <script>
-        const savedTheme = localStorage.getItem('anu_theme') || 'light';
-        if (savedTheme === 'dark') {
+      (function () {
+        try {
+          const saved = localStorage.getItem('anu_theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = saved || (prefersDark ? 'dark' : 'light');
+          if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-        }
+          } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
     </script>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <a href="#">Anu<span>Atelier</span></a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for handmade magic...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="category.html?cat=terracotta-clay">Terracotta</a></li>
-            <li><a href="category.html?cat=embroidered-clothes">Clothing</a></li>
-            <li><a href="category.html?cat=other-handicrafts">Handicrafts</a></li>
-        </ul>
-        <div class="nav-icons" style="align-items: center; gap: 1rem; display: flex;">
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode"
-                style="background:var(--bg-input); border:1px solid var(--border-color); color:var(--text-main); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; transition:0.3s;">
-                <i class="fas fa-moon"></i>
-            </button>
-            <a href="seller.html" class="btn small-btn"
-                style="margin-right:0.5rem; padding: 0.5rem 1rem; text-decoration:none;"><i class="fas fa-plus"></i> Add
-                Craft</a>
-            <a href="profile.html" class="icon" aria-label="Account"><i class="far fa-user"></i></a>
-            <a href="#" class="icon cart-icon" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span
-                    class="badge">3</span></a>
-        </div>
-    </nav>
-
-    <!-- Popup Modal -->
-    <!-- <div id="welcome-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <div class="modal-banner">
-                <img src="img/Pasted 25-09-2026 at 16.00.11.png" alt="Welcome Offer">
-
-            </div>
-            <div class="modal-text">
-                <h2>Welcome to Anu Atelier! ✨</h2>
-                <p>Get 20% off your first handcrafted purchase.</p>
-                <button class="btn primary-btn">Claim Offer</button>
-            </div>
-        </div>
-    </div> -->
-
-
-    <!-- Hero Banner -->
-    <section class="massive-banner-section" style="margin-top:2rem;">
-        <div class="massive-banner">
-            <div class="banner-text">
-                <h2>Stock up on artisanal magic ✨</h2>
-                <p>Discover terracotta creations, hand-stitched clothing, and bespoke handicrafts.</p>
-                <a href="category.html" class="btn banner-btn" style="text-decoration:none;">Explore Now</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Explore Our Crafts (Main Categories) -->
-    <section class="products" style="padding-top: 3rem; padding-bottom: 2rem;">
-        <div class="section-title">
-            <h2>Explore Our Crafts</h2>
-            <p>Shop by our curated artisan collections.</p>
-        </div>
-        <div class="promo-cards-row">
-            <div class="promo-card" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);">
-                <h3>Terracotta &<br>Clay Items</h3>
-                <a href="category.html?cat=terracotta-clay" class="btn small-btn" style="text-decoration:none;">Shop
-                    Terracotta</a>
-            </div>
-            <div class="promo-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%);">
-                <h3>Embroidered &<br>Hand-Stitched</h3>
-                <a href="category.html?cat=embroidered-clothes" class="btn small-btn" style="text-decoration:none;">Shop
-                    Clothing</a>
-            </div>
-            <div class="promo-card" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
-                <h3>Other<br>Handicrafts</h3>
-                <a href="category.html?cat=other-handicrafts" class="btn small-btn" style="text-decoration:none;">Shop
-                    Handicrafts</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Popular Categories (Subcategories) -->
-    <section style="max-width: 1200px; margin: 0 auto; padding: 2rem 5%; text-align: center;">
-        <h2 style="font-family: var(--font-heading); color: var(--primary-dark); margin-bottom: 2rem;">Popular
-            Categories</h2>
-        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
-            <a href="category.html?cat=terracotta-clay&subcat=pots" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Pots</a>
-            <a href="category.html?cat=embroidered-clothes&subcat=kurtis" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Kurtis</a>
-            <a href="category.html?cat=embroidered-clothes&subcat=sarees" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Sarees</a>
-            <a href="category.html?cat=other-handicrafts&subcat=jute-bags" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Jute
-                Bags</a>
-            <a href="category.html?cat=terracotta-clay&subcat=diyas" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Diyas</a>
-            <a href="category.html?cat=other-handicrafts&subcat=wooden-toys" class="subcat-pill"
-                style="padding:0.8rem 1.5rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:50px; color:var(--text-main); text-decoration:none; transition:0.3s;">Wooden
-                Toys</a>
-        </div>
-    </section>
-
-    <!-- Latest Crafts -->
-    <section id="latest-crafts" class="products">
-        <div class="section-title">
-            <h2>Latest Crafts</h2>
-            <p>Fresh additions from our talented artisans.</p>
-        </div>
-        <div id="latest-loading" style="text-align:center; padding:2rem; color:var(--primary);"><i
-                class="fas fa-spinner fa-spin"></i> Loading...</div>
-        <div class="product-grid" id="latest-grid" style="display:none;">
-            <!-- Dynamically populated via API -->
-        </div>
-    </section>
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const latestGrid = document.getElementById('latest-grid');
-            const loading = document.getElementById('latest-loading');
-
-            // globalProducts is populated by script.js
-            const products = await fetchProducts();
-            const published = products.filter(p => p.status === 'published');
-            published.sort((a, b) => b.createdAt - a.createdAt);
-
-            loading.style.display = 'none';
-
-            if (published.length === 0) {
-                latestGrid.parentElement.innerHTML += '<p style="text-align:center; color:var(--text-muted); margin-bottom:3rem;">No products available.</p>';
-            } else {
-                latestGrid.style.display = 'grid';
-                latestGrid.innerHTML = published.slice(0, 8).map(p => {
-                    const formattedSub = p.subcategoryName ? p.subcategoryName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Handmade';
-                    const originalHtml = p.originalPrice ? `<span style="text-decoration:line-through; color:var(--text-muted); font-size:0.9rem;">₹${p.originalPrice}</span>` : '';
-                    return `
-                        <div class="product-card" style="box-shadow: var(--shadow-sm); transition: transform 0.3s ease; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-card);">
-                            <div class="product-image" style="height:250px; background:var(--bg-input);">
-                                <img src="${p.image || 'img/placeholder.png'}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">
-                                <div class="product-overlay">
-                                    <button class="btn add-to-cart" style="background:var(--primary); color:var(--white);">Add to Cart</button>
-                                </div>
-                            </div>
-                            <div class="product-info" style="padding:1.5rem; display:flex; flex-direction:column; flex:1;">
-                                <span style="font-size:0.8rem; color:var(--primary); font-weight:600; text-transform:uppercase; margin-bottom:0.5rem;">${formattedSub}</span>
-                                <h3 style="font-family:var(--font-heading); font-size:1.2rem; color:var(--text-main); margin-bottom:0.5rem; flex:1;">${p.name}</h3>
-                                <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem;">
-                                    <span style="font-size:1.2rem; font-weight:600; color:var(--text-main);">₹${p.price}</span>
-                                    ${originalHtml}
-                                </div>
-                                <a href="product.html?id=${p.id}" style="display:block; text-align:center; padding:0.8rem; border:1px solid var(--primary); color:var(--primary); border-radius:50px; text-decoration:none; font-weight:500;">View Details</a>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-        });
-    </script>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h2>Anu<span>Atelier</span></h2>
-                <p>Bringing you the finest handcrafted goods from artisans around the world.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Shop</h4>
-                <a href="#">Clothing</a>
-                <a href="#">Jewelry</a>
-                <a href="#">Home & Living</a>
-                <a href="#">Art & Collectibles</a>
-            </div>
-            <div class="footer-links">
-                <h4>About</h4>
-                <a href="#">Our Story</a>
-                <a href="#">Meet the Artisans</a>
-                <a href="#">Sustainability</a>
-                <a href="#">Contact Us</a>
-            </div>
-            <div class="footer-newsletter">
-                <h4>Join the Community</h4>
-                <p>Subscribe for updates on new artisan drops.</p>
-                <div class="newsletter-input">
-                    <input type="email" placeholder="Email address">
-                    <button><i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Anu Atelier. All rights reserved.</p>
-        </div>
-    </footer>
-
-
-
-    <script src="script.js"></script>
-    <script>
-        // --- Theme System ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        if (themeToggleBtn) {
-            const themeIcon = themeToggleBtn.querySelector('i');
-            function updateThemeIcon(theme) {
-                if (theme === 'dark') {
-                    themeIcon.className = 'fas fa-sun';
-                } else {
-                    themeIcon.className = 'fas fa-moon';
-                }
-            }
-
-            const saved = localStorage.getItem('anu_theme') || 'light';
-            updateThemeIcon(saved);
-
-            themeToggleBtn.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-                if (newTheme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                } else {
-                    document.documentElement.removeAttribute('data-theme');
-                }
-
-                localStorage.setItem('anu_theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-        }
-    </script>
-</body>
-
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
