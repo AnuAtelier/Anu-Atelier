@@ -11,7 +11,7 @@ const initialProducts = [
         categoryName: "Embroidered & Hand-Stitched",
         subcategoryId: "kurtis",
         subcategoryName: "Kurtis",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsTRyROcOR6uyNs9Z5Fv9-eyIYdjHtCNrlk7vHaWakRRXWnhhuZsEWsUE&s=10",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpijLGyKIV-d9VrEGbWzLLHe44J1P3BFvgHJq4E9d7gA&s=10",
         stock: 10,
         status: "published",
         createdAt: Date.now() - 100000
