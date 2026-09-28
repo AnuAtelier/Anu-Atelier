@@ -229,13 +229,13 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* Tabs Selector */}
-      <div className="flex border-b border-[var(--border-color)] gap-6 text-sm font-semibold">
+      <div className="flex border-b border-[var(--border-color)] gap-8 text-base font-bold">
         <button
           onClick={() => setActiveTab('crafts')}
           className={`pb-3 transition-colors border-b-2 ${
             activeTab === 'crafts'
               ? 'border-[var(--primary)] text-[var(--primary)]'
-              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           }`}
         >
           Crafts Catalog ({products.length})
@@ -245,7 +245,7 @@ export const AdminDashboardPage: React.FC = () => {
           className={`pb-3 transition-colors border-b-2 ${
             activeTab === 'orders'
               ? 'border-[var(--primary)] text-[var(--primary)]'
-              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           }`}
         >
           Customer Orders ({orders.length})
@@ -255,7 +255,7 @@ export const AdminDashboardPage: React.FC = () => {
           className={`pb-3 transition-colors border-b-2 ${
             activeTab === 'settings'
               ? 'border-[var(--primary)] text-[var(--primary)]'
-              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           }`}
         >
           Store Settings
@@ -283,15 +283,15 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
 
           <div className="overflow-x-auto rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[var(--bg-input)] border-b border-[var(--border-color)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-[var(--bg-input)] border-b border-[var(--border-color)] text-gray-800 uppercase tracking-wider font-bold text-xs">
                 <tr>
-                  <th className="py-3 px-4">Craft</th>
-                  <th className="py-3 px-4">Category</th>
-                  <th className="py-3 px-4">Price</th>
-                  <th className="py-3 px-4">Stock</th>
-                  <th className="py-3 px-4">Badge</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                  <th className="py-3.5 px-4">Craft</th>
+                  <th className="py-3.5 px-4">Category</th>
+                  <th className="py-3.5 px-4">Price</th>
+                  <th className="py-3.5 px-4">Stock</th>
+                  <th className="py-3.5 px-4">Badge</th>
+                  <th className="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-color)]">
@@ -367,16 +367,16 @@ export const AdminDashboardPage: React.FC = () => {
       {activeTab === 'orders' && (
         <div className="space-y-4">
           <div className="overflow-x-auto rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[var(--bg-input)] border-b border-[var(--border-color)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-[var(--bg-input)] border-b border-[var(--border-color)] text-gray-800 uppercase tracking-wider font-bold text-xs">
                 <tr>
-                  <th className="py-3 px-4">Order ID</th>
-                  <th className="py-3 px-4">Customer</th>
-                  <th className="py-3 px-4">Items</th>
-                  <th className="py-3 px-4">Total</th>
-                  <th className="py-3 px-4">Payment</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Support</th>
+                  <th className="py-3.5 px-4">Order ID</th>
+                  <th className="py-3.5 px-4">Customer</th>
+                  <th className="py-3.5 px-4">Items</th>
+                  <th className="py-3.5 px-4">Total</th>
+                  <th className="py-3.5 px-4">Payment</th>
+                  <th className="py-3.5 px-4">Status</th>
+                  <th className="py-3.5 px-4 text-right">Support</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-color)]">

@@ -56,7 +56,7 @@ export const QuickCategories: React.FC = () => {
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[var(--secondary)] text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm group-hover:scale-105 group-hover:shadow-md">
                   <Icon className="h-6 w-6" />
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-[var(--text-main)] group-hover:text-[var(--primary)] transition-colors text-center line-clamp-1">
+                <span className="text-sm font-semibold text-gray-900 group-hover:text-[var(--primary)] transition-colors text-center line-clamp-1">
                   {item.name}
                 </span>
               </Link>

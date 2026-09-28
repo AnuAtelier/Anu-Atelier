@@ -100,8 +100,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       </div>
 
       {/* Navigation Links */}
-      <div className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-        <div className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">
+      <div className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+        <div className="text-xs font-bold text-gray-700 uppercase tracking-wider px-3 mb-2.5">
           Management
         </div>
 
@@ -112,23 +112,23 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               key={item.label}
               to={item.path}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm sm:text-[15px] font-semibold transition-all ${
                 item.active
                   ? 'bg-[var(--primary)] text-white shadow-sm shadow-pink-500/20'
-                  : 'text-[var(--text-main)] hover:bg-[var(--bg-input)] hover:text-[var(--primary)]'
+                  : 'text-gray-900 hover:bg-[var(--bg-input)] hover:text-[var(--primary)]'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Icon className={`h-4 w-4 ${item.active ? 'text-white' : 'text-[var(--text-muted)]'}`} />
+                <Icon className={`h-4 w-4 ${item.active ? 'text-white' : 'text-gray-600'}`} />
                 <span>{item.label}</span>
               </div>
-              {item.active && <ChevronRight className="h-3.5 w-3.5 opacity-80" />}
+              {item.active && <ChevronRight className="h-4 w-4 opacity-80" />}
             </Link>
           );
         })}
 
         <div className="pt-4 mt-4 border-t border-[var(--border-color)]">
-          <div className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">
+          <div className="text-xs font-bold text-gray-700 uppercase tracking-wider px-3 mb-2.5">
             Storefront
           </div>
 
@@ -136,13 +136,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             to="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-[var(--text-main)] hover:bg-[var(--bg-input)] hover:text-[var(--primary)] transition-all group"
+            className="flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm sm:text-[15px] font-semibold text-gray-900 hover:bg-[var(--bg-input)] hover:text-[var(--primary)] transition-all group"
           >
             <div className="flex items-center gap-3">
-              <Store className="h-4 w-4 text-[var(--text-muted)] group-hover:text-[var(--primary)]" />
+              <Store className="h-4 w-4 text-gray-600 group-hover:text-[var(--primary)]" />
               <span>View Live Store</span>
             </div>
-            <ExternalLink className="h-3.5 w-3.5 text-[var(--text-muted)]" />
+            <ExternalLink className="h-4 w-4 text-gray-500" />
           </Link>
         </div>
       </div>
@@ -150,15 +150,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Bottom User & System Controls */}
       <div className="p-4 border-t border-[var(--border-color)] bg-[var(--bg-input)]/40 space-y-3">
         {/* User Info Card */}
-        <div className="flex items-center gap-3 p-2 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xs">
-          <div className="w-9 h-9 rounded-full bg-[var(--primary)] text-white font-heading font-bold text-sm flex items-center justify-center shadow-xs flex-shrink-0">
+        <div className="flex items-center gap-3 p-2.5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-xs">
+          <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-white font-heading font-bold text-base flex items-center justify-center shadow-xs flex-shrink-0">
             {user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold text-[var(--text-main)] truncate">
+            <p className="text-sm font-bold text-gray-900 truncate">
               {user?.fullName || 'Anushka Singh'}
             </p>
-            <p className="text-[10px] text-[var(--text-muted)] truncate">
+            <p className="text-xs text-gray-600 truncate">
               {user?.email || 'anushka32199@gmail.com'}
             </p>
           </div>
@@ -167,7 +167,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         {/* Action Button: Logout */}
         <button
           onClick={handleLogout}
-          className="w-full py-2.5 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs"
+          className="w-full py-2.5 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-xs"
           title="Sign Out of Admin"
         >
           <LogOut className="h-4 w-4" />
