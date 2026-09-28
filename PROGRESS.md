@@ -1,8 +1,8 @@
 # Anu Atelier Backend – Progress Tracker
 
 **Active Git Branch:** `backend`  
-**Current Phase:** B5 (Fulfilment & Post-Purchase) – Completed, Awaiting Approval  
-**Next Phase:** B6 (Admin Operations & Growth)
+**Current Phase:** B6 (Admin Operations & Growth) – Completed, Awaiting Approval  
+**Next Phase:** B7 (Hardening & Go-Live)
 
 ---
 
@@ -71,15 +71,21 @@
   - [x] Fulfilment test suite (`tests/b5_fulfilment.test.ts`, 12/12 tests passing; 78 total).
   - [x] Documented in `docs/B5_FULFILMENT_REPORT.md`.
 
-- [ ] **B6 – Admin Operations & Growth**
-  - [ ] Admin management RPCs & order dispatch tools.
-  - [ ] Sales reports, revenue analytics, and low stock digest views.
-  - [ ] CSV product import/export tools.
-  - [ ] Abandoned cart reminder notifications.
-  - [ ] Google Merchant & Meta catalog feeds.
+- [x] **B6 – Admin Operations & Growth**
+  - [x] Admin management RPCs & order dispatch tools (`admin_list_orders`, `admin_get_order_detail`, `admin_update_order_status`, `admin_adjust_stock`).
+  - [x] Customer management & review moderation RPCs (`admin_list_customers`, `admin_set_customer_status`, `admin_moderate_review`).
+  - [x] Sales reports, revenue analytics, and low stock digest views (`get_sales_analytics`, `get_top_selling_products`, `view_low_stock_products`, `admin_get_daily_summary`).
+  - [x] Customer Privacy & DPDPA compliance (`export_customer_data`, `delete_customer_account`).
+  - [x] CSV product import/export tools with dry-run validation (`/api/admin/catalog-csv`).
+  - [x] Abandoned cart reminder worker with opt-in & 2-reminder cap (`/api/cron/abandoned-carts`).
+  - [x] Google Merchant Center XML & Meta catalog feeds (`/api/feeds/catalog`).
+  - [x] SEO-compliant dynamic XML sitemap endpoint (`/api/sitemap`).
+  - [x] Admin & Growth test suite (`tests/b6_admin.test.ts`, 14/14 tests passing; 92 total).
+  - [x] Documented in `docs/B6_ADMIN_REPORT.md`.
 
 - [ ] **B7 – Hardening & Go-Live**
   - [ ] Security audit: rate limits, CAPTCHA, HTTP security headers.
   - [ ] Supabase Security & Performance advisor verification.
   - [ ] Database backup & restore drill.
   - [ ] Production project cutover checklist (`anu-atelier-prod`).
+

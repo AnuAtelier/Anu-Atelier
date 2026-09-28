@@ -245,6 +245,33 @@ async function runSmokeTests() {
     }
   });
 
+  record('Admin Operations & Growth', 'Verifies 007_admin_operations.sql and Admin RPCs', () => {
+    const migrationPath = path.resolve(process.cwd(), 'supabase/migrations/007_admin_operations.sql');
+    if (!fs.existsSync(migrationPath)) throw new Error('Missing 007_admin_operations.sql');
+    const content = fs.readFileSync(migrationPath, 'utf8');
+
+    if (!content.includes('public.admin_list_orders(')) throw new Error('Missing admin_list_orders RPC');
+    if (!content.includes('public.admin_adjust_stock(')) throw new Error('Missing admin_adjust_stock RPC');
+    if (!content.includes('public.admin_set_customer_status(')) throw new Error('Missing admin_set_customer_status RPC');
+    if (!content.includes('public.get_sales_analytics(')) throw new Error('Missing get_sales_analytics RPC');
+    if (!content.includes('public.export_customer_data(')) throw new Error('Missing export_customer_data RPC');
+    if (!content.includes('public.delete_customer_account(')) throw new Error('Missing delete_customer_account RPC');
+    if (!content.includes('public.get_abandoned_carts_for_reminder(')) throw new Error('Missing get_abandoned_carts_for_reminder RPC');
+
+    // Check endpoints on filesystem
+    const endpoints = [
+      'api/admin/catalog-csv.ts',
+      'api/cron/abandoned-carts.ts',
+      'api/feeds/catalog.ts',
+      'api/sitemap.ts',
+    ];
+    for (const ep of endpoints) {
+      if (!fs.existsSync(path.resolve(process.cwd(), ep))) {
+        throw new Error(`Missing endpoint: ${ep}`);
+      }
+    }
+  });
+
   // Print Summary Table
   console.log('----------------------------------------------------------------------');
   console.log('| Status | Suite                 | Test Description                  |');
