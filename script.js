@@ -2,7 +2,7 @@
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : '/api';
 
 const FALLBACK_PRODUCTS = [
-    { id: "prod_1", name: "A Cute Little Girl Hand Stitching Clothes", price: 500, categoryId: "embroidered-clothes", subcategoryId: "kurtis", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsTRyROcOR6uyNs9Z5Fv9-eyIYdjHtCNrlk7vHaWakRRXWnhhuZsEWsUE&s=10", status: "published", categoryName: "Embroidered & Hand-Stitched" },
+    { id: "prod_1", name: "A Cute Little Girl Hand Stitching Clothes", price: 499, categoryId: "embroidered-clothes", subcategoryId: "kurtis", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsTRyROcOR6uyNs9Z5Fv9-eyIYdjHtCNrlk7vHaWakRRXWnhhuZsEWsUE&s=10", status: "published", categoryName: "Embroidered & Hand-Stitched" },
     { id: "prod_2", name: "Colorful Applique Pouch", price: 799, categoryId: "other-handicrafts", subcategoryId: "jute-bags", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpijLGyKIV-d9VrEGbWzLLHe44J1P3BFvgHJq4E9d7gA&s=10", status: "published", categoryName: "Other Handicrafts" },
     { id: "prod_3", name: "Sashiko Embroidered Jeans", price: 2499, categoryId: "embroidered-clothes", subcategoryId: "jackets", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAZqy4uNX9_yihi4CXgNAhsSr7c9Q4f6MovYgs9Xe8A&s=10", status: "published", categoryName: "Embroidered & Hand-Stitched" },
     { id: "prod_4", name: "Floral Fairy Light Hoop", price: 1299, categoryId: "other-handicrafts", subcategoryId: "macrame-hangings", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4_rZRO56o2R8ll_Fy1qnzC7fXqMm_IjfT0W_0IV1OdQ&s=10", status: "published", categoryName: "Other Handicrafts" },
