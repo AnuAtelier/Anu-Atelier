@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
           <img
             src="/logo.png"
             alt="Anu Atelier Logo"
-            className="h-12 w-12 sm:h-13 sm:w-13 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+            className="h-12 w-12 sm:h-14 sm:w-14 object-contain group-hover:scale-105 transition-transform duration-300"
           />
           <div className="flex flex-col">
             <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-none transition-opacity">
