@@ -95,16 +95,6 @@ h6 {
   letter-spacing: -0.015em;
 }
 
-/* Enhanced readability across both panels */
-p {
-  color: var(--text-main);
-}
-
-.text-muted,
-[class*="text-[var(--text-muted)]"] {
-  color: #374151 !important;
-}
-
 /* Micro-text readability bump */
 .text-xs {
   font-size: 0.8125rem;

@@ -16,54 +16,55 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="mt-auto bg-[#141416] text-white border-t border-stone-800 transition-colors">
-      {/* Trust Highlights Bar */}
-      <div className="border-b border-stone-800 py-8 px-4 sm:px-8 bg-[#18181b]">
+    <footer className="mt-auto">
+      {/* Trust Highlights Bar - Kept Light Background with clear icons & text */}
+      <div className="border-t border-b border-[var(--border-color)] py-8 px-4 sm:px-8 bg-[var(--bg-card)]">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/10 text-pink-400 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
               <Truck className="h-6 w-6" />
             </div>
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-white">Free Delivery</h4>
-              <p className="text-xs sm:text-sm text-stone-300">On orders above ₹{DEFAULT_SITE_SETTINGS.freeDeliveryThreshold}</p>
+              <h4 className="text-sm sm:text-base font-bold text-gray-900">Free Delivery</h4>
+              <p className="text-xs sm:text-sm text-gray-600">On orders above ₹{DEFAULT_SITE_SETTINGS.freeDeliveryThreshold}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/10 text-pink-400 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
               <RotateCcw className="h-6 w-6" />
             </div>
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-white">{DEFAULT_SITE_SETTINGS.replacementDays}-Day Returns</h4>
-              <p className="text-xs sm:text-sm text-stone-300">Hassle-free replacement guarantee</p>
+              <h4 className="text-sm sm:text-base font-bold text-gray-900">{DEFAULT_SITE_SETTINGS.replacementDays}-Day Returns</h4>
+              <p className="text-xs sm:text-sm text-gray-600">Hassle-free replacement guarantee</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/10 text-pink-400 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
               <HeartHandshake className="h-6 w-6" />
             </div>
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-white">100% Handmade</h4>
-              <p className="text-xs sm:text-sm text-stone-300">Direct from authentic Indian artisans</p>
+              <h4 className="text-sm sm:text-base font-bold text-gray-900">100% Handmade</h4>
+              <p className="text-xs sm:text-sm text-gray-600">Direct from authentic Indian artisans</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/10 text-pink-400 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-xs">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-white">Secure Payments</h4>
-              <p className="text-xs sm:text-sm text-stone-300">UPI, Cards & Cash on Delivery</p>
+              <h4 className="text-sm sm:text-base font-bold text-gray-900">Secure Payments</h4>
+              <p className="text-xs sm:text-sm text-gray-600">UPI, Cards & Cash on Delivery</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Links & Information */}
-      <div className="max-w-7xl mx-auto py-12 sm:py-14 px-4 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      {/* Main Footer Links & Information - Luxury Dark */}
+      <div className="bg-[#141416] text-white">
+        <div className="max-w-7xl mx-auto py-12 sm:py-14 px-4 sm:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand & Information Column */}
         <div className="space-y-4">
           <Link to="/" className="inline-block">
@@ -209,6 +210,7 @@ export const Footer: React.FC = () => {
       {/* Bottom Copyright */}
       <div className="border-t border-stone-800 py-6 text-center text-xs sm:text-sm text-stone-400 px-4">
         <p>&copy; {new Date().getFullYear()} Anu Atelier. All handmade crafts proudly crafted by Indian Artisans 🇮🇳</p>
+      </div>
       </div>
     </footer>
   );

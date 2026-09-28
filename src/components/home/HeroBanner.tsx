@@ -44,16 +44,16 @@ export const HeroBanner: React.FC = () => {
         <div className="relative mx-auto max-w-md lg:max-w-none w-full">
           <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-3xl overflow-hidden shadow-lg-soft border border-[var(--border-color)]">
             <img
-              src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80"
-              alt="Artisan hand-stitching textile in India"
-              className="w-full h-full object-cover"
+              src="/img/hero-artisan.jpg"
+              alt="Smiling Indian craftswoman painting terracotta pottery in a sunny workshop"
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-6">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex items-end p-6">
               <div className="text-white">
-                <span className="text-xs uppercase tracking-wider font-semibold text-pink-300">
+                <span className="text-xs uppercase tracking-wider font-bold text-pink-200 bg-black/30 backdrop-blur-xs px-2.5 py-1 rounded-full inline-block mb-1.5 shadow-sm">
                   Featured Artisan Story
                 </span>
-                <p className="font-heading text-lg font-bold">100% Genuine Khadi & Terracotta</p>
+                <p className="font-heading text-lg sm:text-xl font-bold drop-shadow-sm">100% Genuine Khadi & Terracotta</p>
               </div>
             </div>
           </div>

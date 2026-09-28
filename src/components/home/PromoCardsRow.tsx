@@ -5,99 +5,124 @@ import { ArrowRight } from 'lucide-react';
 export const PromoCardsRow: React.FC = () => {
   return (
     <section className="py-12 px-4 sm:px-8 max-w-7xl mx-auto">
+      {/* Section Header */}
+      <div className="mb-8">
+        <h2 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900">
+          Explore Our Crafts
+        </h2>
+        <p className="text-sm sm:text-base text-gray-700 mt-1 font-normal">
+          Shop by our curated artisan collections.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Card 1: Festive Edit - Terracotta */}
-        <div className="relative rounded-3xl p-6 bg-gradient-to-br from-pink-50/80 via-rose-50/40 to-white border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between">
-          <div>
-            <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-5 bg-pink-100/40 shadow-inner">
-              <img
-                src="/img/promo/promo-terracotta.jpg"
-                alt="Festive Terracotta & Clay Crafts"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                loading="lazy"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[var(--primary)] text-[11px] font-bold uppercase tracking-wider shadow-sm border border-pink-100">
-                Festive Edit
-              </span>
-            </div>
-            <h3 className="font-heading text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-snug mb-2">
-              Terracotta & Clay Collection
+        <div className="relative rounded-3xl p-8 overflow-hidden border border-purple-100/90 shadow-xs hover:shadow-lg transition-all duration-500 group flex flex-col justify-between min-h-[280px] sm:min-h-[300px] bg-gradient-to-br from-[#e0e7ff]/80 via-[#ede9fe]/90 to-[#fae8ff]/70">
+          {/* Background craft image */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img
+              src="/img/promo/promo-terracotta.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 ease-out mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
+          </div>
+
+          {/* Words in front */}
+          <div className="relative z-10 space-y-2">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-[var(--primary)] text-xs font-bold uppercase tracking-wider shadow-xs border border-pink-100">
+              Festive Edit
+            </span>
+            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
+              Terracotta & Clay Items
             </h3>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] line-clamp-2">
+            <p className="text-sm sm:text-base text-gray-800 font-medium line-clamp-2 max-w-xs">
               Traditional unglazed and painted earthen decor from ₹199
             </p>
           </div>
-          <div className="pt-6">
+
+          {/* Option in front */}
+          <div className="relative z-10 pt-6">
             <Link
               to="/category/terracotta-clay"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-xs font-semibold shadow-sm transition-all group-hover:translate-x-1"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-gray-900 hover:bg-[var(--primary)] hover:text-white text-sm font-bold shadow-sm transition-all duration-200 group-hover:shadow"
             >
-              <span>Explore Terracotta</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>Shop Terracotta</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
 
         {/* Card 2: Artisan Stitched - Embroidered Clothes */}
-        <div className="relative rounded-3xl p-6 bg-gradient-to-br from-amber-50/70 via-orange-50/30 to-white border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between">
-          <div>
-            <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-5 bg-amber-100/40 shadow-inner">
-              <img
-                src="/img/promo/promo-clothing.jpg"
-                alt="Artisan Stitched Khadi & Embroidery"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                loading="lazy"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-amber-700 text-[11px] font-bold uppercase tracking-wider shadow-sm border border-amber-100">
-                Artisan Stitched
-              </span>
-            </div>
-            <h3 className="font-heading text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-snug mb-2">
-              Pure Khadi & Embroidered Wear
+        <div className="relative rounded-3xl p-8 overflow-hidden border border-rose-100/90 shadow-xs hover:shadow-lg transition-all duration-500 group flex flex-col justify-between min-h-[280px] sm:min-h-[300px] bg-gradient-to-br from-[#ffe4e6]/90 via-[#ffd1dc]/90 to-[#fecdd3]/70">
+          {/* Background craft image */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img
+              src="/img/promo/promo-clothing.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 ease-out mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
+          </div>
+
+          {/* Words in front */}
+          <div className="relative z-10 space-y-2">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-rose-600 text-xs font-bold uppercase tracking-wider shadow-xs border border-rose-100">
+              Artisan Stitched
+            </span>
+            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
+              Embroidered & Hand-Stitched
             </h3>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] line-clamp-2">
+            <p className="text-sm sm:text-base text-gray-800 font-medium line-clamp-2 max-w-xs">
               Chikankari, Kantha, and Sashiko handcrafted garments
             </p>
           </div>
-          <div className="pt-6">
+
+          {/* Option in front */}
+          <div className="relative z-10 pt-6">
             <Link
               to="/category/embroidered-clothes"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm transition-all group-hover:translate-x-1"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-gray-900 hover:bg-rose-600 hover:text-white text-sm font-bold shadow-sm transition-all duration-200 group-hover:shadow"
             >
-              <span>View Clothing</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>Shop Clothing</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
 
         {/* Card 3: Eco-Friendly - Other Handicrafts */}
-        <div className="relative rounded-3xl p-6 bg-gradient-to-br from-emerald-50/70 via-teal-50/30 to-white border border-[var(--border-color)] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col justify-between">
-          <div>
-            <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-5 bg-emerald-100/40 shadow-inner">
-              <img
-                src="/img/promo/promo-handicrafts.jpg"
-                alt="Eco-Friendly Jute & Macrame Crafts"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                loading="lazy"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-emerald-700 text-[11px] font-bold uppercase tracking-wider shadow-sm border border-emerald-100">
-                Eco-Friendly
-              </span>
-            </div>
-            <h3 className="font-heading text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-snug mb-2">
-              Jute Totes & Macrame Hangings
+        <div className="relative rounded-3xl p-8 overflow-hidden border border-amber-100/90 shadow-xs hover:shadow-lg transition-all duration-500 group flex flex-col justify-between min-h-[280px] sm:min-h-[300px] bg-gradient-to-br from-[#fef3c7]/90 via-[#fed7aa]/80 to-[#ffe4e6]/70">
+          {/* Background craft image */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img
+              src="/img/promo/promo-handicrafts.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 ease-out mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
+          </div>
+
+          {/* Words in front */}
+          <div className="relative z-10 space-y-2">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-amber-700 text-xs font-bold uppercase tracking-wider shadow-xs border border-amber-100">
+              Eco-Friendly
+            </span>
+            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
+              Other Handicrafts
             </h3>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] line-clamp-2">
-              Sustainable lifestyle crafts made with organic fibers
+            <p className="text-sm sm:text-base text-gray-800 font-medium line-clamp-2 max-w-xs">
+              Jute bags, macrame hangings, and organic fiber crafts
             </p>
           </div>
-          <div className="pt-6">
+
+          {/* Option in front */}
+          <div className="relative z-10 pt-6">
             <Link
               to="/category/other-handicrafts"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all group-hover:translate-x-1"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-gray-900 hover:bg-amber-600 hover:text-white text-sm font-bold shadow-sm transition-all duration-200 group-hover:shadow"
             >
-              <span>Discover Handicrafts</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>Shop Handicrafts</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
