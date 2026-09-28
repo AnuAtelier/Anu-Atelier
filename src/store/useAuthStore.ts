@@ -248,19 +248,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   loginWithDemo: (role: 'admin' | 'customer') => {
     const demoUser: UserProfile = role === 'admin'
       ? {
-          id: 'admin-anushka-uuid',
-          email: 'anushka32199@gmail.com',
-          fullName: 'Anushka (Owner & Artisan)',
-          phone: '9555562542',
-          role: 'admin',
-        }
+        id: 'admin-anushka-uuid',
+        email: 'anushka32199@gmail.com',
+        fullName: 'Anushka (Owner & Artisan)',
+        phone: '9555562542',
+        role: 'admin',
+      }
       : {
-          id: 'customer-priya-uuid',
-          email: 'priya.sharma@example.com',
-          fullName: 'Priya Sharma',
-          phone: '9876543210',
-          role: 'customer',
-        };
+        id: 'customer-priya-uuid',
+        email: 'priya.sharma@example.com',
+        fullName: 'Priya Sharma',
+        phone: '9876543210',
+        role: 'customer',
+      };
 
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(demoUser));
     set({ user: demoUser, isLoading: false, error: null });
