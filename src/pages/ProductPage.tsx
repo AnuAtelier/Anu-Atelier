@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   Heart,
@@ -10,9 +10,14 @@ import {
   HeartHandshake,
   Star,
   ChevronRight,
+  ChevronLeft,
   Share2,
   CheckCircle,
   MapPin,
+  Maximize2,
+  ZoomIn,
+  ZoomOut,
+  X,
 } from 'lucide-react';
 import { useProductStore } from '../store/useProductStore';
 import { useCartStore } from '../store/useCartStore';
@@ -31,7 +36,88 @@ export const ProductPage: React.FC = () => {
   const [pincode, setPincode] = useState('');
   const [pincodeStatus, setPincodeStatus] = useState<string | null>(null);
 
+  // Gallery, Slide & Lightbox Zoom state
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
   const product = getProductBySlugOrId(slug || '');
+
+  // Derived gallery of multi-angle images
+  const galleryImages: string[] = product
+    ? product.images && product.images.length > 0
+      ? product.images
+      : [
+          product.image,
+          ...(product.categoryId === 'terracotta-clay'
+            ? [
+                '/img/promo/promo-terracotta.jpg',
+                'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
+                '/img/hero-artisan.jpg',
+              ]
+            : product.categoryId === 'embroidered-clothes'
+            ? [
+                '/img/promo/promo-clothing.jpg',
+                'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80',
+              ]
+            : [
+                '/img/promo/promo-handicrafts.jpg',
+                'https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?auto=format&fit=crop&w=800&q=80',
+                '/img/hero-artisan.jpg',
+              ]),
+        ]
+    : [];
+
+  const handlePrevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+    setZoomLevel(1);
+  };
+
+  const handleNextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+    setZoomLevel(1);
+  };
+
+  const handleZoomIn = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomLevel((prev) => Math.min(Number((prev + 0.5).toFixed(1)), 3));
+  };
+
+  const handleZoomOut = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setZoomLevel((prev) => Math.max(Number((prev - 0.5).toFixed(1)), 1));
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (diff > 50) handleNextImage();
+    else if (diff < -50) handlePrevImage();
+    setTouchStartX(null);
+  };
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isLightboxOpen) return;
+      if (e.key === 'ArrowRight') handleNextImage();
+      if (e.key === 'ArrowLeft') handlePrevImage();
+      if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+        setZoomLevel(1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, galleryImages.length]);
 
   if (!product) {
     return (
@@ -115,17 +201,26 @@ export const ProductPage: React.FC = () => {
 
       {/* Main Product Section: Two Columns (Sticky Gallery + Details) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        {/* Left Column: Image Gallery (4:5 Aspect Ratio) */}
+        {/* Left Column: Image Gallery with Slide Left/Right & Fit-to-screen Lightbox */}
         <div className="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
-          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[var(--bg-input)] border border-[var(--border-color)] shadow-md-soft group">
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] rounded-3xl overflow-hidden bg-[var(--bg-input)] border border-[var(--border-color)] shadow-md-soft group select-none cursor-pointer"
+            onClick={() => {
+              setIsLightboxOpen(true);
+              setZoomLevel(1);
+            }}
+            title="Click to view fit-to-screen & zoom"
+          >
             <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              src={galleryImages[activeImageIndex]}
+              alt={`${product.name} - View ${activeImageIndex + 1}`}
+              className="w-full h-full object-contain p-2 sm:p-4 transition-transform duration-300 group-hover:scale-102"
             />
 
             {/* Badges */}
-            <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
+            <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start pointer-events-none">
               {product.badge && (
                 <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-[var(--primary)] text-white shadow-sm">
                   {product.badge}
@@ -138,10 +233,56 @@ export const ProductPage: React.FC = () => {
               )}
             </div>
 
+            {/* Slide Navigation Buttons (Left & Right) */}
+            {galleryImages.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={handlePrevImage}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 hover:bg-white text-gray-900 shadow-md flex items-center justify-center transition-all opacity-85 group-hover:opacity-100 hover:scale-110 z-10"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextImage}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 hover:bg-white text-gray-900 shadow-md flex items-center justify-center transition-all opacity-85 group-hover:opacity-100 hover:scale-110 z-10"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </>
+            )}
+
+            {/* Fit-to-screen & Zoom Indicator Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsLightboxOpen(true);
+                setZoomLevel(1);
+              }}
+              className="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-full bg-black/70 hover:bg-black text-white text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 shadow-md transition-all z-10 hover:scale-105"
+            >
+              <Maximize2 className="h-3.5 w-3.5 text-pink-300" />
+              <span>Fit to Screen & Zoom</span>
+            </button>
+
+            {/* Slide Count Badge */}
+            {galleryImages.length > 1 && (
+              <span className="absolute bottom-4 left-4 px-2.5 py-1 rounded-full bg-black/60 text-white text-xs font-semibold backdrop-blur-md z-10">
+                {activeImageIndex + 1} / {galleryImages.length}
+              </span>
+            )}
+
             {/* Wishlist & Share buttons */}
-            <div className="absolute top-4 right-4 flex flex-col gap-2">
+            <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
               <button
-                onClick={() => toggleWishlist(product.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleWishlist(product.id);
+                }}
                 aria-label="Wishlist"
                 className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-md ${
                   isLiked
@@ -152,7 +293,10 @@ export const ProductPage: React.FC = () => {
                 <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
               </button>
               <button
-                onClick={handleShare}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleShare();
+                }}
                 aria-label="Share craft"
                 className="w-10 h-10 rounded-full flex items-center justify-center bg-white/90 text-[var(--text-main)] backdrop-blur-md shadow-md hover:bg-white transition-all"
               >
@@ -160,6 +304,33 @@ export const ProductPage: React.FC = () => {
               </button>
             </div>
           </div>
+
+          {/* Thumbnails Row (Click to slide or preview) */}
+          {galleryImages.length > 1 && (
+            <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
+              {galleryImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setActiveImageIndex(idx);
+                    setZoomLevel(1);
+                  }}
+                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden flex-shrink-0 border-2 transition-all p-1 bg-[var(--bg-input)] ${
+                    activeImageIndex === idx
+                      ? 'border-[var(--primary)] ring-2 ring-pink-500/20 shadow-sm scale-105'
+                      : 'border-transparent opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Right Column: Product Information & Purchase Flow */}
@@ -366,6 +537,167 @@ export const ProductPage: React.FC = () => {
             {relatedProducts.map((rel) => (
               <ProductCard key={rel.id} product={rel} />
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* FULLSCREEN LIGHTBOX MODAL: Fit-to-screen, Zoom in/out, Slide left/right */}
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between select-none"
+          onClick={() => {
+            setIsLightboxOpen(false);
+            setZoomLevel(1);
+          }}
+        >
+          {/* Top Control Bar */}
+          <div
+            className="flex items-center justify-between p-4 sm:p-6 text-white bg-gradient-to-b from-black/80 to-transparent z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div>
+              <p className="font-heading font-bold text-base sm:text-lg truncate max-w-xs sm:max-w-md">
+                {product.name}
+              </p>
+              <p className="text-xs text-stone-300">
+                Image {activeImageIndex + 1} of {galleryImages.length} • Click image or use + / - to zoom
+              </p>
+            </div>
+
+            {/* Zoom & Close Controls */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={handleZoomOut}
+                disabled={zoomLevel <= 1}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all"
+                title="Zoom Out (-)"
+              >
+                <ZoomOut className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </button>
+
+              <span className="text-xs sm:text-sm font-bold font-mono px-2 min-w-[50px] text-center text-pink-300">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+
+              <button
+                type="button"
+                onClick={handleZoomIn}
+                disabled={zoomLevel >= 3}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all"
+                title="Zoom In (+)"
+              >
+                <ZoomIn className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </button>
+
+              {zoomLevel > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setZoomLevel(1)}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
+                  title="Reset Zoom"
+                >
+                  <RotateCcw className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLightboxOpen(false);
+                  setZoomLevel(1);
+                }}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-rose-600 flex items-center justify-center transition-all ml-2"
+                title="Close Fullscreen (Esc)"
+              >
+                <X className="h-5 w-5 text-white" />
+              </button>
+            </div>
+          </div>
+
+          {/* Center Main Image with Zoom & Slide */}
+          <div
+            className="relative flex-1 flex items-center justify-center p-4 sm:p-8 overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Slide Left Button */}
+            {galleryImages.length > 1 && (
+              <button
+                type="button"
+                onClick={handlePrevImage}
+                className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-110 z-20 backdrop-blur-md"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-7 w-7" />
+              </button>
+            )}
+
+            {/* The Image (Fit to Screen & Zoomable) */}
+            <div
+              className="max-w-[90vw] max-h-[75vh] flex items-center justify-center overflow-auto scrollbar-none transition-transform duration-200 ease-out"
+              style={{
+                transform: `scale(${zoomLevel})`,
+                cursor: zoomLevel > 1 ? 'grab' : 'zoom-in',
+              }}
+              onClick={() => {
+                setZoomLevel((z) => (z === 1 ? 2 : 1));
+              }}
+            >
+              <img
+                src={galleryImages[activeImageIndex]}
+                alt={`${product.name} - Fullscreen View ${activeImageIndex + 1}`}
+                className="max-h-[72vh] max-w-[85vw] object-contain rounded-2xl shadow-2xl transition-all select-none"
+              />
+            </div>
+
+            {/* Slide Right Button */}
+            {galleryImages.length > 1 && (
+              <button
+                type="button"
+                onClick={handleNextImage}
+                className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-110 z-20 backdrop-blur-md"
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-7 w-7" />
+              </button>
+            )}
+          </div>
+
+          {/* Bottom Thumbnails Strip in Lightbox */}
+          <div
+            className="p-4 sm:p-6 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center gap-2 z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {galleryImages.length > 1 && (
+              <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 scrollbar-none">
+                {galleryImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      setActiveImageIndex(idx);
+                      setZoomLevel(1);
+                    }}
+                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all p-0.5 bg-black/40 ${
+                      activeImageIndex === idx
+                        ? 'border-[var(--primary)] ring-2 ring-pink-500/40 scale-105'
+                        : 'border-white/20 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-contain rounded-lg"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+            <p className="text-[11px] text-stone-400">
+              Use Left / Right arrow keys or swipe to slide • Click to zoom • Esc to close
+            </p>
           </div>
         </div>
       )}
