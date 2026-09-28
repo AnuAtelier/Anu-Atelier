@@ -18,8 +18,8 @@ export const CartPage: React.FC = () => {
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto py-24 px-4 text-center space-y-5">
-        <div className="w-24 h-24 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center mx-auto">
-          <ShoppingBag className="h-12 w-12 opacity-60" />
+        <div className="w-24 h-24 rounded-full bg-pink-100/70 border border-pink-200/60 text-[var(--primary)] flex items-center justify-center mx-auto shadow-sm">
+          <ShoppingBag className="h-12 w-12 opacity-80" />
         </div>
         <h2 className="font-heading text-3xl font-bold text-[var(--text-main)]">
           Your Shopping Bag is Empty
@@ -29,7 +29,7 @@ export const CartPage: React.FC = () => {
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md transition-all"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-semibold shadow-md transition-all"
         >
           <span>Explore Handmade Crafts</span>
           <ArrowRight className="h-4 w-4" />
@@ -40,7 +40,7 @@ export const CartPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
-      <div className="border-b border-[var(--border-color)] pb-4">
+      <div className="border-b border-pink-100 pb-4">
         <h1 className="font-heading text-3xl font-bold text-[var(--text-main)]">
           Shopping Bag ({items.reduce((s, i) => s + i.qty, 0)})
         </h1>
@@ -50,7 +50,7 @@ export const CartPage: React.FC = () => {
         {/* Left Column: Items List */}
         <div className="lg:col-span-8 space-y-4">
           {/* Free Delivery Goal Bar */}
-          <div className="rounded-2xl bg-[var(--secondary)]/40 p-4 border border-[var(--border-color)]">
+          <div className="rounded-2xl bg-gradient-to-r from-pink-100/60 via-purple-100/40 to-rose-100/60 p-4 border border-pink-200/50 shadow-xs">
             <div className="flex items-center justify-between text-xs font-semibold mb-2 text-[var(--text-main)]">
               <span className="flex items-center gap-1.5">
                 <Sparkles className="h-4 w-4 text-[var(--primary)]" />
@@ -60,9 +60,9 @@ export const CartPage: React.FC = () => {
               </span>
               <span className="text-[var(--primary-dark)] font-bold">{progressPercent}%</span>
             </div>
-            <div className="w-full bg-white h-2.5 rounded-full overflow-hidden">
+            <div className="w-full bg-white/80 h-2.5 rounded-full overflow-hidden shadow-inner">
               <div
-                className="h-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -73,12 +73,12 @@ export const CartPage: React.FC = () => {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex gap-4 p-4 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm"
+                className="flex gap-4 p-4 rounded-3xl bg-white/80 backdrop-blur-md border border-pink-200/60 hover:border-pink-300 shadow-xs transition-all"
               >
                 {/* 4:5 Thumbnail */}
                 <Link
                   to={`/product/${item.productId}`}
-                  className="w-24 h-30 sm:w-28 sm:h-35 rounded-2xl overflow-hidden bg-[var(--bg-input)] flex-shrink-0"
+                  className="w-24 h-30 sm:w-28 sm:h-35 rounded-2xl overflow-hidden bg-neutral-100 flex-shrink-0 border border-pink-100"
                 >
                   <img
                     src={item.image}
@@ -111,7 +111,7 @@ export const CartPage: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border-color)]">
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-pink-100/70">
                     <div className="flex items-baseline gap-2">
                       <span className="text-lg font-bold text-[var(--text-main)]">
                         ₹{item.price * item.qty}
@@ -124,10 +124,10 @@ export const CartPage: React.FC = () => {
                     </div>
 
                     {/* Stepper */}
-                    <div className="flex items-center border border-[var(--border-color)] rounded-full bg-[var(--bg-input)] px-2 py-1">
+                    <div className="flex items-center border border-pink-200 rounded-full bg-pink-50/50 px-2 py-1 shadow-2xs">
                       <button
                         onClick={() => updateQty(item.id, -1)}
-                        className="p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                        className="p-1 text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors"
                       >
                         <Minus className="h-3.5 w-3.5" />
                       </button>
@@ -136,7 +136,7 @@ export const CartPage: React.FC = () => {
                       </span>
                       <button
                         onClick={() => updateQty(item.id, 1)}
-                        className="p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                        className="p-1 text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors"
                       >
                         <Plus className="h-3.5 w-3.5" />
                       </button>
@@ -150,8 +150,8 @@ export const CartPage: React.FC = () => {
 
         {/* Right Column: Sticky Price Details */}
         <div className="lg:col-span-4 lg:sticky lg:top-24">
-          <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
-            <h3 className="font-heading text-lg font-bold text-[var(--text-main)] border-b border-[var(--border-color)] pb-3">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-white/90 via-purple-50/40 to-pink-50/20 backdrop-blur-md border border-purple-200/70 shadow-sm space-y-4">
+            <h3 className="font-heading text-lg font-bold text-[var(--text-main)] border-b border-purple-100 pb-3">
               Price Details
             </h3>
 
@@ -170,7 +170,7 @@ export const CartPage: React.FC = () => {
                   )}
                 </span>
               </div>
-              <div className="flex justify-between text-base font-bold text-[var(--text-main)] pt-3 border-t border-[var(--border-color)]">
+              <div className="flex justify-between text-base font-bold text-[var(--text-main)] pt-3 border-t border-purple-100">
                 <span>Total Payable</span>
                 <span className="text-[var(--primary)]">₹{total}</span>
               </div>
@@ -178,7 +178,7 @@ export const CartPage: React.FC = () => {
 
             <button
               onClick={() => navigate('/checkout')}
-              className="w-full py-3.5 px-6 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+              className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               <span>Proceed to Checkout</span>
               <ArrowRight className="h-4 w-4" />

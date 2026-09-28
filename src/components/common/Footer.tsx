@@ -85,10 +85,10 @@ export const Footer: React.FC = () => {
       )}
 
       {/* Trust Highlights Bar - Slim & Light */}
-      <div className="border-t border-b border-[var(--border-color)] py-2.5 sm:py-3 px-4 sm:px-6 bg-[var(--bg-card)]">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+      <div className="border-t border-b border-pink-100 py-3.5 px-4 sm:px-6 bg-white/60 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-pink-200/60 shadow-2xs">
+            <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <Truck className="h-4 w-4" />
             </div>
             <div>
@@ -97,8 +97,8 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+          <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-sky-200/60 shadow-2xs">
+            <div className="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <RotateCcw className="h-4 w-4" />
             </div>
             <div>
@@ -107,8 +107,8 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+          <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-amber-200/60 shadow-2xs">
+            <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <HeartHandshake className="h-4 w-4" />
             </div>
             <div>
@@ -117,8 +117,8 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[var(--secondary)] text-[var(--primary)] flex items-center justify-center flex-shrink-0 shadow-2xs">
+          <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-emerald-200/60 shadow-2xs">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <ShieldCheck className="h-4 w-4" />
             </div>
             <div>

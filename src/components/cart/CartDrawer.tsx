@@ -58,9 +58,9 @@ export const CartDrawer: React.FC = () => {
       />
 
       {/* Drawer Panel */}
-      <aside className="relative w-full max-w-md h-full bg-[var(--bg-card)] border-l border-[var(--border-color)] flex flex-col shadow-2xl z-10 transition-transform duration-300">
+      <aside className="relative w-full max-w-md h-full bg-white/95 backdrop-blur-xl border-l border-pink-200/60 flex flex-col shadow-2xl z-10 transition-transform duration-300">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-[var(--border-color)] flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-pink-50/50 via-white to-purple-50/40">
           <div className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5 text-[var(--primary)]" />
             <h2 className="font-heading text-lg font-bold text-[var(--text-main)]">
@@ -70,14 +70,14 @@ export const CartDrawer: React.FC = () => {
           <button
             onClick={closeDrawer}
             aria-label="Close cart"
-            className="p-1 rounded-full text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-input)] transition-colors"
+            className="p-1 rounded-full text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-pink-100/50 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Free Delivery Goal Bar */}
-        <div className="bg-[var(--secondary)]/40 p-3.5 border-b border-[var(--border-color)]">
+        <div className="bg-gradient-to-r from-pink-100/60 via-purple-100/40 to-rose-100/60 p-3.5 border-b border-pink-200/40">
           <div className="flex items-center justify-between text-xs font-semibold mb-1.5 text-[var(--text-main)]">
             <span className="flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-[var(--primary)]" />
@@ -87,20 +87,20 @@ export const CartDrawer: React.FC = () => {
             </span>
             <span className="text-[var(--primary-dark)] font-bold">{progressPercent}%</span>
           </div>
-          <div className="w-full bg-white h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-white/80 h-2 rounded-full overflow-hidden shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-500 rounded-full"
+              className="h-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 transition-all duration-500 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
 
         {/* Item List */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-              <div className="w-20 h-20 rounded-full bg-[var(--secondary)] flex items-center justify-center text-[var(--primary)]">
-                <ShoppingBag className="h-10 w-10 opacity-60" />
+              <div className="w-20 h-20 rounded-full bg-pink-100/60 flex items-center justify-center text-[var(--primary)] border border-pink-200/60 shadow-sm">
+                <ShoppingBag className="h-10 w-10 opacity-70" />
               </div>
               <h3 className="font-heading text-xl font-semibold text-[var(--text-main)]">
                 Your cart is empty
@@ -113,7 +113,7 @@ export const CartDrawer: React.FC = () => {
                   closeDrawer();
                   navigate('/');
                 }}
-                className="px-6 py-2.5 rounded-full bg-[var(--primary)] text-white text-sm font-semibold hover:bg-[var(--primary-dark)] transition-colors shadow-sm"
+                className="px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 text-white text-sm font-semibold hover:from-pink-600 hover:to-rose-700 transition-colors shadow-sm"
               >
                 Start Exploring
               </button>
@@ -122,13 +122,13 @@ export const CartDrawer: React.FC = () => {
             items.map((item) => (
               <div
                 key={item.id}
-                className="flex gap-3 p-3 rounded-2xl bg-[var(--bg-input)] border border-[var(--border-color)]"
+                className="flex gap-3 p-3 rounded-2xl bg-white/75 backdrop-blur-sm border border-pink-200/70 shadow-xs hover:border-pink-300 transition-all"
               >
                 {/* 4:5 image ratio */}
                 <Link
                   to={`/product/${item.productId}`}
                   onClick={closeDrawer}
-                  className="w-20 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-neutral-200"
+                  className="w-20 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-neutral-200 border border-pink-100"
                 >
                   <img
                     src={item.image}
@@ -162,17 +162,17 @@ export const CartDrawer: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-[var(--border-color)]">
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-pink-100/70">
                     <span className="text-sm font-bold text-[var(--primary)]">
                       ₹{item.price * item.qty}
                     </span>
 
                     {/* Quantity Stepper */}
-                    <div className="flex items-center border border-[var(--border-color)] rounded-full bg-[var(--bg-card)] px-1.5 py-0.5">
+                    <div className="flex items-center border border-pink-200 rounded-full bg-pink-50/50 px-1.5 py-0.5 shadow-2xs">
                       <button
                         onClick={() => updateQty(item.id, -1)}
                         aria-label="Decrease quantity"
-                        className="p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                        className="p-1 text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors"
                       >
                         <Minus className="h-3 w-3" />
                       </button>
@@ -182,7 +182,7 @@ export const CartDrawer: React.FC = () => {
                       <button
                         onClick={() => updateQty(item.id, 1)}
                         aria-label="Increase quantity"
-                        className="p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                        className="p-1 text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors"
                       >
                         <Plus className="h-3 w-3" />
                       </button>
@@ -196,8 +196,8 @@ export const CartDrawer: React.FC = () => {
 
         {/* Footer Summary & Checkout */}
         {items.length > 0 && (
-          <div className="p-4 sm:p-5 border-t border-[var(--border-color)] bg-[var(--bg-card)] space-y-3">
-            <div className="space-y-1.5 text-xs text-[var(--text-muted)]">
+          <div className="p-4 sm:p-5 border-t border-pink-200/60 bg-gradient-to-b from-white/95 via-pink-50/30 to-purple-50/30 backdrop-blur-md space-y-3">
+            <div className="p-3.5 rounded-2xl bg-white/70 backdrop-blur-sm border border-pink-200/50 space-y-1.5 text-xs text-[var(--text-muted)] shadow-xs">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span className="font-semibold text-[var(--text-main)]">₹{subtotal}</span>
@@ -212,19 +212,19 @@ export const CartDrawer: React.FC = () => {
                   )}
                 </span>
               </div>
-              <div className="flex justify-between text-sm font-bold text-[var(--text-main)] pt-2 border-t border-[var(--border-color)]">
+              <div className="flex justify-between text-sm font-bold text-[var(--text-main)] pt-2 border-t border-pink-100">
                 <span>Total Amount</span>
                 <span className="text-[var(--primary)]">₹{total}</span>
               </div>
             </div>
 
-            <div className="pt-2 flex flex-col gap-2">
+            <div className="pt-1 flex flex-col gap-2">
               <button
                 onClick={() => {
                   closeDrawer();
                   navigate('/checkout');
                 }}
-                className="w-full py-3 px-4 rounded-full bg-[var(--primary)] text-white text-sm font-semibold hover:bg-[var(--primary-dark)] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 text-white text-sm font-semibold hover:from-pink-600 hover:to-rose-700 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="h-4 w-4" />
@@ -235,7 +235,7 @@ export const CartDrawer: React.FC = () => {
                   closeDrawer();
                   navigate('/cart');
                 }}
-                className="w-full py-2 text-center text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                className="w-full py-2 text-center text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors cursor-pointer"
               >
                 View Full Cart Details
               </button>

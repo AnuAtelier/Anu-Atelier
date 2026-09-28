@@ -46,7 +46,7 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[var(--secondary)]/30 via-[var(--bg-color)] to-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
       {/* Clean Minimal Top Navigation for Auth */}
-      <nav className="w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-[var(--border-color)] bg-[var(--bg-card)]/50 backdrop-blur-xs">
+      <nav className="w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-pink-100 bg-white/70 backdrop-blur-md">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
@@ -58,7 +58,7 @@ export const LoginPage: React.FC = () => {
 
       {/* Main Login Card Area */}
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 py-12">
-        <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-6 sm:p-8 shadow-lg-soft">
+        <div className="w-full max-w-md bg-gradient-to-br from-white/95 via-pink-50/35 to-purple-50/25 backdrop-blur-xl border border-pink-200/70 rounded-3xl p-6 sm:p-8 shadow-xl">
           {/* Brand Header */}
           <div className="text-center mb-6">
             <Link to="/" className="inline-flex flex-col items-center mb-3 group">
@@ -83,7 +83,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Admin Prompt Highlight Banner */}
           {isAdminRequired && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-pink-50 border border-pink-200 text-[var(--primary-dark)] text-xs flex items-start gap-2.5">
+            <div className="mb-6 p-3.5 rounded-2xl bg-pink-100/70 border border-pink-200 text-[var(--primary-dark)] text-xs flex items-start gap-2.5">
               <ShieldCheck className="h-4 w-4 text-[var(--primary)] flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold">Store Admin Access Required</p>
@@ -96,7 +96,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Error Alert */}
           {(formError || error) && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+            <div className="mb-6 p-3.5 rounded-2xl bg-red-50/80 border border-red-200 text-red-700 text-xs flex items-center gap-2">
               <span>{formError || error}</span>
             </div>
           )}
@@ -114,7 +114,7 @@ export const LoginPage: React.FC = () => {
                   placeholder="anushka32199@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
               </div>
@@ -131,13 +131,13 @@ export const LoginPage: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-11 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-11 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3.5 text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                  className="absolute right-3.5 top-3.5 text-[var(--text-muted)] hover:text-[var(--text-main)] cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -147,7 +147,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 px-4 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md-soft hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -161,7 +161,7 @@ export const LoginPage: React.FC = () => {
           </form>
 
           {/* Quick Fast 1-Click Login Section */}
-          <div className="mt-8 pt-6 border-t border-[var(--border-color)] space-y-3">
+          <div className="mt-8 pt-6 border-t border-pink-100 space-y-3">
             <p className="text-xs font-semibold text-center text-[var(--text-muted)] uppercase tracking-wider">
               Fast 1-Click Demo Login
             </p>
@@ -169,7 +169,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleDemoLogin('admin')}
-              className="w-full py-3 px-4 rounded-2xl border-2 border-pink-400/40 bg-pink-50 text-[var(--primary-dark)] hover:bg-pink-100 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs"
+              className="w-full py-3 px-4 rounded-2xl border border-pink-300 bg-pink-100/70 text-[var(--primary-dark)] hover:bg-pink-100 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer"
             >
               <ShieldCheck className="h-4 w-4 text-[var(--primary)]" />
               <span>Login as Anushka (Admin: anushka32199@gmail.com)</span>
@@ -179,7 +179,7 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleDemoLogin('customer')}
-                className="w-full py-2.5 px-4 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] hover:bg-[var(--border-hover)] text-[var(--text-main)] text-xs sm:text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                className="w-full py-2.5 px-4 rounded-2xl border border-purple-200 bg-purple-50/60 hover:bg-purple-100/60 text-purple-900 text-xs sm:text-sm font-medium flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <UserCheck className="h-4 w-4 text-emerald-500" />
                 <span>Login as Customer (Demo Shopper)</span>

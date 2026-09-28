@@ -28,14 +28,14 @@ export const OrderSuccessPage: React.FC = () => {
       </div>
 
       {/* Order Info Card */}
-      <div className="p-6 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm text-left space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white/95 via-emerald-50/35 to-teal-50/20 backdrop-blur-md border border-emerald-200/70 shadow-sm text-left space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-emerald-100">
           <span className="text-xs text-[var(--text-muted)]">Order Number</span>
           <span className="font-mono text-sm font-bold text-[var(--primary)]">{id || 'ANU-982145'}</span>
         </div>
 
         <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
-          <Truck className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+          <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
           <div>
             <p className="font-semibold text-[var(--text-main)]">Estimated Delivery in 3-5 Business Days</p>
             <p>You will receive SMS & WhatsApp tracking updates at +91 {DEFAULT_SITE_SETTINGS.whatsappNumber}</p>
@@ -55,7 +55,7 @@ export const OrderSuccessPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
         <Link
           to="/"
-          className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md transition-all flex items-center justify-center gap-2"
+          className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-semibold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>Continue Shopping</span>
           <ArrowRight className="h-4 w-4" />
@@ -65,7 +65,7 @@ export const OrderSuccessPage: React.FC = () => {
           href={`https://wa.me/91${DEFAULT_SITE_SETTINGS.whatsappNumber}?text=Hi%20Anu%20Atelier,%20I%20have%20an%20inquiry%20regarding%20my%20order%20${id || ''}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-xs sm:text-sm font-semibold text-[var(--text-main)] flex items-center justify-center gap-2 shadow-sm"
+          className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-emerald-300 bg-emerald-50/80 hover:bg-emerald-100/80 text-xs sm:text-sm font-semibold text-emerald-800 flex items-center justify-center gap-2 shadow-xs cursor-pointer"
         >
           <MessageCircle className="h-4 w-4 text-emerald-600" />
           <span>WhatsApp Updates</span>

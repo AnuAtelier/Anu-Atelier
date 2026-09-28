@@ -367,7 +367,7 @@ export const ProductPage: React.FC = () => {
           </div>
 
           {/* Pricing Row */}
-          <div className="p-4 rounded-2xl bg-[var(--bg-input)] border border-[var(--border-color)] space-y-1">
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-white/90 via-pink-50/40 to-rose-50/20 backdrop-blur-md border border-pink-200/70 shadow-xs space-y-1">
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-extrabold text-[var(--text-main)]">
                 ₹{product.price}
@@ -393,7 +393,7 @@ export const ProductPage: React.FC = () => {
             <span className="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">
               Quantity:
             </span>
-            <div className="flex items-center border border-[var(--border-color)] rounded-full bg-[var(--bg-card)] px-3 py-1">
+            <div className="flex items-center border border-pink-200 rounded-full bg-white/80 px-3 py-1 shadow-2xs">
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
                 className="p-1 text-[var(--text-muted)] hover:text-[var(--text-main)]"
@@ -421,7 +421,7 @@ export const ProductPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
             <button
               onClick={handleAddToCart}
-              className="w-full py-3.5 px-6 rounded-full border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+              className="w-full py-3.5 px-6 rounded-full border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
             >
               <ShoppingBag className="h-4 w-4" />
               <span>Add to Cart</span>
@@ -429,7 +429,7 @@ export const ProductPage: React.FC = () => {
 
             <button
               onClick={handleBuyNow}
-              className="w-full py-3.5 px-6 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+              className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               <Zap className="h-4 w-4" />
               <span>Buy Now</span>
@@ -437,9 +437,9 @@ export const ProductPage: React.FC = () => {
           </div>
 
           {/* PIN Code Delivery Checker */}
-          <div className="p-4 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] space-y-2">
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-white/90 via-sky-50/40 to-blue-50/20 backdrop-blur-md border border-sky-200/70 shadow-xs space-y-2.5">
             <div className="flex items-center gap-2 text-xs font-semibold text-[var(--text-main)]">
-              <MapPin className="h-4 w-4 text-[var(--primary)]" />
+              <MapPin className="h-4 w-4 text-sky-600" />
               <span>Check Delivery & COD Availability</span>
             </div>
             <form onSubmit={handleCheckPincode} className="flex gap-2">
@@ -449,11 +449,11 @@ export const ProductPage: React.FC = () => {
                 placeholder="Enter 6-digit Pincode (e.g. 110001)"
                 value={pincode}
                 onChange={(e) => setPincode(e.target.value.replace(/[^0-9]/g, ''))}
-                className="flex-1 px-3 py-2 text-xs rounded-full border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] focus:outline-none focus:border-[var(--primary)]"
+                className="flex-1 px-4 py-2 text-xs rounded-full border border-sky-200 bg-white/90 text-[var(--text-main)] focus:outline-none focus:border-sky-400"
               />
               <button
                 type="submit"
-                className="px-5 py-2 text-xs font-semibold rounded-full bg-[var(--secondary)] text-[var(--primary-dark)] hover:bg-[var(--primary)] hover:text-white transition-colors"
+                className="px-5 py-2 text-xs font-semibold rounded-full bg-sky-500 hover:bg-sky-600 text-white shadow-xs transition-colors cursor-pointer"
               >
                 Check
               </button>
@@ -467,27 +467,27 @@ export const ProductPage: React.FC = () => {
           </div>
 
           {/* Trust Highlights Strip */}
-          <div className="grid grid-cols-2 gap-3 py-3 border-y border-[var(--border-color)]">
+          <div className="grid grid-cols-2 gap-3 p-4 rounded-3xl bg-gradient-to-br from-white/80 via-emerald-50/30 to-teal-50/20 backdrop-blur-md border border-emerald-200/60 shadow-xs">
             <div className="flex items-center gap-2.5">
-              <Truck className="h-4 w-4 text-[var(--primary)]" />
+              <Truck className="h-4 w-4 text-emerald-600" />
               <span className="text-xs text-[var(--text-main)] font-medium">Free Delivery above ₹100</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <RotateCcw className="h-4 w-4 text-[var(--primary)]" />
+              <RotateCcw className="h-4 w-4 text-emerald-600" />
               <span className="text-xs text-[var(--text-main)] font-medium">15-Day Easy Replacement</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <HeartHandshake className="h-4 w-4 text-[var(--primary)]" />
+              <HeartHandshake className="h-4 w-4 text-emerald-600" />
               <span className="text-xs text-[var(--text-main)] font-medium">100% Authentic Handmade</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <ShieldCheck className="h-4 w-4 text-[var(--primary)]" />
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
               <span className="text-xs text-[var(--text-main)] font-medium">Cash on Delivery Available</span>
             </div>
           </div>
 
           {/* Description */}
-          <div className="space-y-3 pt-2">
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-white/90 via-amber-50/30 to-orange-50/20 backdrop-blur-md border border-amber-200/60 shadow-xs space-y-2">
             <h3 className="font-heading text-lg font-bold text-[var(--text-main)]">
               Craft Story & Description
             </h3>
@@ -498,16 +498,16 @@ export const ProductPage: React.FC = () => {
 
           {/* Specifications Table */}
           {product.specs && Object.keys(product.specs).length > 0 && (
-            <div className="space-y-3 pt-2">
+            <div className="p-5 rounded-3xl bg-gradient-to-br from-white/90 via-purple-50/30 to-indigo-50/20 backdrop-blur-md border border-purple-200/60 shadow-xs space-y-3">
               <h3 className="font-heading text-lg font-bold text-[var(--text-main)]">
                 Specifications
               </h3>
-              <div className="rounded-2xl border border-[var(--border-color)] overflow-hidden text-xs">
+              <div className="rounded-2xl border border-purple-100 overflow-hidden text-xs">
                 {Object.entries(product.specs).map(([key, val], idx) => (
                   <div
                     key={key}
                     className={`grid grid-cols-2 p-3 ${
-                      idx % 2 === 0 ? 'bg-[var(--bg-input)]' : 'bg-[var(--bg-card)]'
+                      idx % 2 === 0 ? 'bg-white/60' : 'bg-purple-50/30'
                     }`}
                   >
                     <span className="font-semibold text-[var(--text-muted)]">{key}</span>

@@ -39,7 +39,7 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[var(--secondary)]/30 via-[var(--bg-color)] to-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
       {/* Clean Minimal Top Navigation for Auth */}
-      <nav className="w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-[var(--border-color)] bg-[var(--bg-card)]/50 backdrop-blur-xs">
+      <nav className="w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-pink-100 bg-white/70 backdrop-blur-md">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
@@ -50,7 +50,7 @@ export const RegisterPage: React.FC = () => {
       </nav>
 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 py-12">
-        <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-6 sm:p-8 shadow-lg-soft">
+        <div className="w-full max-w-md bg-gradient-to-br from-white/95 via-pink-50/35 to-purple-50/25 backdrop-blur-xl border border-pink-200/70 rounded-3xl p-6 sm:p-8 shadow-xl">
           <div className="text-center mb-6">
             <Link to="/" className="inline-flex flex-col items-center mb-3 group">
               <img
@@ -71,7 +71,7 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           {(formError || error) && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs">
+            <div className="mb-6 p-3.5 rounded-2xl bg-red-50/80 border border-red-200 text-red-700 text-xs">
               {formError || error}
             </div>
           )}
@@ -88,7 +88,7 @@ export const RegisterPage: React.FC = () => {
                   placeholder="Priya Sharma"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <User className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
               </div>
@@ -105,7 +105,7 @@ export const RegisterPage: React.FC = () => {
                   placeholder="priya@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
               </div>
@@ -121,7 +121,7 @@ export const RegisterPage: React.FC = () => {
                   placeholder="9876543210"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
               </div>
@@ -139,13 +139,13 @@ export const RegisterPage: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-11 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
+                  className="w-full pl-10 pr-11 py-3 rounded-2xl border border-pink-200/70 bg-white/85 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-[var(--text-muted)]"
                 />
                 <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-[var(--text-muted)]" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3.5 text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                  className="absolute right-3.5 top-3.5 text-[var(--text-muted)] hover:text-[var(--text-main)] cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -155,7 +155,7 @@ export const RegisterPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 px-4 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-sm font-semibold shadow-md-soft hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

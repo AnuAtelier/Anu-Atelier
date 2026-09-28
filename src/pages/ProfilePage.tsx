@@ -213,7 +213,7 @@ export const ProfilePage: React.FC = () => {
             {orders.map((order) => (
               <div
                 key={order.id}
-                className="p-4 rounded-2xl bg-[var(--bg-input)] border border-[var(--border-color)] flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+                className="p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-pink-200/60 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-pink-300 transition-all shadow-xs"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -264,7 +264,7 @@ export const ProfilePage: React.FC = () => {
       </div>
 
       {/* Profile Details or Edit Form */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white/90 via-sky-50/40 to-blue-50/20 backdrop-blur-md border border-sky-200/70 shadow-sm space-y-6">
         <h2 className="font-heading text-xl font-bold text-[var(--text-main)]">
           {isEditing ? 'Edit Profile & Delivery Address' : 'Saved Delivery Address'}
         </h2>
@@ -281,7 +281,7 @@ export const ProfilePage: React.FC = () => {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -294,7 +294,7 @@ export const ProfilePage: React.FC = () => {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -307,7 +307,7 @@ export const ProfilePage: React.FC = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -321,7 +321,7 @@ export const ProfilePage: React.FC = () => {
                   maxLength={6}
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -334,7 +334,7 @@ export const ProfilePage: React.FC = () => {
                   required
                   value={flat}
                   onChange={(e) => setFlat(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -347,7 +347,7 @@ export const ProfilePage: React.FC = () => {
                   required
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                 />
               </div>
 
@@ -361,14 +361,14 @@ export const ProfilePage: React.FC = () => {
                     required
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                   />
                   <input
                     type="text"
                     required
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-sky-200/60 bg-white/80 text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
                   />
                 </div>
               </div>
@@ -391,7 +391,7 @@ export const ProfilePage: React.FC = () => {
             </div>
           </form>
         ) : (
-          <div className="p-4 rounded-2xl bg-[var(--bg-input)] border border-[var(--border-color)] space-y-2">
+          <div className="p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-sky-200/60 space-y-2">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-[var(--primary)]" />
               <span className="text-sm font-semibold text-[var(--text-main)]">Default Delivery Address</span>
@@ -408,7 +408,7 @@ export const ProfilePage: React.FC = () => {
       </div>
 
       {/* Privacy & DPDPA 2023 Self-Service Controls */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-4">
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white/90 via-amber-50/40 to-orange-50/20 backdrop-blur-md border border-amber-200/70 shadow-sm space-y-4">
         <h3 className="font-heading text-base font-bold text-[var(--text-main)]">
           Account Privacy & Data Rights (DPDPA 2023)
         </h3>
@@ -418,9 +418,9 @@ export const ProfilePage: React.FC = () => {
         <div className="flex flex-wrap gap-3 pt-2">
           <button
             onClick={handleExportData}
-            className="px-4 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-input)] hover:bg-[var(--bg-card)] text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-full border border-amber-200 bg-white/80 hover:bg-white text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5 transition-all"
           >
-            <Download className="h-3.5 w-3.5 text-[var(--primary)]" />
+            <Download className="h-3.5 w-3.5 text-amber-600" />
             <span>Download My Data (JSON)</span>
           </button>
           <button

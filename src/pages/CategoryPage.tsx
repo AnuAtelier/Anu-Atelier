@@ -64,17 +64,17 @@ export const CategoryPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto py-8 px-4 sm:px-8 space-y-8">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]">
+      <nav className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-pink-200/50 shadow-2xs text-xs text-[var(--text-muted)]">
         <Link to="/" className="hover:text-[var(--primary)] transition-colors">
           Home
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="h-3.5 w-3.5 text-pink-400" />
         <Link to={`/category/${category.slug}`} className="hover:text-[var(--primary)] transition-colors">
           {category.name}
         </Link>
         {subcatParam && (
           <>
-            <ChevronRight className="h-3.5 w-3.5" />
+            <ChevronRight className="h-3.5 w-3.5 text-pink-400" />
             <span className="text-[var(--text-main)] font-semibold capitalize">
               {subcatParam.replace(/-/g, ' ')}
             </span>
@@ -83,7 +83,7 @@ export const CategoryPage: React.FC = () => {
       </nav>
 
       {/* Category Hero / Header */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[var(--secondary)]/60 via-[var(--bg-card)] to-[var(--bg-card)] border border-[var(--border-color)] p-6 sm:p-10 shadow-sm">
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-pink-500/15 via-purple-500/10 to-rose-500/10 backdrop-blur-md border border-pink-200/60 p-6 sm:p-10 shadow-sm">
         <div className="max-w-2xl space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-[var(--primary)]">
             Handcrafted Collection
@@ -101,10 +101,10 @@ export const CategoryPage: React.FC = () => {
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         <button
           onClick={() => handleSubcategoryClick(null)}
-          className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+          className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
             !subcatParam
-              ? 'bg-[var(--primary)] text-white shadow-sm'
-              : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] hover:bg-[var(--bg-input)]'
+              ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-sm'
+              : 'border border-pink-200/70 bg-white/80 backdrop-blur-sm text-[var(--text-main)] hover:bg-white hover:border-pink-300'
           }`}
         >
           All {category.name.split(' ')[0]}
@@ -113,10 +113,10 @@ export const CategoryPage: React.FC = () => {
           <button
             key={sub.id}
             onClick={() => handleSubcategoryClick(sub.id)}
-            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
               subcatParam === sub.id
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] hover:bg-[var(--bg-input)]'
+                ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-sm'
+                : 'border border-pink-200/70 bg-white/80 backdrop-blur-sm text-[var(--text-main)] hover:bg-white hover:border-pink-300'
             }`}
           >
             {sub.name}
@@ -125,17 +125,17 @@ export const CategoryPage: React.FC = () => {
       </div>
 
       {/* Control & Sorting Bar */}
-      <div className="flex items-center justify-between gap-4 py-3 border-y border-[var(--border-color)]">
+      <div className="flex items-center justify-between gap-4 p-3.5 rounded-2xl bg-white/70 backdrop-blur-sm border border-pink-200/50 shadow-2xs">
         <div className="text-xs sm:text-sm text-[var(--text-muted)] font-medium">
           Showing <span className="font-bold text-[var(--text-main)]">{sortedProducts.length}</span> handcrafted items
         </div>
 
         <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-[var(--text-muted)]" />
+          <ArrowUpDown className="h-4 w-4 text-[var(--primary)]" />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="text-xs sm:text-sm font-semibold rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] px-3 py-1.5 focus:outline-none focus:border-[var(--primary)] cursor-pointer"
+            className="text-xs sm:text-sm font-semibold rounded-full border border-pink-200 bg-white/90 text-[var(--text-main)] px-3 py-1.5 focus:outline-none focus:border-[var(--primary)] cursor-pointer shadow-2xs"
           >
             <option value="newest">Newest Arrivals</option>
             <option value="price-asc">Price: Low to High</option>
@@ -147,7 +147,7 @@ export const CategoryPage: React.FC = () => {
 
       {/* Product Grid */}
       {sortedProducts.length === 0 ? (
-        <div className="text-center py-20 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-8 space-y-3">
+        <div className="text-center py-20 bg-gradient-to-br from-white/90 via-pink-50/30 to-purple-50/20 backdrop-blur-md border border-pink-200/60 rounded-3xl p-8 space-y-3 shadow-xs">
           <p className="text-base font-semibold text-[var(--text-main)]">
             No items currently found in this subcategory
           </p>
@@ -156,7 +156,7 @@ export const CategoryPage: React.FC = () => {
           </p>
           <button
             onClick={() => handleSubcategoryClick(null)}
-            className="px-5 py-2 rounded-full bg-[var(--primary)] text-white text-xs font-semibold hover:bg-[var(--primary-dark)]"
+            className="px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 text-white text-xs font-semibold hover:from-pink-600 hover:to-rose-700 shadow-sm cursor-pointer"
           >
             View All {category.name}
           </button>

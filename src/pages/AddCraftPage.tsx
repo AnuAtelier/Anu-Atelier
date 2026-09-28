@@ -133,17 +133,17 @@ export const AddCraftPage: React.FC = () => {
       </div>
 
       {/* Form Card */}
-      <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm space-y-8">
+      <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-3xl bg-white/70 backdrop-blur-md border border-pink-200/70 shadow-sm space-y-6">
         {/* Section 1: Basic Info */}
-        <div className="space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-2">
-            <Sparkles className="h-4 w-4" />
+        <div className="p-5 sm:p-6 rounded-2xl bracket-pink space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-pink-700 flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-pink-600" />
             <span>1. Basic Information</span>
           </h2>
 
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Craft Title <span className="text-rose-500">*</span>
               </label>
               <input
@@ -152,12 +152,12 @@ export const AddCraftPage: React.FC = () => {
                 placeholder="e.g. Hand-carved Terracotta Diya with Floral Motifs"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                className="w-full px-4 py-2.5 rounded-xl border border-pink-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-pink-500 shadow-xs"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Description & Artisan Notes
               </label>
               <textarea
@@ -165,21 +165,21 @@ export const AddCraftPage: React.FC = () => {
                 placeholder="Tell the story of how this craft was created, materials used, and care instructions..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                className="w-full px-4 py-2.5 rounded-xl border border-pink-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-pink-500 shadow-xs"
               />
             </div>
           </div>
         </div>
 
         {/* Section 2: Categorization */}
-        <div className="space-y-4 pt-4 border-t border-[var(--border-color)]">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--primary)]">
+        <div className="p-5 sm:p-6 rounded-2xl bracket-purple space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-purple-800">
             2. Categorization
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Category <span className="text-rose-500">*</span>
               </label>
               <select
@@ -189,7 +189,7 @@ export const AddCraftPage: React.FC = () => {
                   setCategoryId(e.target.value);
                   setSubcategoryId('');
                 }}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] cursor-pointer"
+                className="w-full px-4 py-2.5 rounded-xl border border-purple-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-purple-500 cursor-pointer shadow-xs"
               >
                 <option value="">Select a category</option>
                 {CATEGORIES.map((c) => (
@@ -201,7 +201,7 @@ export const AddCraftPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Subcategory <span className="text-rose-500">*</span>
               </label>
               <select
@@ -209,7 +209,7 @@ export const AddCraftPage: React.FC = () => {
                 disabled={!categoryId}
                 value={subcategoryId}
                 onChange={(e) => setSubcategoryId(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)] cursor-pointer disabled:opacity-50"
+                className="w-full px-4 py-2.5 rounded-xl border border-purple-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-purple-500 cursor-pointer disabled:opacity-50 shadow-xs"
               >
                 <option value="">Select subcategory</option>
                 {selectedCategory?.subcategories.map((sub) => (
@@ -223,14 +223,14 @@ export const AddCraftPage: React.FC = () => {
         </div>
 
         {/* Section 3: Pricing & Inventory */}
-        <div className="space-y-4 pt-4 border-t border-[var(--border-color)]">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--primary)]">
+        <div className="p-5 sm:p-6 rounded-2xl bracket-amber space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-800">
             3. Pricing & Inventory
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Selling Price (₹) <span className="text-rose-500">*</span>
               </label>
               <input
@@ -240,12 +240,12 @@ export const AddCraftPage: React.FC = () => {
                 placeholder="e.g. 599"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                className="w-full px-4 py-2.5 rounded-xl border border-amber-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-amber-500 shadow-xs"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Original MRP (₹) (Optional)
               </label>
               <input
@@ -254,12 +254,12 @@ export const AddCraftPage: React.FC = () => {
                 placeholder="e.g. 799"
                 value={originalPrice}
                 onChange={(e) => setOriginalPrice(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                className="w-full px-4 py-2.5 rounded-xl border border-amber-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-amber-500 shadow-xs"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+              <label className="block text-xs font-semibold text-gray-900 mb-1">
                 Stock Quantity
               </label>
               <input
@@ -267,31 +267,31 @@ export const AddCraftPage: React.FC = () => {
                 min={0}
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
+                className="w-full px-4 py-2.5 rounded-xl border border-amber-200/70 bg-white/80 text-gray-900 text-sm focus:outline-none focus:border-amber-500 shadow-xs"
               />
             </div>
           </div>
         </div>
 
         {/* Section 4: Craft Photo (4:5 Fixed Aspect Ratio) */}
-        <div className="space-y-4 pt-4 border-t border-[var(--border-color)]">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-2">
-            <ImageIcon className="h-4 w-4" />
+        <div className="p-5 sm:p-6 rounded-2xl bracket-sky space-y-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-sky-800 flex items-center gap-2">
+            <ImageIcon className="h-4 w-4 text-sky-600" />
             <span>4. Product Media (4:5 Aspect Ratio)</span>
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+                <label className="block text-xs font-semibold text-gray-900 mb-1">
                   Upload Craft Photo
                 </label>
-                <label className="border-2 border-dashed border-[var(--border-color)] hover:border-[var(--primary)] rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-[var(--bg-input)] transition-colors text-center">
-                  <Upload className="h-6 w-6 text-[var(--primary)]" />
-                  <span className="text-xs font-semibold text-[var(--text-main)]">
+                <label className="border-2 border-dashed border-sky-300/70 hover:border-sky-500 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white/70 transition-colors text-center shadow-xs">
+                  <Upload className="h-6 w-6 text-sky-600" />
+                  <span className="text-xs font-semibold text-gray-900">
                     Click to browse image
                   </span>
-                  <span className="text-[11px] text-[var(--text-muted)]">
+                  <span className="text-[11px] text-gray-500">
                     JPG, PNG, or WebP up to 5MB
                   </span>
                   <input
@@ -304,7 +304,7 @@ export const AddCraftPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[var(--text-main)] mb-1">
+                <label className="block text-xs font-semibold text-gray-900 mb-1">
                   Or Paste Direct Image URL
                 </label>
                 <input
@@ -315,17 +315,17 @@ export const AddCraftPage: React.FC = () => {
                     setImageUrl(e.target.value);
                     setImagePreview(e.target.value);
                   }}
-                  className="w-full px-4 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-xs focus:outline-none focus:border-[var(--primary)]"
+                  className="w-full px-4 py-2 rounded-xl border border-sky-200/70 bg-white/80 text-gray-900 text-xs focus:outline-none focus:border-sky-500 shadow-xs"
                 />
               </div>
             </div>
 
             {/* Live 4:5 Preview Box */}
             <div className="space-y-1">
-              <span className="text-xs font-semibold text-[var(--text-main)]">
+              <span className="text-xs font-semibold text-gray-900">
                 Live 4:5 Card Preview
               </span>
-              <div className="relative aspect-[4/5] max-w-[200px] rounded-2xl overflow-hidden bg-[var(--bg-input)] border border-[var(--border-color)] flex items-center justify-center">
+              <div className="relative aspect-[4/5] max-w-[200px] rounded-2xl overflow-hidden bg-white/90 border border-sky-200/80 flex items-center justify-center shadow-xs">
                 {imagePreview ? (
                   <>
                     <img
