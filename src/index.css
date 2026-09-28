@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-bg-color: var(--bg-color);
+  --color-bg-card: var(--bg-card);
+  --color-bg-input: var(--bg-input);
+  --color-border-color: var(--border-color);
+  --color-border-hover: var(--border-hover);
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+  --shadow-sm-soft: 0 2px 8px rgba(44, 42, 41, 0.05);
+  --shadow-md-soft: 0 8px 24px rgba(44, 42, 41, 0.08);
+  --shadow-lg-soft: 0 16px 48px rgba(44, 42, 41, 0.12);
+}
+
+:root {
+  /* Brand Palette (Light & Vibrant) */
+  --primary: #e11d48;
+  --primary-dark: #be123c;
+  --primary-hover: #f43f5e;
+  --secondary: rgba(255, 228, 235, 0.7);
+  --accent: #9333ea;
+
+  /* Surfaces & Translucent Backgrounds */
+  --bg-color: #fff8f9;
+  --bg-card: rgba(255, 255, 255, 0.78);
+  --bg-input: rgba(255, 255, 255, 0.85);
+  --header-bg: rgba(255, 250, 252, 0.85);
+  --header-border: rgba(244, 114, 182, 0.22);
+
+  /* Typography - Dark, bold, crystal clear */
+  --text-main: #18181b;
+  --text-muted: #52525b;
+  --white: #ffffff;
+
+  /* Borders & Translucent Pastel Accents */
+  --border-color: rgba(244, 114, 182, 0.22);
+  --border-hover: rgba(236, 72, 153, 0.4);
+
+  /* Status Colors */
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #2563eb;
+
+  /* Fonts */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Shadows - Soft luminous glow */
+  --shadow-sm: 0 2px 8px rgba(225, 29, 72, 0.05);
+  --shadow-md: 0 8px 24px rgba(225, 29, 72, 0.08);
+  --shadow-lg: 0 16px 48px rgba(225, 29, 72, 0.12);
+
+  /* Geometry & Motion */
+  --radius: 20px;
+  --transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  /* Luxury light multi-gradient ambient mesh background */
+  background: 
+    radial-gradient(circle at 10% 15%, rgba(255, 228, 235, 0.55) 0%, transparent 40%),
+    radial-gradient(circle at 90% 12%, rgba(243, 232, 255, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(254, 243, 199, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(224, 242, 254, 0.45) 0%, transparent 40%),
+    #fff8f9;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text-main);
+  line-height: 1.6;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.015em;
+}
+
+/* Form input readability */
+input, textarea, select {
+  color: #111827;
+  font-weight: 500;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Consistent Aspect Ratio for Product Cards */
+.craft-aspect {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Safe areas for iPhone/iPad */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+
+/* ========================================================
+   LIGHT TRANSLUCENT PASTEL BRACKET / CARD STYLING SYSTEM
+   ======================================================== */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 114, 182, 0.25);
+  box-shadow: 0 8px 30px rgba(225, 29, 72, 0.04);
+}
+
+.bracket-pink {
+  background: linear-gradient(135deg, rgba(255, 241, 242, 0.82) 0%, rgba(255, 228, 230, 0.58) 100%);
+  border: 1px solid rgba(251, 113, 133, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bracket-peach {
+  background: linear-gradient(135deg, rgba(255, 247, 237, 0.82) 0%, rgba(254, 215, 170, 0.52) 100%);
+  border: 1px solid rgba(251, 146, 60, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bracket-amber {
+  background: linear-gradient(135deg, rgba(255, 251, 235, 0.82) 0%, rgba(254, 243, 199, 0.52) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bracket-emerald {
+  background: linear-gradient(135deg, rgba(240, 253, 244, 0.82) 0%, rgba(220, 252, 231, 0.52) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bracket-purple {
+  background: linear-gradient(135deg, rgba(250, 245, 255, 0.82) 0%, rgba(243, 232, 255, 0.52) 100%);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bracket-sky {
+  background: linear-gradient(135deg, rgba(240, 249, 255, 0.82) 0%, rgba(224, 242, 254, 0.52) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
