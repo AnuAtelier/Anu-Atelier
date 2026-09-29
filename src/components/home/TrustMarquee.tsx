@@ -48,7 +48,7 @@ export const TrustMarquee: React.FC = () => {
   return (
     <div
       aria-label="Trust highlights ticker"
-      className="relative w-full overflow-hidden py-3 bg-gradient-to-r from-rose-100/70 via-pink-50/90 to-amber-50/70 border-y border-pink-200/50 backdrop-blur-md select-none group"
+      className="relative w-full max-w-full min-w-0 overflow-hidden py-3 bg-gradient-to-r from-rose-100/70 via-pink-50/90 to-amber-50/70 border-y border-pink-200/50 backdrop-blur-md select-none group"
     >
       {/* Soft gradient edge fade masks */}
       <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />

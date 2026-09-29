@@ -77,17 +77,27 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Brand Header */}
       <div className="p-6 border-b border-[var(--border-color)] flex items-center justify-between">
         <div>
-          <Link to="/admin" className="flex items-center gap-1 group">
-            <span className="font-heading text-2xl font-bold tracking-tight text-[var(--text-main)]">
-              Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
-            </span>
+          <Link to="/admin" className="flex items-center gap-3 group">
+            <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+              <img
+                src="/logo.png"
+                alt="Anu Atelier Logo"
+                className="relative z-10 h-10 w-10 object-contain drop-shadow-sm flex-shrink-0 animate-heartbeat"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-heading text-2xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 transition-opacity">
+                Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
+              </span>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-[9.5px] font-bold tracking-wide uppercase border border-pink-300">
+                  <ShieldCheck className="h-2.5 w-2.5 text-[var(--primary)]" />
+                  <span>Admin Suite</span>
+                </span>
+              </div>
+            </div>
           </Link>
-          <div className="flex items-center gap-1.5 mt-1.5">
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-[10px] font-bold tracking-wide uppercase border border-pink-300">
-              <ShieldCheck className="h-3 w-3 text-[var(--primary)]" />
-              <span>Admin Suite</span>
-            </span>
-          </div>
         </div>
 
         {/* Mobile close button */}
@@ -203,7 +213,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <div className="flex-1 md:pl-64 lg:pl-72 flex flex-col min-w-0">
         {/* Mobile Header Bar (Only visible < md) */}
         <header className="md:hidden sticky top-0 z-20 bg-[var(--bg-card)] border-b border-[var(--border-color)] px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="p-2 rounded-xl border border-[var(--border-color)] text-[var(--text-main)] hover:bg-[var(--bg-input)]"
@@ -211,9 +221,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             >
               <Menu className="h-5 w-5" />
             </button>
-            <span className="font-heading font-bold text-lg text-[var(--text-main)]">
-              Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
-            </span>
+            <Link to="/admin" className="flex items-center gap-2">
+              <div className="relative flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-sm animate-heart-aura pointer-events-none" />
+                <img
+                  src="/logo.png"
+                  alt="Anu Atelier"
+                  className="relative z-10 h-7 w-7 object-contain animate-heartbeat"
+                />
+              </div>
+              <span className="font-heading font-bold text-lg text-[var(--text-main)]">
+                Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
+              </span>
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">

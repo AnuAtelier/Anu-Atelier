@@ -209,7 +209,7 @@ export const ProductPage: React.FC = () => {
           <div
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="relative w-full aspect-square max-h-[460px] sm:max-h-[500px] mx-auto rounded-3xl overflow-hidden bg-stone-50/90 border border-stone-200/90 shadow-xs flex items-center justify-center p-3 sm:p-5 select-none cursor-pointer group hover:border-[var(--primary)] transition-all"
+            className="relative w-full aspect-square max-h-[460px] sm:max-h-[500px] mx-auto rounded-3xl overflow-hidden bg-stone-50/90 border border-stone-200/80 shadow-xs flex items-center justify-center p-3 sm:p-5 select-none cursor-pointer group transition-all"
             onClick={() => {
               setIsLightboxOpen(true);
               setZoomLevel(1);
@@ -321,8 +321,8 @@ export const ProductPage: React.FC = () => {
                   }}
                   className={`relative w-15 h-15 sm:w-18 sm:h-18 rounded-2xl overflow-hidden flex-shrink-0 border-2 transition-all p-1 bg-white shadow-2xs cursor-pointer ${
                     activeImageIndex === idx
-                      ? 'border-[var(--primary)] ring-2 ring-pink-500/20 scale-105'
-                      : 'border-stone-200 opacity-70 hover:opacity-100 hover:border-stone-300'
+                      ? 'border-gray-900 ring-2 ring-gray-900/15 scale-105'
+                      : 'border-stone-200 opacity-70 hover:opacity-100 hover:border-stone-400'
                   }`}
                 >
                   <img
@@ -728,7 +728,7 @@ export const ProductPage: React.FC = () => {
                     }}
                     className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all p-0.5 bg-stone-50 cursor-pointer ${
                       activeImageIndex === idx
-                        ? 'border-[var(--primary)] ring-2 ring-pink-500/30 scale-105 shadow-sm'
+                        ? 'border-gray-900 ring-2 ring-gray-900/20 scale-105 shadow-sm'
                         : 'border-stone-200 opacity-70 hover:opacity-100 hover:border-stone-300'
                     }`}
                   >

@@ -67,10 +67,18 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+  position: relative;
   /* Luxury light multi-gradient ambient mesh background */
   background: 
     radial-gradient(circle at 10% 15%, rgba(255, 228, 235, 0.55) 0%, transparent 40%),
@@ -84,10 +92,18 @@ body {
   line-height: 1.6;
   font-weight: 450;
   letter-spacing: -0.01em;
-  overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -273,6 +289,70 @@ input::placeholder, textarea::placeholder {
   }
 }
 
+@keyframes logoHeartbeat {
+  0% {
+    transform: scale3d(1, 1, 1);
+    filter: drop-shadow(0 2px 6px rgba(225, 29, 72, 0.16));
+  }
+  14% {
+    /* First beat (lub) - quick, smooth expansion */
+    transform: scale3d(1.13, 1.13, 1);
+    filter: drop-shadow(0 0 14px rgba(244, 63, 94, 0.55)) drop-shadow(0 2px 8px rgba(225, 29, 72, 0.28));
+  }
+  24% {
+    /* Fluid valley - back-to-back transition, does NOT stall at 1.0 */
+    transform: scale3d(1.055, 1.055, 1);
+    filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.32)) drop-shadow(0 2px 6px rgba(225, 29, 72, 0.2));
+  }
+  38% {
+    /* Second beat (dub) - deeper, fuller surge back-to-back */
+    transform: scale3d(1.19, 1.19, 1);
+    filter: drop-shadow(0 0 22px rgba(244, 63, 94, 0.72)) drop-shadow(0 0 36px rgba(251, 113, 133, 0.42));
+  }
+  52% {
+    /* Smooth gentle release */
+    transform: scale3d(0.985, 0.985, 1);
+    filter: drop-shadow(0 2px 6px rgba(225, 29, 72, 0.2));
+  }
+  62% {
+    /* Soft elastic settle */
+    transform: scale3d(1.012, 1.012, 1);
+    filter: drop-shadow(0 2px 5px rgba(225, 29, 72, 0.15));
+  }
+  70%, 100% {
+    /* Peaceful rest phase */
+    transform: scale3d(1, 1, 1);
+    filter: drop-shadow(0 2px 6px rgba(225, 29, 72, 0.16));
+  }
+}
+
+@keyframes heartAuraPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  14% {
+    transform: scale(1.22);
+    opacity: 0.6;
+  }
+  24% {
+    transform: scale(1.1);
+    opacity: 0.38;
+  }
+  38% {
+    transform: scale(1.38);
+    opacity: 0.85;
+  }
+  54% {
+    transform: scale(1.05);
+    opacity: 0.2;
+  }
+  70%, 100% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+
 @keyframes sparkleRotate {
   0% {
     transform: rotate(0deg) scale(1);
@@ -349,6 +429,24 @@ input::placeholder, textarea::placeholder {
 
 .animate-heart-pop {
   animation: heartPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-heartbeat {
+  animation: logoHeartbeat 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-heart-aura {
+  animation: heartAuraPulse 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
 }
 
 /* 60fps Marquee Row */

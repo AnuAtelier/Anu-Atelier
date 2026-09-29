@@ -21,7 +21,7 @@ export const LatestCrafts: React.FC = () => {
   const sortedProducts = [...filteredProducts].sort((a, b) => b.createdAt - a.createdAt);
 
   return (
-    <section id="latest-crafts" className="py-16 px-4 sm:px-8 max-w-7xl mx-auto transition-colors">
+    <section id="latest-crafts" className="py-10 sm:py-16 px-3.5 sm:px-8 max-w-7xl mx-auto transition-colors w-full max-w-full min-w-0 overflow-hidden">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
@@ -38,7 +38,7 @@ export const LatestCrafts: React.FC = () => {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none w-full max-w-full overscroll-x-contain">
           <button
             onClick={() => setSelectedFilter('all')}
             className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 backdrop-blur-xs cursor-pointer ${
@@ -77,7 +77,7 @@ export const LatestCrafts: React.FC = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 w-full min-w-0">
           {sortedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

@@ -44,10 +44,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div
       onClick={handleCardClick}
-      className="card-interactive shimmer-container group relative flex flex-col rounded-3xl bg-white/80 backdrop-blur-md border border-pink-200/50 hover:border-pink-400 hover:bg-white/95 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+      className="card-interactive shimmer-container group relative flex flex-col rounded-3xl bg-white/90 backdrop-blur-md border border-stone-200/80 hover:border-stone-300 hover:bg-white shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
     >
       {/* 4:5 Image Container */}
-      <div className="relative w-full aspect-[4/5] bg-pink-50/30 overflow-hidden">
+      <div className="relative w-full aspect-[4/5] bg-stone-50/50 overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
@@ -126,16 +126,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div>
           {/* Price Bracket Box */}
           <div className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-r from-pink-500/10 via-rose-500/5 to-purple-500/10 border border-pink-200/50 mb-1">
-            <div className="flex items-baseline gap-2">
-              <span className="text-base sm:text-lg font-bold text-gray-900">
-                ₹{product.price}
-              </span>
-              {product.originalPrice && product.originalPrice > product.price && (
-                <span className="text-xs text-gray-500 line-through">
-                  ₹{product.originalPrice}
+            <div className="flex flex-wrap items-baseline justify-between gap-1">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-sm sm:text-base font-bold text-gray-900">
+                  ₹{product.price}
                 </span>
-              )}
-              <span className="text-[10px] text-emerald-700 font-bold ml-auto px-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-200/60">
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <span className="text-[11px] text-gray-500 line-through">
+                    ₹{product.originalPrice}
+                  </span>
+                )}
+              </div>
+              <span className="text-[9.5px] sm:text-[10px] text-emerald-700 font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-200/60 whitespace-nowrap ml-auto">
                 Free Delivery
               </span>
             </div>

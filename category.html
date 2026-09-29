@@ -12,7 +12,10 @@
         .category-page {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 5%;
+            padding: 1.5rem 4%;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
         
         .breadcrumbs {
@@ -198,24 +201,72 @@
             document.documentElement.setAttribute('data-theme', 'dark');
         }
     </script>
+    <!-- Global Heartbeat Synchronizer -->
+    <script>
+        (function() {
+            function syncHearts() {
+                if (!document.getAnimations) return;
+                try {
+                    var anims = document.getAnimations();
+                    for (var i = 0; i < anims.length; i++) {
+                        var a = anims[i];
+                        if (a.animationName === 'logoHeartbeat' || a.animationName === 'heartAuraPulse') {
+                            if (a.startTime !== 0) {
+                                try { a.startTime = 0; } catch (err) {}
+                            }
+                        }
+                    }
+                } catch (err) {}
+            }
+            document.addEventListener('animationstart', function(e) {
+                if (e.animationName === 'logoHeartbeat' || e.animationName === 'heartAuraPulse') {
+                    syncHearts();
+                }
+            });
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') syncHearts();
+            });
+            setInterval(syncHearts, 2800);
+        })();
+    </script>
 </head>
 <body>
     <nav class="navbar">
         <div class="logo">
-            <a href="index.html">Anu<span>Atelier</span></a>
+            <a href="index.html">
+                <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                    <div class="animate-heart-aura" style="position: absolute; inset: 0; border-radius: 50%; background: rgba(244, 63, 94, 0.25); filter: blur(6px); pointer-events: none;"></div>
+                    <img src="logo.png" alt="Anu Atelier Logo" class="animate-heartbeat" style="height: 38px; width: 38px; object-fit: contain; position: relative; z-index: 1;">
+                </div>
+                <span>Anu<span>Atelier</span></span>
+            </a>
         </div>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Search for handmade magic...">
             <button id="search-btn"><i class="fas fa-search"></i></button>
         </div>
-                <div class="nav-icons" style="align-items: center; gap: 1rem; display: flex;">
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:var(--bg-input); border:1px solid var(--border-color); color:var(--text-main); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; transition:0.3s;">
+        <div class="nav-links" style="display: flex; align-items: center; gap: 1rem; margin: 0 0.5rem;">
+            <a href="index.html" style="text-decoration:none; color:var(--text-main); font-weight:500; font-size:0.85rem;">Home</a>
+            <a href="category.html?cat=terracotta-clay" style="text-decoration:none; color:var(--text-main); font-weight:500; font-size:0.85rem;">Terracotta</a>
+            <a href="category.html?cat=embroidered-clothes" style="text-decoration:none; color:var(--text-main); font-weight:500; font-size:0.85rem;">Clothing</a>
+            <a href="category.html?cat=wall-art-decor" style="text-decoration:none; color:var(--text-main); font-weight:500; font-size:0.85rem;">Wall Art</a>
+            <a href="category.html?cat=other-handicrafts" style="text-decoration:none; color:var(--text-main); font-weight:500; font-size:0.85rem;">Handicrafts</a>
+        </div>
+        <div class="nav-icons" style="align-items: center; gap: 0.5rem; display: flex; flex-shrink: 0;">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:var(--bg-input); border:1px solid var(--border-color); color:var(--text-main); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; transition:0.3s; flex-shrink:0;">
                 <i class="fas fa-moon"></i>
             </button>
-            <a href="seller.html" class="btn small-btn" style="margin-right:0.5rem; padding: 0.5rem 1rem; text-decoration:none;"><i class="fas fa-plus"></i> Add Craft</a>
-            <a href="profile.html" class="icon"><i class="far fa-user"></i></a>
+            <a href="seller.html" class="btn small-btn" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; text-decoration:none; white-space:nowrap;"><i class="fas fa-plus"></i> Add Craft</a>
+            <a href="profile.html" id="user-nav-link" class="btn small-btn" style="padding: 0.35rem 0.65rem; font-size: 0.8rem; text-decoration:none; display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 50px; background: rgba(225, 29, 72, 0.08); color: var(--primary); font-weight: 600;"><i class="far fa-user"></i> <span>Login</span></a>
         </div>
     </nav>
+    <div class="quick-category-bar" style="position: sticky; top: 58px; z-index: 999; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 0.4rem 4%; display: flex; gap: 0.5rem; overflow-x: auto; white-space: nowrap;">
+        <a href="index.html" style="text-decoration:none; padding: 0.25rem 0.75rem; border-radius: 50px; background: var(--bg-input); color: var(--text-main); font-size: 0.8rem; font-weight: 500;">🏠 Home</a>
+        <a href="category.html?cat=terracotta-clay" style="text-decoration:none; padding: 0.25rem 0.75rem; border-radius: 50px; background: var(--bg-input); color: var(--text-main); font-size: 0.8rem; font-weight: 500;">🏺 Terracotta</a>
+        <a href="category.html?cat=embroidered-clothes" style="text-decoration:none; padding: 0.25rem 0.75rem; border-radius: 50px; background: var(--bg-input); color: var(--text-main); font-size: 0.8rem; font-weight: 500;">🧵 Clothing</a>
+        <a href="category.html?cat=wall-art-decor" style="text-decoration:none; padding: 0.25rem 0.75rem; border-radius: 50px; background: var(--bg-input); color: var(--text-main); font-size: 0.8rem; font-weight: 500;">🖼️ Wall Art</a>
+        <a href="category.html?cat=other-handicrafts" style="text-decoration:none; padding: 0.25rem 0.75rem; border-radius: 50px; background: var(--bg-input); color: var(--text-main); font-size: 0.8rem; font-weight: 500;">🎁 Handicrafts</a>
+    </div>
 
     <div class="category-page">
         <div class="breadcrumbs" id="breadcrumbs">
@@ -432,6 +483,23 @@
                 updateThemeIcon(newTheme);
             });
         }
+
+        // Dynamic Auth Header Badge
+        (function() {
+            try {
+                const saved = localStorage.getItem('anu_auth_user');
+                const link = document.getElementById('user-nav-link');
+                if (link && saved) {
+                    const user = JSON.parse(saved);
+                    const isOwner = user.role === 'admin' || (user.email && user.email.toLowerCase() === 'anushka32199@gmail.com');
+                    const name = user.fullName ? user.fullName.split(' ')[0] : 'User';
+                    link.innerHTML = `<i class="fas fa-user-circle"></i> <span>${isOwner ? '👑 Owner' : 'Hi, ' + name}</span>`;
+                    link.style.background = 'rgba(225, 29, 72, 0.12)';
+                    link.style.color = '#e11d48';
+                    link.title = `${user.fullName || 'User'} (${isOwner ? 'Owner' : 'Customer'})`;
+                }
+            } catch(e) {}
+        })();
     </script>
 </body>
 </html>

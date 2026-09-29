@@ -27,8 +27,9 @@ export const OrderSuccessPage: React.FC = () => {
       {/* Top Banner Celebration */}
       <div className="text-center space-y-3">
         <div className="relative mx-auto w-20 h-20 flex items-center justify-center">
-          <img src="/logo.png" alt="Anu Atelier" className="w-20 h-20 object-contain drop-shadow-md" />
-          <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md border-2 border-white animate-scale-in">
+          <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+          <img src="/logo.png" alt="Anu Atelier" className="relative z-10 w-20 h-20 object-contain drop-shadow-md animate-heartbeat" />
+          <div className="absolute -bottom-1 -right-1 z-20 w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md border-2 border-white animate-scale-in">
             <CheckCircle className="h-4 w-4" />
           </div>
         </div>

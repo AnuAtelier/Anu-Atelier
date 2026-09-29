@@ -5,6 +5,15 @@ import { Home, Sparkles } from 'lucide-react';
 export const NotFoundPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto my-20 p-8 sm:p-10 text-center space-y-6 rounded-3xl bg-gradient-to-br from-white/95 via-pink-50/35 to-purple-50/25 backdrop-blur-xl border border-pink-200/70 shadow-xl">
+      <div className="relative mx-auto w-16 h-16 flex items-center justify-center">
+        <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+        <img
+          src="/logo.png"
+          alt="Anu Atelier Logo"
+          className="relative z-10 w-16 h-16 object-contain drop-shadow-md animate-heartbeat"
+        />
+      </div>
+
       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-semibold border border-pink-200">
         <Sparkles className="h-3.5 w-3.5 text-[var(--primary)]" />
         <span>404 - Page Not Found</span>

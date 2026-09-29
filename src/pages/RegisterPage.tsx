@@ -53,11 +53,14 @@ export const RegisterPage: React.FC = () => {
         <div className="w-full max-w-md bg-gradient-to-br from-white/95 via-pink-50/35 to-purple-50/25 backdrop-blur-xl border border-pink-200/70 rounded-3xl p-6 sm:p-8 shadow-xl">
           <div className="text-center mb-6">
             <Link to="/" className="inline-flex flex-col items-center mb-3 group">
-              <img
-                src="/logo.png"
-                alt="Anu Atelier Logo"
-                className="h-16 w-16 object-contain drop-shadow-sm mb-2 group-hover:scale-105 transition-transform duration-300"
-              />
+              <div className="relative flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-105">
+                <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+                <img
+                  src="/logo.png"
+                  alt="Anu Atelier Logo"
+                  className="relative z-10 h-16 w-16 object-contain drop-shadow-sm animate-heartbeat"
+                />
+              </div>
               <span className="font-heading text-2xl font-bold tracking-tight text-[var(--text-main)]">
                 Anu<span className="text-[var(--primary)] italic font-semibold">Atelier</span>
               </span>

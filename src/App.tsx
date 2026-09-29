@@ -10,6 +10,7 @@ import { AdminRoute } from './components/common/AdminRoute';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AnimatedArtisanBackground } from './components/common/AnimatedArtisanBackground';
 import { useAuthStore } from './store/useAuthStore';
+import { initHeartbeatSync, syncHeartbeatAnimations } from './utils/syncHeartbeats';
 
 // Storefront Pages
 import { HomePage } from './pages/HomePage';
@@ -34,6 +35,8 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Guarantee all hearts on the incoming page immediately lock into unison
+    syncHeartbeatAnimations();
   }, [pathname]);
   return null;
 }
@@ -112,10 +115,10 @@ const AppContent: React.FC = () => {
 
   // 4. Customer Storefront Layout: WITH Header, Footer, MobileNav, CartDrawer, WhatsAppFloat
   return (
-    <div className="relative flex flex-col min-h-screen bg-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
+    <div className="relative flex flex-col min-h-screen bg-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200 w-full max-w-full overflow-x-clip min-w-0">
       <AnimatedArtisanBackground />
       <Header />
-      <main className="flex-1 pb-16 sm:pb-0 relative z-10">
+      <main className="flex-1 pb-16 sm:pb-0 relative z-10 w-full max-w-full min-w-0 overflow-x-clip">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
@@ -143,6 +146,10 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     initializeAuth();
+    const cleanupHeartSync = initHeartbeatSync();
+    return () => {
+      cleanupHeartSync();
+    };
   }, [initializeAuth]);
 
   return (

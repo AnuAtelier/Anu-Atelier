@@ -62,7 +62,7 @@ export const CategoryPage: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-8 space-y-8">
+    <div className="max-w-7xl mx-auto py-6 sm:py-8 px-3.5 sm:px-8 space-y-6 sm:space-y-8 w-full max-w-full min-w-0 overflow-hidden">
       {/* Breadcrumbs */}
       <nav className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-pink-200/50 shadow-2xs text-xs text-[var(--text-muted)]">
         <Link to="/" className="hover:text-[var(--primary)] transition-colors">
@@ -162,7 +162,7 @@ export const CategoryPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 w-full min-w-0">
           {sortedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

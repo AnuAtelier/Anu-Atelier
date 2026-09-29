@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 export const PromoCardsRow: React.FC = () => {
   return (
-    <section className="py-12 px-4 sm:px-8 max-w-7xl mx-auto">
+    <section className="py-12 px-4 sm:px-8 max-w-7xl mx-auto w-full max-w-full min-w-0 overflow-hidden">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>

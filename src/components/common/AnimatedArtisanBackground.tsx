@@ -56,7 +56,7 @@ export const AnimatedArtisanBackground: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 -z-20 overflow-hidden pointer-events-none select-none"
+      className="fixed inset-0 -z-20 w-full h-full max-w-[100vw] overflow-hidden pointer-events-none select-none"
     >
       {/* 1. Interactive Cursor Ambient Spotlight (Desktop only, 0 CPU on mobile) */}
       {isDesktop && (

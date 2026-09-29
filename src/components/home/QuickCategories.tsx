@@ -74,10 +74,10 @@ const QUICK_ITEMS = [
 
 export const QuickCategories: React.FC = () => {
   return (
-    <section className="relative z-20 my-4 sm:my-6 py-6 sm:py-8 border-y border-pink-200/60 bg-white/80 backdrop-blur-md shadow-xs transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+    <section className="relative z-20 my-4 sm:my-6 py-6 sm:py-8 border-y border-pink-200/60 bg-white/80 backdrop-blur-md shadow-xs transition-colors w-full max-w-full min-w-0 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full min-w-0">
         {/* Horizontal scroll container with generous top & bottom headroom */}
-        <div className="flex items-center justify-between gap-4 sm:gap-6 overflow-x-auto pt-4 pb-3 sm:pt-5 sm:pb-4 scrollbar-none">
+        <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto pt-4 pb-3 sm:pt-5 sm:pb-4 scrollbar-none w-full max-w-full overscroll-x-contain">
           {QUICK_ITEMS.map((item) => {
             const Icon = item.icon;
             return (

@@ -186,7 +186,14 @@ export const CheckoutPage: React.FC = () => {
     <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-8 space-y-8">
       <div className="border-b border-[var(--border-color)] pb-4">
         <div className="flex items-center gap-3.5 mb-2">
-          <img src="/logo.png" alt="Anu Atelier" className="h-12 w-12 object-contain drop-shadow-sm flex-shrink-0" />
+          <div className="relative flex items-center justify-center transition-transform duration-300 hover:scale-105">
+            <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-sm animate-heart-aura pointer-events-none" />
+            <img
+              src="/logo.png"
+              alt="Anu Atelier"
+              className="relative z-10 h-12 w-12 object-contain drop-shadow-sm flex-shrink-0 animate-heartbeat"
+            />
+          </div>
           <div>
             <span className="text-[11px] font-bold tracking-widest uppercase text-[var(--primary)]">
               Official Anu Atelier Checkout

@@ -24,6 +24,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../constants';
 import { Product, Order } from '../types';
 import { adminService } from '../services/adminService';
+import { syncHeartbeatAnimations } from '../utils/syncHeartbeats';
 
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ export const AdminDashboardPage: React.FC = () => {
 
   // Fetch live orders and analytics from backend
   useEffect(() => {
+    syncHeartbeatAnimations();
     adminService.fetchSalesAnalytics().then((res) => {
       setLiveAnalytics({
         totalRevenueRupees: res.totalRevenueRupees,
@@ -122,7 +124,14 @@ export const AdminDashboardPage: React.FC = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-6">
         <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="Anu Atelier Logo" className="h-14 w-14 object-contain drop-shadow-sm flex-shrink-0" />
+          <div className="relative flex items-center justify-center transition-transform duration-300 hover:scale-105">
+            <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+            <img
+              src="/logo.png"
+              alt="Anu Atelier Logo"
+              className="relative z-10 h-14 w-14 object-contain drop-shadow-sm flex-shrink-0 animate-heartbeat"
+            />
+          </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-100 text-[var(--primary-dark)] text-xs font-bold border border-pink-300">

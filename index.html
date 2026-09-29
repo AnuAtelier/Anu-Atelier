@@ -31,6 +31,34 @@
             document.documentElement.setAttribute('data-theme', 'light');
         } catch (e) { }
     </script>
+
+    <!-- Global Heartbeat Synchronizer (ensures all heart logos on page beat in exact unison) -->
+    <script>
+        (function() {
+            function syncHearts() {
+                if (!document.getAnimations) return;
+                try {
+                    var anims = document.getAnimations();
+                    for (var i = 0; i < anims.length; i++) {
+                        var a = anims[i];
+                        if (a.animationName === 'logoHeartbeat' || a.animationName === 'heartAuraPulse') {
+                            if (a.startTime !== 0) {
+                                try { a.startTime = 0; } catch (err) {}
+                            }
+                        }
+                    }
+                } catch (err) {}
+            }
+            document.addEventListener('animationstart', function(e) {
+                if (e.animationName === 'logoHeartbeat' || e.animationName === 'heartAuraPulse') {
+                    syncHearts();
+                }
+            });
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') syncHearts();
+            });
+        })();
+    </script>
 </head>
 
 <body>

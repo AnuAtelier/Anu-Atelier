@@ -3,11 +3,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, Grid, Heart, ShoppingBag, User } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
+import { useAuthStore } from '../../store/useAuthStore';
 
 export const MobileNav: React.FC = () => {
   const location = useLocation();
   const { getTotalItems, toggleDrawer } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
+  const { user } = useAuthStore();
+
+  const isAdmin = user?.role === 'admin' || user?.email?.toLowerCase() === 'anushka32199@gmail.com';
 
   const cartCount = getTotalItems();
   const wishlistCount = wishlistItems.length;
@@ -71,15 +75,30 @@ export const MobileNav: React.FC = () => {
           <span className="text-[10px] font-medium">Cart</span>
         </button>
 
-        {/* Account */}
+        {/* Account / Login */}
         <Link
-          to="/profile"
+          to={user ? "/profile" : "/login"}
           className={`flex flex-col items-center justify-center gap-0.5 ${
-            isActive('/profile') ? 'text-[var(--primary)]' : 'text-[var(--text-muted)]'
+            isActive('/profile') || isActive('/login') ? 'text-[var(--primary)]' : 'text-[var(--text-muted)]'
           }`}
         >
-          <User className="h-4 w-4" />
-          <span className="text-[10px] font-medium">Account</span>
+          {user ? (
+            <div className="relative flex items-center justify-center">
+              <div className={`w-5 h-5 rounded-full ${
+                isAdmin
+                  ? 'bg-gradient-to-tr from-pink-600 via-rose-500 to-amber-500'
+                  : 'bg-gradient-to-br from-pink-500 to-rose-600'
+              } text-white font-bold text-[9px] flex items-center justify-center shadow-xs`}>
+                {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-1.5 h-1.5 bg-emerald-500 rounded-full border border-white"></span>
+            </div>
+          ) : (
+            <User className="h-4 w-4" />
+          )}
+          <span className="text-[10px] font-medium truncate max-w-[58px]">
+            {user ? (isAdmin ? 'Owner' : user.fullName.split(' ')[0]) : 'Login'}
+          </span>
         </Link>
       </div>
     </nav>

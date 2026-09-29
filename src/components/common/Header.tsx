@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, ShoppingBag, Heart, Plus, User, X } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
@@ -7,8 +7,17 @@ import { useProductStore } from '../../store/useProductStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import { DEFAULT_SITE_SETTINGS } from '../../constants';
 
+const CATEGORY_LINKS = [
+  { label: 'Home', path: '/', emoji: '🏠' },
+  { label: 'Terracotta', path: '/category/terracotta-clay', emoji: '🏺' },
+  { label: 'Clothing', path: '/category/embroidered-clothes', emoji: '🧵' },
+  { label: 'Wall Art', path: '/category/wall-art-decor', emoji: '🖼️' },
+  { label: 'Handicrafts', path: '/category/other-handicrafts', emoji: '🎁' },
+];
+
 export const Header: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { getTotalItems, toggleDrawer } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
   const { products } = useProductStore();
@@ -18,8 +27,19 @@ export const Header: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Track window scroll to make header sleek on head and collapse announcement
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const cartCount = getTotalItems();
   const wishlistCount = wishlistItems.length;
@@ -71,28 +91,38 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full transition-colors duration-200">
-      {/* Announcement Bar */}
-      <div className="bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white text-xs sm:text-sm font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
-        <span>{DEFAULT_SITE_SETTINGS.announcementText}</span>
+    <header className={`sticky top-0 z-50 w-full max-w-full transition-all duration-300 ${
+      isScrolled ? 'shadow-md' : 'shadow-xs'
+    }`}>
+      {/* Announcement Bar: Collapses on scroll down so Header is cleanly on "head" */}
+      <div
+        className={`bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white text-[11px] sm:text-xs font-medium text-center tracking-wide flex items-center justify-center gap-2 overflow-hidden w-full transition-all duration-300 ease-in-out ${
+          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-10 py-1.5 px-3 sm:px-4 opacity-100'
+        }`}
+      >
+        <span className="truncate max-w-full">{DEFAULT_SITE_SETTINGS.announcementText}</span>
       </div>
 
       {/* Main Navbar */}
       <nav
         style={{
-          backgroundColor: 'var(--header-bg)',
-          borderColor: 'var(--header-border)',
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.96)' : 'var(--header-bg)',
+          borderColor: isScrolled ? 'rgba(244, 114, 182, 0.35)' : 'var(--header-border)',
         }}
-        className="backdrop-blur-md border-b transition-colors"
+        className="backdrop-blur-md border-b transition-all duration-300 w-full"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 sm:py-3.5 flex items-center justify-between gap-4">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-4 lg:gap-6 min-w-0">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-            <img
-              src="/logo.png"
-              alt="Anu Atelier Logo"
-              className="h-12 w-12 sm:h-14 sm:w-14 object-contain group-hover:scale-105 transition-transform duration-300"
-            />
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+            <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              {/* Soft ambient heart halo that breathes in sync with the pulse */}
+              <div className="absolute inset-0 rounded-full bg-rose-500/25 blur-md animate-heart-aura pointer-events-none" />
+              <img
+                src="/logo.png"
+                alt="Anu Atelier Logo"
+                className="relative z-10 h-11 w-11 sm:h-13 sm:w-13 object-contain animate-heartbeat"
+              />
+            </div>
             <div className="flex flex-col">
               <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-none transition-opacity">
                 Anu<span className="text-pink-600 italic font-semibold">Atelier</span>
@@ -104,7 +134,7 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Search Bar (Desktop) */}
-          <div ref={searchContainerRef} className="relative hidden md:block flex-1 max-w-md mx-4">
+          <div ref={searchContainerRef} className="relative hidden md:block flex-1 max-w-xs xl:max-w-sm mx-2 xl:mx-4">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 ref={searchInputRef}
@@ -173,37 +203,23 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Category Navigation Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-6">
-            <Link
-              to="/"
-              className="text-sm font-medium text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
-            >
-              Home
-            </Link>
-            <Link
-              to="/category/terracotta-clay"
-              className="text-sm font-medium text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
-            >
-              Terracotta
-            </Link>
-            <Link
-              to="/category/embroidered-clothes"
-              className="text-sm font-medium text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
-            >
-              Clothing
-            </Link>
-            <Link
-              to="/category/wall-art-decor"
-              className="text-sm font-medium text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
-            >
-              Wall Art
-            </Link>
-            <Link
-              to="/category/other-handicrafts"
-              className="text-sm font-medium text-[var(--text-main)] hover:text-[var(--primary)] transition-colors"
-            >
-              Handicrafts
-            </Link>
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
+            {CATEGORY_LINKS.map((cat) => {
+              const isActive = location.pathname === cat.path;
+              return (
+                <Link
+                  key={cat.path}
+                  to={cat.path}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all ${
+                    isActive
+                      ? 'bg-[var(--primary)] text-white shadow-xs'
+                      : 'text-[var(--text-main)] hover:text-[var(--primary)] hover:bg-pink-50/80'
+                  }`}
+                >
+                  {cat.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Action Controls */}
@@ -247,28 +263,77 @@ export const Header: React.FC = () => {
               )}
             </button>
 
-            {/* User Account / Profile */}
-            <Link
-              to={user ? "/profile" : "/login"}
-              aria-label="My Account"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 hover:bg-purple-500/20 border border-purple-200/60 flex items-center justify-center text-purple-700 transition-all shadow-xs"
-            >
-              {user ? (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-xs">
-                  {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
+            {/* User Account / Profile / Login */}
+            {user ? (
+              <Link
+                to="/profile"
+                aria-label="My Account"
+                className="inline-flex items-center gap-2 pl-1 pr-2.5 sm:pr-3 py-1 rounded-full border border-pink-200/90 bg-white/90 hover:bg-pink-50/80 text-stone-900 transition-all shadow-xs group flex-shrink-0"
+                title={`${user.fullName || 'User'} (${isAdmin ? 'Owner' : 'Customer'})`}
+              >
+                <div className="relative flex-shrink-0">
+                  <div className={`w-8 h-8 rounded-full ${
+                    isAdmin
+                      ? 'bg-gradient-to-tr from-pink-600 via-rose-500 to-amber-500'
+                      : 'bg-gradient-to-br from-pink-500 to-rose-600'
+                  } text-white font-bold text-xs flex items-center justify-center shadow-xs`}>
+                    {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
                 </div>
-              ) : (
-                <User className="h-4.5 w-4.5" />
-              )}
-            </Link>
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-rose-600">
+                    {isAdmin ? 'Owner' : `Hi, ${user.fullName.split(' ')[0]}`}
+                  </span>
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800 truncate max-w-[110px] lg:max-w-[180px]">
+                    {isAdmin ? (user.fullName || 'Anushka') : 'My Account'}
+                  </span>
+                </div>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                aria-label="Login to Anu Atelier"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-pink-300/80 bg-white hover:bg-pink-50 text-stone-800 hover:text-[var(--primary)] text-xs sm:text-sm font-semibold transition-all shadow-xs group flex-shrink-0"
+              >
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-pink-100 flex items-center justify-center text-[var(--primary)] group-hover:scale-105 transition-transform flex-shrink-0">
+                  <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                </div>
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[9.5px] sm:text-[10px] text-stone-500 font-medium leading-none">Sign In</span>
+                  <span className="font-bold text-[11px] sm:text-xs text-[var(--primary)] leading-none mt-0.5">Login</span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
 
+      {/* Sticky Quick-Access Category Navigation (Mobile & Tablet) */}
+      <div className="lg:hidden border-b border-[var(--border-color)]/70 bg-white/95 backdrop-blur-md px-3 py-1.5 overflow-x-auto no-scrollbar flex items-center gap-1.5 shadow-2xs">
+        {CATEGORY_LINKS.map((cat) => {
+          const isActive = location.pathname === cat.path;
+          return (
+            <Link
+              key={cat.path}
+              to={cat.path}
+              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                isActive
+                  ? 'bg-[var(--primary)] text-white shadow-xs'
+                  : 'bg-stone-100/90 text-stone-700 hover:bg-stone-200/80'
+              }`}
+            >
+              <span className="text-[11px]">{cat.emoji}</span>
+              <span>{cat.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+
       {/* Mobile Search Input */}
-      <div className="md:hidden border-b border-[var(--border-color)] bg-[var(--bg-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-2">
-          <form onSubmit={handleSearchSubmit} className="relative">
+      <div className="md:hidden border-b border-[var(--border-color)] bg-[var(--bg-color)] w-full max-w-full overflow-hidden">
+        <div className="w-full px-4 sm:px-6 py-2 min-w-0">
+          <form onSubmit={handleSearchSubmit} className="relative w-full">
             <input
               type="text"
               placeholder="Search handmade magic..."

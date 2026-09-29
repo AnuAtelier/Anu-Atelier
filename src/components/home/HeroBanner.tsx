@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles, Star, Leaf, Heart, ShieldCheck, Truck } from 'luc
 
 export const HeroBanner: React.FC = () => {
   return (
-    <section className="relative overflow-hidden py-12 md:py-20 transition-colors">
+    <section className="relative overflow-hidden py-10 md:py-20 transition-colors w-full max-w-full min-w-0">
       {/* Ambient Animated Glowing Mesh Orbs (Hardware-accelerated with translate3d) */}
       <div
         aria-hidden="true"
@@ -83,7 +83,7 @@ export const HeroBanner: React.FC = () => {
         {/* Right Hero Image Card with Floating Badges */}
         <div className="relative mx-auto max-w-md lg:max-w-none w-full flex items-center justify-center">
           {/* Main Artisan Image Card */}
-          <div className="group relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg-soft border border-pink-200/70 bg-stone-100 card-interactive">
+          <div className="group relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg-soft border border-stone-200/80 bg-stone-100 card-interactive">
             <img
               src="/img/hero-artisan.jpg"
               alt="Smiling Indian craftswoman painting terracotta pottery in a sunny workshop"
