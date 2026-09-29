@@ -18,6 +18,8 @@ import {
   ZoomIn,
   ZoomOut,
   X,
+  Sparkles,
+  Check,
 } from 'lucide-react';
 import { useProductStore } from '../store/useProductStore';
 import { useCartStore } from '../store/useCartStore';
@@ -416,6 +418,48 @@ export const ProductPage: React.FC = () => {
               )}
             </span>
           </div>
+
+          {/* Key Craft Highlights */}
+          {product.highlights && product.highlights.length > 0 && (
+            <div className="p-4 rounded-2xl bg-white/70 backdrop-blur-xs border border-pink-200/60 shadow-2xs space-y-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-pink-700 flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-pink-500 animate-sparkle-spin" />
+                Artisan Highlights
+              </span>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700">
+                {product.highlights.map((h, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <Check className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Customization Options Card for Customizable Products */}
+          {(product.name.includes('Customizable') || product.description.includes('Customization Options')) && (
+            <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-pink-50/90 via-rose-50/50 to-amber-50/30 border border-pink-200/80 shadow-xs space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-pink-800">
+                  <Sparkles className="h-4 w-4 text-pink-500 animate-sparkle-spin" />
+                  <span>Personalization &amp; Customization</span>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-200/80 text-pink-900">
+                  Free Option
+                </span>
+              </div>
+              <p className="text-xs text-stone-700 leading-relaxed">
+                Handcrafted specifically for you or your best friend! You can customize this piece with your own choice of:
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] font-semibold text-pink-950">
+                <span className="p-2 rounded-xl bg-white/80 border border-pink-200/70 text-center shadow-2xs">✏️ Custom Text</span>
+                <span className="p-2 rounded-xl bg-white/80 border border-pink-200/70 text-center shadow-2xs">🎨 Thread Colors</span>
+                <span className="p-2 rounded-xl bg-white/80 border border-pink-200/70 text-center shadow-2xs">🌿 Custom Motifs</span>
+                <span className="p-2 rounded-xl bg-white/80 border border-pink-200/70 text-center shadow-2xs">🔤 Initials (e.g. M&amp;M)</span>
+              </div>
+            </div>
+          )}
 
           {/* Action Buttons: ADD TO CART & BUY NOW (As user explicitly requested!) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Truck,
@@ -43,17 +43,6 @@ export const Footer: React.FC = () => {
   const [isPreferenceModalOpen, setIsPreferenceModalOpen] = useState(false);
   const [preferenceFeedback, setPreferenceFeedback] = useState<string | null>(null);
 
-  // Floating Back to Top visibility
-  const [showFloatingTop, setShowFloatingTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowFloatingTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const handleSavePreferences = (countryCode: string, langCode: string) => {
     setSelectedCountry(countryCode);
     setSelectedLang(langCode);
@@ -73,17 +62,6 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="mt-auto relative">
-      {/* Floating Back to Top Button */}
-      {showFloatingTop && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white shadow-lg flex items-center justify-center transition-all hover:scale-110 animate-scale-in"
-          title="Back to Top"
-          aria-label="Back to Top"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </button>
-      )}
 
       {/* Trust Highlights Bar - Slim & Light */}
       <div className="border-t border-b border-pink-100 py-3.5 px-4 sm:px-6 bg-white/60 backdrop-blur-md">

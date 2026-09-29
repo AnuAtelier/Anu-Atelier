@@ -107,6 +107,8 @@ export interface Order {
   paymentStatus: 'pending' | 'completed' | 'failed' | 'demo';
   status: 'Placed' | 'Confirmed' | 'Packed' | 'Shipped' | 'Out for delivery' | 'Delivered' | 'Cancelled';
   trackingNumber?: string;
+  trackingCarrier?: string;
+  upiUtr?: string;
 }
 
 export interface SiteSettings {

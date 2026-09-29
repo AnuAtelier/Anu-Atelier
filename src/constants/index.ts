@@ -14,12 +14,28 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
 
 export const CATEGORIES: Category[] = [
   {
+    id: 'wall-art-decor',
+    slug: 'wall-art-decor',
+    name: 'Wall Art & Murals',
+    description: 'Whimsical handcrafted paper silhouette art, in-home custom painted murals, playful switchboard art, and artisanal wall hangings.',
+    image: '/img/penguin-lamp-post-wall-mural.jpg',
+    subcategories: [
+      { id: 'wall-murals', name: 'Custom Wall Murals & Accent Art' },
+      { id: 'switchboard-art', name: 'Switchboard Art' },
+      { id: 'fairy-wall-art', name: 'Fairy & Fantasy Art' },
+      { id: 'leaf-wreaths', name: 'Leaf Wreaths & Botanicals' },
+      { id: 'paper-silhouettes', name: 'Paper Silhouettes' },
+      { id: 'wall-hangings', name: 'Paper Wall Hangings' },
+    ],
+  },
+  {
     id: 'terracotta-clay',
     slug: 'terracotta-clay',
     name: 'Terracotta & Clay Items',
     description: 'Earthy, eco-friendly terracotta pottery, diyas, hand-carved tableware and figurines.',
     image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
     subcategories: [
+      { id: 'devotional-idols', name: 'Devotional Idols & Clay Figurines' },
       { id: 'pots', name: 'Pots & Planters' },
       { id: 'diyas', name: 'Diyas' },
       { id: 'jewelry', name: 'Clay Jewelry' },
@@ -45,15 +61,17 @@ export const CATEGORIES: Category[] = [
       { id: 'quilts', name: 'Quilts' },
       { id: 'blouses', name: 'Blouses' },
       { id: 'frocks', name: 'Frocks' },
+      { id: 'handkerchiefs', name: 'Handkerchiefs & Linen' },
     ],
   },
   {
     id: 'other-handicrafts',
     slug: 'other-handicrafts',
     name: 'Other Handicrafts',
-    description: 'Jute bags, macrame wall hangings, wooden toys, bamboo baskets, and folk art.',
+    description: 'Jute bags, macrame wall hangings, wooden toys, bamboo baskets, greeting cards, and folk art.',
     image: 'https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?auto=format&fit=crop&w=800&q=80',
     subcategories: [
+      { id: 'devotional-cards', name: 'Greeting Cards & Devotional Stationery' },
       { id: 'jute-bags', name: 'Jute Bags' },
       { id: 'macrame-hangings', name: 'Macrame Hangings' },
       { id: 'wooden-toys', name: 'Wooden Toys' },
@@ -65,6 +83,273 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const INITIAL_PRODUCTS: Product[] = [
+  {
+    id: 'prod_12',
+    slug: 'penguin-lamp-post-custom-wall-mural',
+    name: 'Whimsical Hand-Painted Penguin Lamp Post Custom Wall Mural Service (In-Home Delivery)',
+    description: `Transform your child's nursery, playroom, or bedroom into an enchanting space with our whimsical hand-painted penguin mural service! This delightful design, featuring a stack of four friendly cartoon penguins playfully clinging to a vintage lamp post, will be created directly in your home by our professional artists. No messy decals; this is a true work of hand-painted art, adding authentic texture and character.
+
+Our service is designed for maximum convenience. Our team will travel to your location and hand-paint this charming scene directly onto your chosen wall. We ensure a clean, professional process, allowing you to watch the magic happen and customize details without the hassle of moving furniture around. The final mural will feature the vibrant colors and detailed work seen here, from the cute penguins to the cheerful border of potted and ground-planted flowers. The soft, warm glow from the lamp adds a cozy, imaginative touch.
+
+This is the perfect way to create a unique and memorable environment that inspires creativity and joy. We work closely with you to ensure the placement and final design are exactly what you envisioned for your little one.
+
+Key Service Features:
+• In-Home Custom Painting: Our professional artist comes to your home and paints the mural directly on your wall.
+• Hand-Painted Detailing: Authentic hand-painted texture and custom details.
+• Convenience: Minimal disruption; we come to you.
+• Unique Art: A truly one-of-a-kind piece.
+• Child-Safe Materials: We use high-quality, non-toxic, water-based paints suitable for a nursery or child’s room.
+
+Sizing & Proportions:
+The design is inherently tall and narrow, making it an excellent choice for a narrow accent wall, a corner element, or a floor-to-ceiling feature. The final size can be customized to your specific space, but typical proportions are as follows:
+• Mural Style: Tall & Slender Floor-to-Ceiling or Accent Feature.
+• Typical Custom Height Range: Customizable between 6 feet (180 cm) to 8.5 feet (260 cm).
+• Typical Width Range: Approximately 2 feet (60 cm) to 3 feet (90 cm) at the base.
+
+Additional Artisan Styles Included in Portfolio:
+• Playful Bamboo Pandas Switchboard Mural (featured in gallery slide 2)
+• Cheerful Lotus Frog Garden Switchboard Mural (featured in gallery slide 3)`,
+    price: 499,
+    originalPrice: 999,
+    categoryId: 'wall-art-decor',
+    categoryName: 'Wall Art & Murals',
+    subcategoryId: 'wall-murals',
+    subcategoryName: 'Custom Wall Murals & Accent Art',
+    image: '/img/penguin-lamp-post-wall-mural.jpg',
+    images: [
+      '/img/penguin-lamp-post-wall-mural.jpg',
+      '/img/panda-switchboard-wall-art.jpg',
+      '/img/frog-switchboard-wall-art.jpg',
+    ],
+    stock: 12,
+    status: 'published',
+    badge: 'Bestseller',
+    rating: 5.0,
+    reviewsCount: 19,
+    soldCount: 42,
+    highlights: [
+      'In-Home Custom Wall Painting Service by Master Indian Artists',
+      'Front Feature: 4 Playful Stacked Penguins on Glowing Vintage Lamp Post',
+      'Includes Bamboo Pandas & Cheerful Frog Switchboard Art in service portfolio',
+      'Child-Safe Non-Toxic Odor-Free Water-Based Acrylic Paints',
+      'Custom Height: 6 ft to 8.5 ft (180 - 260 cm) | Width: 2 to 3 ft (60 - 90 cm)',
+      '100% Hand-Painted Direct on Wall — No Cheap Decals or Peelable Stickers',
+    ],
+    specs: {
+      'Service Type': 'In-Home On-Wall Custom Painting & Mural Service',
+      'Primary Motif': 'Whimsical 4 Penguins Clinging to Glowing Lamp Post',
+      'Additional Motifs': 'Playful Bamboo Pandas & Lotus Frog Switchboard Murals',
+      'Paints Used': 'Child-Safe Non-Toxic Odor-Free Water-Based Paints',
+      'Suitability': 'Kids Nursery, Playroom, Bedroom, Study Room Accent Wall',
+      'Custom Height Range': '6 ft – 8.5 ft (180 cm – 260 cm)',
+      'Custom Width Range': '2 ft – 3 ft (60 cm – 90 cm) at base',
+      'Service Delivery': 'Direct In-Home Artist Visit & Custom Hand-Painting',
+      'Care & Longevity': 'Moisture-resistant clear protective coat; durable for years',
+      'Origin': 'Handcrafted & Painted in India by Professional Artists',
+    },
+    createdAt: 1790666000000,
+  },
+  {
+    id: 'prod_13',
+    slug: 'artisanal-air-dry-foam-clay-baby-ganesha-ji',
+    name: 'Artisanal Air-Dry Foam Clay Baby Ganesha Ji',
+    description: `Handcrafted with devotion, tenderness, and festive joy, this adorable Baby Ganesha Ji idol is meticulously hand-sculpted from ultra-lightweight artisanal air-dry foam clay. Features a festive coral-pink turban (pagri), a gentle blush-pink complexion with intricately hand-painted expressive eyes and trunk markings, a vibrant sunshine-yellow garland (haar), and a seated posture on a serene sky-blue lotus cushion.
+
+Perfect for your home puja altar, study table, work desk, car dashboard, children's bedroom, or as a cherished divine gift for Diwali, Ganesh Utsav, Griha Pravesh (Housewarming), and auspicious beginnings.
+
+Key Craft Highlights:
+• 100% Freehand Sculpted: Each trunk fold, ear curvature, and turban twist is uniquely molded by hand without molds.
+• Premium Air-Dry Foam Clay: Ultra-lightweight, velvety soft to the touch, and shatter-resistant compared to brittle ceramic or plaster.
+• Auspicious & Heartwarming: Brings peaceful spiritual presence, intellect, and obstacle-removing blessings (Vighnaharta).
+• Eco-Friendly & Non-Toxic: Formulated with organic craft pigments, completely safe for children and home environments.`,
+    price: 349,
+    originalPrice: 699,
+    categoryId: 'terracotta-clay',
+    categoryName: 'Terracotta & Clay Items',
+    subcategoryId: 'devotional-idols',
+    subcategoryName: 'Devotional Idols & Clay Figurines',
+    image: '/img/baby-ganesha-clay-art.jpg',
+    images: [
+      '/img/baby-ganesha-clay-art.jpg',
+      '/img/baby-ganesha-clay-art-handcrafted.jpg',
+    ],
+    stock: 20,
+    status: 'published',
+    badge: 'Handmade',
+    rating: 4.9,
+    reviewsCount: 28,
+    soldCount: 65,
+    highlights: [
+      'Hand-sculpted Baby Ganesha with Coral Pagri & Sunshine Yellow Garland',
+      'Velvety Ultra-Lightweight Air-Dry Foam Clay (Shatter-Resistant)',
+      'Hand-painted devotional eyes, modak posture, and detailed trunk markings',
+      'Compact altar & desk size: Approx 4 Inches (10 cm) Height',
+      'Ideal for Puja Mandir, Work Desk, Living Room, or Car Dashboard',
+    ],
+    specs: {
+      'Deity': 'Lord Baby Ganesha (Bal Ganesha / Vighnaharta)',
+      'Material': 'Artisanal Ultra-Light Air-Dry Foam Clay',
+      'Color Theme': 'Coral Pink Pagri, Soft Blush Body, Sunny Yellow Garland, Sky Blue Seat',
+      'Dimensions': 'Height: 4.0 Inches (10.2 cm) x Base: 2.8 Inches (7.1 cm)',
+      'Weight': 'Approx 50 grams (Ultra-light, shatter-proof)',
+      'Finish': 'Matte Velvet Finish with Fine Acrylic Detailing',
+      'Placement': 'Puja Altar, Work Desk, Living Room, Car Dashboard, Festive Gifting',
+      'Care': 'Keep away from direct water immersion; dust gently with a soft dry brush',
+      'Origin': 'Handmade with Devotion in Uttar Pradesh, India',
+    },
+    createdAt: 1790665500000,
+  },
+  {
+    id: 'prod_14',
+    slug: 'handcrafted-shri-radhe-devotional-card',
+    name: 'Handcrafted Shri Radhe Devotional Greeting Card',
+    description: `Experience the divine grace and tranquil love of Vrindavan with this luxury handcrafted Shri Radhe devotional greeting card and keepsake. Created on heavyweight, deckle-edge handmade cotton rag paper, it features radiant raised gold embossed Devanagari calligraphy of 'श्री राधे' (Shri Radhe), accompanied by delicate hand-painted lotus blooms and a vibrant peacock feather (mor pankh).
+
+Whether shared as an auspicious greeting for Janmashtami, Radhashtami, Diwali, weddings, or kept in a devotional altar frame, this heirloom keepsake brings sacred spiritual elegance into any sanctuary.
+
+Key Highlights:
+• Deckle-Edge Cotton Rag Paper: 100% tree-free handmade recycled cotton paper with natural feathery edges.
+• Gold Embossed Inscription: Gleaming raised metallic gold foil calligraphy of 'श्री राधे' that catches the light.
+• Sacred Devotional Motifs: Hand-painted watercolor lotus flowers and sacred mor pankh symbolizing divine grace.
+• Includes Keepsake Envelope: Comes accompanied by a matching handmade cotton envelope with gold seal sticker.`,
+    price: 249,
+    originalPrice: 499,
+    categoryId: 'other-handicrafts',
+    categoryName: 'Other Handicrafts',
+    subcategoryId: 'devotional-cards',
+    subcategoryName: 'Greeting Cards & Devotional Stationery',
+    image: '/img/shri-radhe-handcrafted-card.jpg',
+    images: ['/img/shri-radhe-handcrafted-card.jpg'],
+    stock: 35,
+    status: 'published',
+    badge: 'Handmade',
+    rating: 5.0,
+    reviewsCount: 31,
+    soldCount: 78,
+    highlights: [
+      "Radiant Gold Embossed 'श्री राधे' Devanagari Calligraphy",
+      '100% Tree-Free Heavyweight Deckle-Edge Handmade Cotton Paper',
+      'Hand-Painted Sacred Peacock Feather (Mor Pankh) & Lotus Flowers',
+      'Includes Matching Handmade Cotton Envelope with Gold Seal',
+      'Ideal for Janmashtami, Radhashtami, Diwali, or Framed Altar Keepsake',
+    ],
+    specs: {
+      'Card Type': 'Handcrafted Devotional Greeting Card & Keepsake',
+      'Inscription': 'श्री राधे (Shri Radhe)',
+      'Paper Type': '300 GSM Heavyweight Deckle-Edge Handmade Cotton Paper',
+      'Embossing': 'Raised Metallic Gold Foil Lettering',
+      'Artwork Technique': 'Fine Watercolor & Gold Foil Detailing',
+      'Card Dimensions': '5.0 x 7.0 Inches (12.7 x 17.8 cm)',
+      'Envelope': 'Matching Deckle-Edge Handmade Cotton Envelope Included',
+      'Occasion': 'Janmashtami, Radhashtami, Diwali, Festive Gifting, Altar Art',
+      'Origin': 'Vrindavan & Varanasi Heritage Artisan Tradition, India',
+    },
+    createdAt: 1790665000000,
+  },
+  {
+    id: 'prod_11',
+    slug: 'fairy-and-wreath-wall-art',
+    name: 'Fairy and Wreath Wall Art',
+    description: `This charming wall art features a whimsical fairy character holding a series of string and leaf wreaths, creating a decorative and artistic pattern. This piece is perfect for adding a touch of enchantment and imagination to any room, especially for a study or drawing room. The design is detailed and intricate, and the overall effect is both playful and elegant.
+
+Measurements:
+• Height: 24 inches (60.96 cm)
+• Width: 16 inches (40.64 cm)
+• Depth: 0.25 inches (0.64 cm)
+
+Finishing:
+The piece is made from high-quality paper with a dark bronze or black finish, which adds to its elegant, lightweight, and durable feel. The details of the fairy's wings, dress, and the intricate leaf patterns on the wreaths are all carefully rendered, creating a finished look that is both attractive and professional.`,
+    price: 749,
+    originalPrice: 1499,
+    categoryId: 'wall-art-decor',
+    categoryName: 'Paper Wall Art & Decor',
+    subcategoryId: 'fairy-wall-art',
+    subcategoryName: 'Fairy & Fantasy Art',
+    image: '/img/fairy-and-wreath-wall-art.jpg',
+    images: [
+      '/img/fairy-and-wreath-wall-art.jpg',
+      '/img/fairy-and-wreath-wall-art-detail.jpg',
+    ],
+    stock: 15,
+    status: 'published',
+    badge: 'New',
+    rating: 4.9,
+    reviewsCount: 16,
+    soldCount: 39,
+    highlights: [
+      'Height: 24 inches (60.96 cm)',
+      'Width: 16 inches (40.64 cm) | Depth: 0.25 inches (0.64 cm)',
+      'High-grade handcrafted art paper with dark bronze / black finish',
+      'Whimsical fairy with delicate wings & leaf wreath balloons',
+      'Ultra-lightweight & wall-safe (easy to mount with minimal wall damage)',
+      'Ideal for study, drawing room, or living room decor',
+    ],
+    specs: {
+      'Height': '24 inches (60.96 cm)',
+      'Width': '16 inches (40.64 cm)',
+      'Depth': '0.25 inches (0.64 cm)',
+      'Material': 'High-Quality Crafted Art Paper & Cardstock',
+      'Craft Technique': 'Precision Handcrafted Paper Silhouette & Cutwork',
+      'Finish': 'Dark Bronze / Matte Black Protective Coating',
+      'Design Theme': 'Whimsical Fairy & Botanical Leaf Wreaths',
+      'Room Placement': 'Study, Drawing Room, Living Room, Bedroom',
+      'Mounting': 'Wall-safe lightweight mounting (strips / pins friendly)',
+      'Care': 'Keep away from moisture; wipe gently with a soft dry cloth',
+      'Origin': 'Handcrafted in India by Master Artisans',
+    },
+    createdAt: 1790664000000,
+  },
+  {
+    id: 'prod_10',
+    slug: 'artisanal-friendship-heirloom-handkerchief-customizable',
+    name: 'Artisanal Friendship Heirloom Handkerchief (Customizable)',
+    description: `Experience the warmth of a cherished bond with our hand-embroidered friendship handkerchief. Meticulously crafted on premium, pure white cotton, this handkerchief features the timeless sentiment 'friends FOREVER' rendered in exquisite magenta script and sophisticated orange satin-stitch lettering. An intricate floral arrangement, including delicate bullion roses and a personalized initial medallion (M & M), symbolizes growing and lasting connections. A perfect heirloom gift, blending thoughtful design with exceptional craftsmanship.
+
+Customization Options:
+
+We understand that every friendship is unique. That's why we offer a variety of customization options to make your handkerchief truly one-of-the-kind. You can personalize the embroidery with your choice of:
+
+• Text: Choose a different sentiment or a custom phrase.
+• Colors: Select colors that reflect your personal style or the recipient's favorites.
+• Motifs: Incorporate meaningful symbols or objects into the design.
+• Initials: Add a custom initial medallion for a more personal touch.`,
+    price: 199,
+    originalPrice: 299,
+    categoryId: 'embroidered-clothes',
+    categoryName: 'Embroidered & Hand-Stitched',
+    subcategoryId: 'handkerchiefs',
+    subcategoryName: 'Handkerchiefs & Linen',
+    image: '/img/artisanal-friendship-handkerchief.jpg',
+    images: [
+      '/img/artisanal-friendship-handkerchief.jpg',
+      '/img/artisanal-friendship-handkerchief-square.jpg',
+    ],
+    stock: 25,
+    status: 'published',
+    badge: 'Handmade',
+    rating: 5.0,
+    reviewsCount: 22,
+    soldCount: 54,
+    highlights: [
+      'Height: 8.5 Inches (21.5 CM)',
+      '100% Pure White Cotton Handkerchief',
+      "Hand-embroidered 'friends FOREVER' Script & Satin Lettering",
+      'Bullion Rose Vines & Custom Initial Medallion (M & M)',
+      'Fully Customizable: Text, Colors, Motifs, Initials',
+    ],
+    specs: {
+      'Height': '8.5 Inches (21.5 CM)',
+      'Dimensions': '8.5 x 8.5 Inches (21.5 x 21.5 CM)',
+      'Material': '100% Pure White Cotton',
+      'Embroidery Style': 'Magenta Script & Orange Satin-Stitch',
+      'Motifs': 'Bullion Roses & Monogram Initial Medallion (M & M)',
+      'Customization': 'Text, Colors, Motifs & Initials Available',
+      'Occasion': 'Friendship Day, Keepsake, Birthday, Heirloom Gift',
+      'Care': 'Gentle Hand Wash in Cold Water',
+      'Origin': 'Varanasi, India (Artisan Handcrafted)',
+    },
+    createdAt: 1790663000000,
+  },
   {
     id: 'prod_1',
     slug: 'cute-girl-hand-stitching-clothes',

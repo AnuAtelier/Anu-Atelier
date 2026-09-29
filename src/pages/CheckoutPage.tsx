@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Truck, ArrowRight, CheckCircle2, CreditCard, Banknote, Smartphone, Tag, X } from 'lucide-react';
+import { ShieldCheck, Truck, ArrowRight, CheckCircle2, CreditCard, Banknote, Smartphone, Tag, X, QrCode, Copy, Check, ExternalLink, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
@@ -20,7 +20,9 @@ export const CheckoutPage: React.FC = () => {
   const [city, setCity] = useState('Lucknow');
   const [state, setState] = useState('Uttar Pradesh');
   const [pincode, setPincode] = useState('226010');
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'card'>('cod');
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'card'>('upi');
+  const [upiUtr, setUpiUtr] = useState('');
+  const [copiedUpi, setCopiedUpi] = useState(false);
   const [isPlacing, setIsPlacing] = useState(false);
 
   // Live Pincode Verification State
@@ -67,6 +69,12 @@ export const CheckoutPage: React.FC = () => {
   }
   const total = Math.max(0, subtotal - discountAmount + deliveryFee);
 
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText('9555562542@airtel');
+    setCopiedUpi(true);
+    setTimeout(() => setCopiedUpi(false), 2000);
+  };
+
   const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     setCouponError(null);
@@ -76,7 +84,7 @@ export const CheckoutPage: React.FC = () => {
       items,
       code,
       pincode,
-      paymentMethod === 'cod' ? 'cod' : 'razorpay'
+      paymentMethod === 'cod' ? 'cod' : 'upi_qr'
     );
 
     if (totals.discountRupees > 0 || code === 'FREESHIP') {
@@ -116,7 +124,6 @@ export const CheckoutPage: React.FC = () => {
     setIsPlacing(true);
 
     try {
-      const isOnline = paymentMethod === 'upi' || paymentMethod === 'card';
       const address = {
         id: 'addr_default',
         name: fullName,
@@ -134,8 +141,9 @@ export const CheckoutPage: React.FC = () => {
         userId: user?.id,
         items,
         shippingAddress: address,
-        paymentMethod: isOnline ? 'razorpay' : 'cod',
+        paymentMethod: paymentMethod === 'upi' ? 'upi_qr' : paymentMethod === 'card' ? 'razorpay' : 'cod',
         couponCode: appliedCoupon?.code,
+        upiUtr: upiUtr.trim() || undefined,
       });
 
       if (!placeResult.success) {
@@ -146,8 +154,8 @@ export const CheckoutPage: React.FC = () => {
 
       const orderNumber = placeResult.orderNumber || `AA-26-${Date.now().toString().slice(-6)}`;
 
-      if (isOnline) {
-        // Trigger Razorpay Checkout Modal
+      if (paymentMethod === 'card') {
+        // Trigger Card Gateway Modal
         await orderService.initiateRazorpayPayment(orderNumber, total, {
           name: fullName,
           email: user?.email || `${phone}@customer.anuatelier.com`,
@@ -381,6 +389,129 @@ export const CheckoutPage: React.FC = () => {
                 </div>
               </label>
             </div>
+
+            {/* UPI QR & Mobile App Section */}
+            {paymentMethod === 'upi' && (
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-white/95 border-2 border-emerald-400/80 shadow-md space-y-5">
+                {/* Header with App Badges */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-emerald-200/60">
+                  <div>
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider mb-1 shadow-2xs">
+                      <Zap className="h-3 w-3" />
+                      <span>Instant Verification & Same-Day Dispatch</span>
+                    </div>
+                    <h3 className="font-heading text-base sm:text-lg font-bold text-gray-900">
+                      Scan QR or Pay with Any UPI App
+                    </h3>
+                  </div>
+
+                  {/* App Logos / Pills */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 shadow-2xs text-[11px] font-bold text-[#4285F4] flex items-center gap-1">
+                      <span>GPay</span>
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 shadow-2xs text-[11px] font-bold text-[#5f259f] flex items-center gap-1">
+                      <span>PhonePe</span>
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 shadow-2xs text-[11px] font-bold text-[#00baf2] flex items-center gap-1">
+                      <span>Paytm</span>
+                    </span>
+                    <span className="px-2 py-1 rounded-lg bg-white border border-gray-200 shadow-2xs text-[11px] font-bold text-emerald-700 flex items-center gap-1">
+                      <span>BHIM</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                  {/* Clean Cropped QR Code Container */}
+                  <div className="flex flex-col items-center justify-center text-center p-4 rounded-2xl bg-white border border-emerald-200/80 shadow-xs">
+                    <div className="relative p-2 rounded-xl bg-white border-2 border-emerald-500/30 shadow-inner">
+                      <img
+                        src="/img/upi-qr-cropped.png"
+                        alt="Scan UPI QR Code to Pay ADITYA SINGH"
+                        className="w-52 h-52 sm:w-56 sm:h-56 object-contain mx-auto rounded-lg"
+                      />
+                    </div>
+                    <p className="mt-2.5 text-xs font-semibold text-gray-700 flex items-center gap-1">
+                      <QrCode className="h-3.5 w-3.5 text-emerald-600" />
+                      <span>Scan with GPay, PhonePe, Paytm or BHIM</span>
+                    </p>
+                  </div>
+
+                  {/* Right side: Amount, UPI ID, Mobile Pay Button & UTR Input */}
+                  <div className="space-y-4">
+                    {/* Amount to Pay */}
+                    <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-300/70">
+                      <span className="text-[11px] uppercase tracking-wider font-bold text-emerald-800 block">
+                        Exact Amount to Pay
+                      </span>
+                      <span className="text-2xl sm:text-3xl font-extrabold text-emerald-900 font-heading">
+                        ₹{total}
+                      </span>
+                      <span className="text-[11px] text-emerald-700 block mt-0.5">
+                        Zero transaction fees &bull; 100% Secure via NPCI UPI
+                      </span>
+                    </div>
+
+                    {/* Payee Info & Copy UPI ID */}
+                    <div className="p-3 rounded-xl bg-white border border-gray-200/80 space-y-1.5 shadow-2xs">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-gray-500">Beneficiary / Payee:</span>
+                        <span className="font-bold text-gray-900">ADITYA SINGH</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-2 text-xs pt-1.5 border-t border-gray-100">
+                        <span className="text-gray-500">UPI ID:</span>
+                        <span className="font-mono font-bold text-emerald-800 text-sm">9555562542@airtel</span>
+                        <button
+                          type="button"
+                          onClick={handleCopyUpi}
+                          className="px-2.5 py-1 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          {copiedUpi ? (
+                            <>
+                              <Check className="h-3 w-3 text-emerald-600" />
+                              <span>Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Direct 1-Tap Pay Button on Mobile */}
+                    <a
+                      href={`upi://pay?pa=9555562542@airtel&pn=ADITYA%20%20SINGH&am=${total}&cu=INR&tn=Order%20Payment`}
+                      className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-all active:scale-98 cursor-pointer"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      <span>Tap to Pay ₹{total} in UPI App (Mobile)</span>
+                    </a>
+
+                    {/* 12-digit UTR Input */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-800 mb-1">
+                        12-Digit UPI Ref / UTR No. <span className="text-gray-400 font-normal">(from GPay / PhonePe / Paytm receipt)</span>
+                      </label>
+                      <input
+                        type="text"
+                        maxLength={18}
+                        placeholder="e.g. 423589123456"
+                        value={upiUtr}
+                        onChange={(e) => setUpiUtr(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 bg-white text-xs font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                      />
+                      <p className="text-[10px] text-gray-500 mt-1">
+                        Payment is instantly reconciled & order will be dispatched immediately!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

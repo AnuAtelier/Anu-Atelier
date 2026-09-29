@@ -19,9 +19,10 @@ export interface PlaceOrderPayload {
   userId?: string;
   items: CartItem[];
   shippingAddress: UserAddress;
-  paymentMethod: 'cod' | 'razorpay';
+  paymentMethod: 'cod' | 'razorpay' | 'upi_qr';
   couponCode?: string;
   giftWrap?: boolean;
+  upiUtr?: string;
 }
 
 export interface PlaceOrderResult {
@@ -29,7 +30,7 @@ export interface PlaceOrderResult {
   orderId?: string;
   orderNumber?: string;
   totalRupees?: number;
-  paymentMethod?: 'cod' | 'razorpay';
+  paymentMethod?: 'cod' | 'razorpay' | 'upi_qr';
   error?: string;
 }
 
@@ -47,7 +48,7 @@ export const orderService = {
     items: CartItem[],
     couponCode?: string,
     pincode?: string,
-    paymentMethod: 'cod' | 'razorpay' = 'cod'
+    paymentMethod: 'cod' | 'razorpay' | 'upi_qr' = 'cod'
   ): Promise<CheckoutTotalsResult> {
     const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
     let deliveryFee = subtotal >= 999 ? 0 : 60;
@@ -89,7 +90,7 @@ export const orderService = {
 
     const randomSuffix = Math.floor(100000 + Math.random() * 900000);
     const generatedOrderNumber = `AA-26-${randomSuffix}`;
-    const orderId = `ord_${Date.now()}_${randomSuffix}`;
+    const orderId = generatedOrderNumber;
 
     const newOrder: Order = {
       id: orderId,
@@ -106,11 +107,13 @@ export const orderService = {
       subtotal: totals.subtotalRupees,
       deliveryFee: totals.deliveryFeeRupees,
       discount: totals.discountRupees,
-      status: 'Placed',
+      status: 'Confirmed',
       paymentMethod: payload.paymentMethod === 'cod' ? 'cod' : 'upi',
       paymentStatus: payload.paymentMethod === 'cod' ? 'pending' : 'completed',
       shippingAddress: payload.shippingAddress,
       trackingNumber: `EXP-${Date.now().toString().slice(-6)}`,
+      trackingCarrier: 'Express Air Courier (BlueDart / Delhivery)',
+      upiUtr: payload.upiUtr,
     };
 
     // 1. Try Supabase place_order RPC if configured and user is logged in
@@ -385,4 +388,10 @@ export const orderService = {
       return [];
     }
   },
+
+  getOrder(orderId: string): Order | undefined {
+    const orders = this.getLocalOrders();
+    return orders.find((o) => o.id === orderId || o.trackingNumber === orderId);
+  },
 };
+

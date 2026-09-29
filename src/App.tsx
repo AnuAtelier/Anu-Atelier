@@ -8,6 +8,7 @@ import { WhatsAppFloat } from './components/common/WhatsAppFloat';
 import { Toast } from './components/common/Toast';
 import { AdminRoute } from './components/common/AdminRoute';
 import { AdminLayout } from './components/admin/AdminLayout';
+import { AnimatedArtisanBackground } from './components/common/AnimatedArtisanBackground';
 import { useAuthStore } from './store/useAuthStore';
 
 // Storefront Pages
@@ -111,9 +112,10 @@ const AppContent: React.FC = () => {
 
   // 4. Customer Storefront Layout: WITH Header, Footer, MobileNav, CartDrawer, WhatsAppFloat
   return (
-    <div className="flex flex-col min-h-screen bg-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
+    <div className="relative flex flex-col min-h-screen bg-[var(--bg-color)] text-[var(--text-main)] transition-colors duration-200">
+      <AnimatedArtisanBackground />
       <Header />
-      <main className="flex-1 pb-16 sm:pb-0">
+      <main className="flex-1 pb-16 sm:pb-0 relative z-10">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
@@ -134,6 +136,7 @@ const AppContent: React.FC = () => {
     </div>
   );
 };
+
 
 export const App: React.FC = () => {
   const initializeAuth = useAuthStore((state) => state.initialize);

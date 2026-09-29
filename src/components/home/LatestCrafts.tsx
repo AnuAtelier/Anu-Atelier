@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Sparkles } from 'lucide-react';
 import { useProductStore } from '../../store/useProductStore';
+import { CATEGORIES } from '../../constants';
 import { ProductCard } from '../common/ProductCard';
 
 export const LatestCrafts: React.FC = () => {
@@ -23,10 +25,11 @@ export const LatestCrafts: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--primary)]">
-            Fresh From Workshop
-          </span>
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[var(--text-main)] mt-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--primary)] mb-1">
+            <Sparkles className="h-3 w-3 animate-sparkle-spin" />
+            <span>Fresh From Workshop</span>
+          </div>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[var(--text-main)]">
             Latest Crafts
           </h2>
           <p className="text-sm text-gray-700 mt-1 font-normal">
@@ -38,44 +41,31 @@ export const LatestCrafts: React.FC = () => {
         <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setSelectedFilter('all')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 backdrop-blur-xs cursor-pointer ${
               selectedFilter === 'all'
                 ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md scale-105'
-                : 'bg-pink-500/10 text-pink-950 border border-pink-200/60 hover:bg-pink-500/20'
+                : 'bg-pink-500/10 text-pink-950 border border-pink-200/60 hover:bg-pink-500/20 active:scale-95'
             }`}
           >
-            All Crafts
+            All Crafts ({publishedProducts.length})
           </button>
-          <button
-            onClick={() => setSelectedFilter('terracotta-clay')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
-              selectedFilter === 'terracotta-clay'
-                ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-md scale-105'
-                : 'bg-orange-500/10 text-orange-950 border border-orange-200/60 hover:bg-orange-500/20'
-            }`}
-          >
-            Terracotta & Clay
-          </button>
-          <button
-            onClick={() => setSelectedFilter('embroidered-clothes')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
-              selectedFilter === 'embroidered-clothes'
-                ? 'bg-gradient-to-r from-fuchsia-500 to-pink-600 text-white shadow-md scale-105'
-                : 'bg-fuchsia-500/10 text-fuchsia-950 border border-fuchsia-200/60 hover:bg-fuchsia-500/20'
-            }`}
-          >
-            Clothing
-          </button>
-          <button
-            onClick={() => setSelectedFilter('other-handicrafts')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all backdrop-blur-xs ${
-              selectedFilter === 'other-handicrafts'
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md scale-105'
-                : 'bg-emerald-500/10 text-emerald-950 border border-emerald-200/60 hover:bg-emerald-500/20'
-            }`}
-          >
-            Handicrafts
-          </button>
+          {CATEGORIES.map((cat) => {
+            const count = publishedProducts.filter((p) => p.categoryId === cat.id).length;
+            const isSelected = selectedFilter === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedFilter(cat.id)}
+                className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 backdrop-blur-xs cursor-pointer ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md scale-105'
+                    : 'bg-stone-500/10 text-stone-800 border border-stone-200/60 hover:bg-pink-500/10 hover:border-pink-300 active:scale-95'
+                }`}
+              >
+                {cat.name} ({count})
+              </button>
+            );
+          })}
         </div>
       </div>
 
