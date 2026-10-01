@@ -17,6 +17,37 @@ const HERO_SLIDES: HeroSlide[] = [
     alt: 'Indian craftswoman hand-painting delicate floral patterns on a terracotta vase',
   },
   {
+    image: '/img/hero-wall-hanging-dreamcatcher.jpg',
+    tag: 'Handmade Wall Art',
+    title: 'Boho Celestial Star, Sun & Moon Wall Hangings',
+    alt: 'Handcrafted celestial star, sun, and crescent moon macrame wall hangings with colorful floral embroidery and tassels',
+  },
+  {
+    image: '/img/hero-wooden-toys.jpg',
+    tag: 'Handcrafted Wooden Toys',
+    title: 'Vibrant Lacquered Wooden Toys & Folk Figurines',
+    alt: 'Traditional handcrafted lacquered wooden toys including painted autos, trains, elephants, spinning tops, and folk figurines',
+  },
+  {
+    image: '/img/hero-seashell-wind-chimes.jpg',
+    tag: 'Artisan Wind Chimes',
+    title: 'Illuminated Coastal Seashell Wind Chime Chandelier',
+    alt: 'Handcrafted colorful seashell wind chime chandelier illuminated with fairy lights on a garden patio',
+  },
+  {
+    image: '/img/hero-bamboo-baskets.jpg',
+    tag: 'Hand-Woven Bamboo Crafts',
+    title: 'Artisanal Natural Bamboo & Cane Harvest Baskets',
+    alt: 'Hand-woven natural bamboo cane baskets with wildflower arrangements and fresh fruit on a sunlit table',
+  },
+  {
+    image: '/img/hero-botanical-clay-jewelry.jpg',
+    tag: 'Artisan Clay Jewelry',
+    title: 'Botanical Blossom Terracotta Clay Necklace & Earring Set',
+    alt: 'Handcrafted sage green clay jewelry set with sculpted miniature wild roses, delicate leaves, aventurine beads, and matching drop earrings',
+  },
+
+  {
     image: '/img/hero-crafts-flatlay.jpg',
     tag: 'Artisan Heritage Flatlay',
     title: 'Terracotta Pottery, Linen & Brass Diyas',
@@ -40,12 +71,7 @@ const HERO_SLIDES: HeroSlide[] = [
     title: 'Folk Handicrafts, Brass Lamps & Tapestries',
     alt: 'Traditional Indian handicraft boutique with handwoven tapestries and brass decor',
   },
-  {
-    image: '/img/hero-colorful-ceramic.jpg',
-    tag: 'Hand-painted Ceramics',
-    title: 'Vibrant Floral Glazes & Embossed Artistry',
-    alt: 'Vibrant hand-painted Indian embossed floral ceramic vase with rich colors',
-  },
+
   {
     image: '/img/hero-kathputli-puppets.jpg',
     tag: 'Rajasthani Folk Art',
@@ -333,19 +359,6 @@ export const HeroBanner: React.FC = () => {
               <span className="block text-[11px] font-bold leading-tight text-emerald-800">100% Eco-Friendly</span>
               <span className="block text-[9px] text-gray-500 font-medium">Pure Clay & Natural Threads</span>
             </div>
-          </div>
-
-          {/* Floating Badge: Top-Left Live Studio Indicator */}
-          <div
-            className="animate-float-gentle absolute top-4 left-4 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold shadow-md border border-white/20"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-            </span>
-            <span className="text-[11px] font-medium tracking-wide text-rose-50">
-              Handmade in India
-            </span>
           </div>
         </div>
       </div>

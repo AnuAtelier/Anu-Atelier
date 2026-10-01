@@ -1,17 +1,162 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, Plus, User, X } from 'lucide-react';
+import { Search, ShoppingBag, Heart, Plus, User, X, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { useProductStore } from '../../store/useProductStore';
 import { useAuthStore } from '../../store/useAuthStore';
 
-const CATEGORY_LINKS = [
-  { label: 'Home', path: '/', emoji: '🏠' },
-  { label: 'Terracotta', path: '/category/terracotta-clay', emoji: '🏺' },
-  { label: 'Clothing', path: '/category/embroidered-clothes', emoji: '🧵' },
-  { label: 'Wall Art', path: '/category/wall-art-decor', emoji: '🖼️' },
-  { label: 'Handicrafts', path: '/category/other-handicrafts', emoji: '🎁' },
+interface SubcategoryQuickLink {
+  name: string;
+  path: string;
+  icon: string;
+}
+
+interface CategoryConfig {
+  id: string;
+  label: string;
+  fullTitle: string;
+  path: string;
+  emoji: string;
+  badge: string;
+  badgeColor: string;
+  iconAnimClass: string;
+  activeGradient: string;
+  activeGlowClass: string;
+  borderColor: string;
+  hoverBorderColor: string;
+  hoverBgColor: string;
+  hoverTextColor: string;
+  iconBgColor: string;
+  cardBg: string;
+  subcategories: SubcategoryQuickLink[];
+}
+
+const CATEGORY_CONFIGS: CategoryConfig[] = [
+  {
+    id: 'home',
+    label: 'Home',
+    fullTitle: 'Anu Atelier Studio',
+    path: '/',
+    emoji: '🏠',
+    badge: 'Studio',
+    badgeColor: 'bg-rose-100 text-rose-700 border-rose-300',
+    iconAnimClass: 'icon-home-sparkle',
+    activeGradient: 'bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 text-white',
+    activeGlowClass: 'glow-home',
+    borderColor: 'border-rose-200/90',
+    hoverBorderColor: 'hover:border-rose-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50',
+    hoverTextColor: 'hover:text-rose-700',
+    iconBgColor: 'bg-rose-100/90 text-rose-600',
+    cardBg: 'bg-white/95 hover:bg-rose-50/70',
+    subcategories: [
+      { name: 'Featured Crafts', path: '/', icon: '✨' },
+      { name: 'Artisan Story', path: '/#artisan-story', icon: '🌸' },
+      { name: 'Customer Favorites', path: '/#featured', icon: '⭐' },
+      { name: 'Festive Clay Diyas', path: '/category/terracotta-clay?subcat=diyas', icon: '🪔' },
+    ],
+  },
+  {
+    id: 'terracotta-clay',
+    label: 'Terracotta',
+    fullTitle: 'Terracotta & Clay Craft',
+    path: '/category/terracotta-clay',
+    emoji: '🏺',
+    badge: '100% Clay',
+    badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
+    iconAnimClass: 'icon-pot-wobble',
+    activeGradient: 'bg-gradient-to-r from-orange-600 via-amber-600 to-rose-600 text-white',
+    activeGlowClass: 'glow-terracotta',
+    borderColor: 'border-orange-200/90',
+    hoverBorderColor: 'hover:border-orange-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50',
+    hoverTextColor: 'hover:text-orange-800',
+    iconBgColor: 'bg-orange-100/90 text-orange-700',
+    cardBg: 'bg-white/95 hover:bg-orange-50/70',
+    subcategories: [
+      { name: 'Festive Clay Diyas', path: '/category/terracotta-clay?subcat=diyas', icon: '🪔' },
+      { name: 'Pots & Planters', path: '/category/terracotta-clay?subcat=pots', icon: '🪴' },
+      { name: 'Devotional Idols & Figurines', path: '/category/terracotta-clay?subcat=devotional-idols', icon: '🙏' },
+      { name: 'Hand-Carved Tableware', path: '/category/terracotta-clay?subcat=tableware', icon: '🥣' },
+      { name: 'Wind Chimes & Vases', path: '/category/terracotta-clay?subcat=wind-chimes', icon: '🎐' },
+    ],
+  },
+  {
+    id: 'embroidered-clothes',
+    label: 'Clothing',
+    fullTitle: 'Embroidered Folk Wear',
+    path: '/category/embroidered-clothes',
+    emoji: '🧵',
+    badge: 'Handmade',
+    badgeColor: 'bg-fuchsia-100 text-fuchsia-900 border-fuchsia-300',
+    iconAnimClass: 'icon-needle-tilt',
+    activeGradient: 'bg-gradient-to-r from-fuchsia-600 via-purple-600 to-pink-600 text-white',
+    activeGlowClass: 'glow-clothing',
+    borderColor: 'border-fuchsia-200/90',
+    hoverBorderColor: 'hover:border-fuchsia-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-fuchsia-50 hover:to-purple-50',
+    hoverTextColor: 'hover:text-fuchsia-800',
+    iconBgColor: 'bg-fuchsia-100/90 text-fuchsia-700',
+    cardBg: 'bg-white/95 hover:bg-fuchsia-50/70',
+    subcategories: [
+      { name: 'Chikankari & Folk Kurtis', path: '/category/embroidered-clothes?subcat=kurtis', icon: '👗' },
+      { name: 'Artisan Embroidered Sarees', path: '/category/embroidered-clothes?subcat=sarees', icon: '🥻' },
+      { name: 'Hand-Dyed Dupattas & Stoles', path: '/category/embroidered-clothes?subcat=dupattas', icon: '🧣' },
+      { name: 'Needlework Ethnic Jackets', path: '/category/embroidered-clothes?subcat=jackets', icon: '🧥' },
+      { name: 'Folk Linens & Quilts', path: '/category/embroidered-clothes?subcat=quilts', icon: '🪡' },
+    ],
+  },
+  {
+    id: 'wall-art-decor',
+    label: 'Wall Art',
+    fullTitle: 'Murals & Canvas Decor',
+    path: '/category/wall-art-decor',
+    emoji: '🖼️',
+    badge: 'In-Home Art',
+    badgeColor: 'bg-teal-100 text-teal-900 border-teal-300',
+    iconAnimClass: 'icon-art-float',
+    activeGradient: 'bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 text-white',
+    activeGlowClass: 'glow-wallart',
+    borderColor: 'border-teal-200/90',
+    hoverBorderColor: 'hover:border-teal-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-teal-50 hover:to-cyan-50',
+    hoverTextColor: 'hover:text-teal-800',
+    iconBgColor: 'bg-teal-100/90 text-teal-700',
+    cardBg: 'bg-white/95 hover:bg-teal-50/70',
+    subcategories: [
+      { name: 'Penguin & Children Murals', path: '/product/penguin-lamp-post-custom-wall-mural', icon: '🐧' },
+      { name: 'Custom Accent Murals', path: '/category/wall-art-decor?subcat=wall-murals', icon: '🎨' },
+      { name: 'Whimsical Switchboard Art', path: '/category/wall-art-decor?subcat=switchboard-art', icon: '⚡' },
+      { name: 'Paper Silhouette Hangings', path: '/category/wall-art-decor?subcat=paper-silhouettes', icon: '✂️' },
+      { name: 'Leaf Wreaths & Botanicals', path: '/category/wall-art-decor?subcat=leaf-wreaths', icon: '🌿' },
+    ],
+  },
+  {
+    id: 'other-handicrafts',
+    label: 'Handicrafts',
+    fullTitle: 'Folk Gifts & Decor',
+    path: '/category/other-handicrafts',
+    emoji: '🎁',
+    badge: 'Artisan',
+    badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
+    iconAnimClass: 'icon-gift-bounce',
+    activeGradient: 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white',
+    activeGlowClass: 'glow-handicrafts',
+    borderColor: 'border-amber-200/90',
+    hoverBorderColor: 'hover:border-amber-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50',
+    hoverTextColor: 'hover:text-amber-800',
+    iconBgColor: 'bg-amber-100/90 text-amber-700',
+    cardBg: 'bg-white/95 hover:bg-amber-50/70',
+    subcategories: [
+      { name: 'Eco-Friendly Jute Bags', path: '/category/other-handicrafts?subcat=jute-bags', icon: '👜' },
+      { name: 'Boho Macrame Hangings', path: '/category/other-handicrafts?subcat=macrame-hangings', icon: '🧶' },
+      { name: 'Handcrafted Wooden Toys', path: '/category/other-handicrafts?subcat=wooden-toys', icon: '🪵' },
+      { name: 'Woven Bamboo Baskets', path: '/category/other-handicrafts?subcat=bamboo-baskets', icon: '🧺' },
+      { name: 'Brass Idols & Ritual Diyas', path: '/category/other-handicrafts?subcat=brass-idols', icon: '🪔' },
+    ],
+  },
 ];
 
 export const Header: React.FC = () => {
@@ -93,6 +238,17 @@ export const Header: React.FC = () => {
     }
   };
 
+  const isCategoryActive = (catPath: string) => {
+    if (catPath === '/') {
+      return location.pathname === '/';
+    }
+    if (catPath.includes('?')) {
+      const [pathPart, queryPart] = catPath.split('?');
+      return location.pathname === pathPart && location.search.includes(queryPart);
+    }
+    return location.pathname.startsWith(catPath);
+  };
+
   return (
     <header className={`sticky top-0 z-50 w-full max-w-full transition-all duration-300 ${
       isScrolled ? 'shadow-md shadow-pink-900/5' : 'shadow-xs'
@@ -123,14 +279,6 @@ export const Header: React.FC = () => {
                 <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-none transition-opacity">
                   Anu<span className="text-pink-600 italic font-semibold">Atelier</span>
                 </span>
-                {/* Live Artisan Hallmark Badge */}
-                <span className="hidden xl:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50/70 border border-pink-200/80 text-rose-700 shadow-2xs">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-                  </span>
-                  <span>Handcrafted</span>
-                </span>
               </div>
               <span className="text-[10px] tracking-widest uppercase font-bold text-pink-600/80 mt-1 hidden sm:block">
                 Artisan Studio
@@ -139,7 +287,7 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Search Bar (Desktop) */}
-          <div ref={searchContainerRef} className="relative hidden md:block flex-1 mx-2 sm:mx-4 max-w-xl">
+          <div ref={searchContainerRef} className="relative hidden md:block flex-1 mx-2 sm:mx-6 max-w-xl lg:max-w-2xl xl:max-w-3xl">
             <form onSubmit={handleSearchSubmit} className="relative w-full group">
               <input
                 ref={searchInputRef}
@@ -210,26 +358,6 @@ export const Header: React.FC = () => {
                 )}
               </div>
             )}
-          </div>
-
-          {/* Category Navigation Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-shrink-0">
-            {CATEGORY_LINKS.map((cat) => {
-              const isActive = location.pathname === cat.path;
-              return (
-                <Link
-                  key={cat.path}
-                  to={cat.path}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 active:scale-95 ${
-                    isActive
-                      ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-xs ring-2 ring-pink-500/20'
-                      : 'text-[var(--text-main)] hover:text-pink-600 hover:bg-pink-50/80'
-                  }`}
-                >
-                  {cat.label}
-                </Link>
-              );
-            })}
           </div>
 
           {/* Action Controls */}
@@ -390,32 +518,161 @@ export const Header: React.FC = () => {
         )}
       </div>
 
-      {/* Sticky Quick-Access Category Navigation (Mobile & Tablet) */}
-      <div className="lg:hidden border-b border-[var(--border-color)]/70 bg-white/95 backdrop-blur-md px-3 py-1.5 overflow-x-auto no-scrollbar flex items-center gap-1.5 shadow-2xs">
-        {CATEGORY_LINKS.map((cat) => {
-          const isActive = location.pathname === cat.path;
-          return (
-            <Link
-              key={cat.path}
-              to={cat.path}
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 active:scale-95 ${
-                isActive
-                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-xs'
-                  : 'bg-stone-100/90 text-stone-700 hover:bg-pink-50 hover:text-pink-600'
-              }`}
-            >
-              <span className="text-[11px]">{cat.emoji}</span>
-              <span>{cat.label}</span>
-            </Link>
-          );
-        })}
-      </div>
+      {/* ========================================================
+          VIBRANT ARTISAN CATEGORY STRIP (NO SCROLLBAR - 100% IN FRONT)
+          ======================================================== */}
+      <div className="w-full header-strip-aurora-bg backdrop-blur-xl border-b border-pink-200/60 relative z-30 transition-all duration-300 shadow-2xs">
+        {/* Top Iridescent Hairline Glow */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-pink-300/70 to-transparent" />
 
-      {/* Luminous Aurora Shimmer Hairline (Ultra-delicate luxury animation) */}
-      <div className="relative w-full h-[2px] overflow-hidden bg-gradient-to-r from-transparent via-rose-200/50 to-transparent">
-        <div className="header-aurora-beam" />
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+          {/* Mobile Layout: 5-Column Grid directly in front (Zero Scrollbar) */}
+          <div className="grid grid-cols-5 gap-1.5 py-1.5 sm:hidden">
+            {CATEGORY_CONFIGS.map((cat) => {
+              const isActive = isCategoryActive(cat.path);
+
+              return (
+                <Link
+                  key={cat.id}
+                  to={cat.path}
+                  className={`group relative flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl transition-all duration-200 active:scale-95 text-center overflow-hidden ${
+                    isActive
+                      ? `${cat.activeGradient} ${cat.activeGlowClass} shadow-md`
+                      : `${cat.cardBg} ${cat.borderColor} border shadow-2xs hover:scale-105`
+                  }`}
+                >
+                  <span className="category-sheen-sweep" />
+
+                  {/* Animated Icon Avatar */}
+                  <div className="relative mb-1">
+                    <span
+                      className={`relative flex items-center justify-center w-6 h-6 rounded-full text-xs transition-transform duration-200 ${
+                        isActive ? 'bg-white/20 text-white' : `${cat.iconBgColor}`
+                      } icon-ambient-breathe ${cat.iconAnimClass}`}
+                    >
+                      {cat.emoji}
+                    </span>
+                    {isActive && (
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Category Label */}
+                  <span
+                    className={`text-[10px] font-bold tracking-tight leading-tight truncate w-full px-0.5 ${
+                      isActive ? 'text-white' : 'text-stone-800'
+                    }`}
+                  >
+                    {cat.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Tablet & Desktop Layout: Centered Flex Ribbon (Zero Scrollbar) */}
+          <div className="hidden sm:flex sm:items-center sm:justify-center gap-2 md:gap-3 lg:gap-5 py-2">
+            {CATEGORY_CONFIGS.map((cat) => {
+              const isActive = isCategoryActive(cat.path);
+
+              return (
+                <div key={cat.id} className="relative group flex-shrink-0">
+                  <Link
+                    to={cat.path}
+                    className={`relative inline-flex items-center gap-2 px-3.5 lg:px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-semibold tracking-wide transition-all duration-200 overflow-hidden active:scale-95 ${
+                      isActive
+                        ? `${cat.activeGradient} ${cat.activeGlowClass} shadow-md scale-[1.02]`
+                        : `${cat.cardBg} text-stone-700 ${cat.borderColor} border ${cat.hoverBorderColor} ${cat.hoverBgColor} ${cat.hoverTextColor} shadow-2xs hover:scale-[1.04] hover:-translate-y-0.5`
+                    }`}
+                  >
+                    {/* Delicate Sheen Sweep on Hover */}
+                    <span className="category-sheen-sweep" />
+
+                    {/* Animated Icon Avatar with Ambient Float & Micro-Movement */}
+                    <span
+                      className={`relative flex items-center justify-center w-5.5 h-5.5 rounded-full text-sm transition-transform duration-200 ${
+                        isActive ? 'bg-white/20 text-white' : `${cat.iconBgColor} group-hover:scale-115`
+                      } icon-ambient-breathe ${cat.iconAnimClass}`}
+                    >
+                      {cat.emoji}
+                    </span>
+
+                    {/* Category Label */}
+                    <span className="whitespace-nowrap font-medium">{cat.label}</span>
+
+                    {/* Micro-Badge Tag */}
+                    <span
+                      className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold tracking-tight uppercase transition-colors ${
+                        isActive
+                          ? 'bg-white/25 text-white border border-white/30'
+                          : `${cat.badgeColor} border`
+                      }`}
+                    >
+                      {cat.badge}
+                    </span>
+
+                    {/* Active Ping Pip Indicator */}
+                    {isActive && (
+                      <span className="relative flex h-1.5 w-1.5 flex-shrink-0 ml-0.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white shadow-xs" />
+                      </span>
+                    )}
+                  </Link>
+
+                  {/* Desktop Interactive Hover Flyout (Instant Subcategory Access) */}
+                  <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50 min-w-[270px]">
+                    <div className="bg-white/95 backdrop-blur-xl border border-pink-200/90 rounded-2xl p-3.5 shadow-xl-soft ring-1 ring-black/5">
+                      <div className="flex items-center justify-between pb-2 border-b border-pink-100 mb-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-base">{cat.emoji}</span>
+                          <span className="font-heading font-bold text-xs text-stone-900">{cat.fullTitle}</span>
+                        </div>
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${cat.badgeColor}`}>
+                          {cat.badge}
+                        </span>
+                      </div>
+
+                      <div className="space-y-1">
+                        {cat.subcategories.map((sub) => (
+                          <Link
+                            key={sub.name}
+                            to={sub.path}
+                            className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-700 hover:text-stone-950 hover:bg-pink-50/70 transition-colors group/sub"
+                          >
+                            <span className="flex items-center gap-2">
+                              <span className="text-xs">{sub.icon}</span>
+                              <span>{sub.name}</span>
+                            </span>
+                            <ChevronRight className="h-3 w-3 text-stone-400 group-hover/sub:text-pink-600 group-hover/sub:translate-x-0.5 transition-all" />
+                          </Link>
+                        ))}
+                      </div>
+
+                      <Link
+                        to={cat.path}
+                        className="mt-2.5 flex items-center justify-center gap-1.5 w-full py-1.5 rounded-xl bg-gradient-to-r from-rose-50 via-pink-50 to-amber-50/60 hover:from-rose-100 hover:to-pink-100 text-rose-700 text-[11px] font-bold border border-rose-200/70 transition-all shadow-2xs"
+                      >
+                        <span>Explore All {cat.label}</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Luminous Rainbow Aurora Hairline with Sweeping Beam */}
+        <div className="relative w-full h-[2.5px] overflow-hidden bg-rose-100/50">
+          <div className="category-rainbow-hairline w-full h-full" />
+          <div className="header-aurora-beam" />
+        </div>
       </div>
     </header>
   );
 };
-

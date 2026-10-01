@@ -91,20 +91,20 @@ export const PromoCardsRow: React.FC = () => {
           <div>
             <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-5 bg-white/60 shadow-xs border border-white/60">
               <img
-                src="/img/promo/promo-handicrafts.jpg"
-                alt="Eco-Friendly Jute & Macrame Crafts"
+                src="/img/hero-wall-hanging-dreamcatcher.jpg"
+                alt="Handcrafted Boho Celestial Floral Wall Hangings"
                 className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
               <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-amber-700 text-xs font-bold uppercase tracking-wider shadow-xs border border-amber-100 animate-badge-pulse">
-                Eco-Friendly
+                Handmade Wall Art
               </span>
             </div>
             <h3 className="font-heading text-xl sm:text-2xl font-bold text-gray-900 leading-snug mb-2 group-hover:text-amber-900 transition-colors">
-              Jute Totes & Macrame Hangings
+              Boho Wall Hangings & Decor
             </h3>
             <p className="text-xs sm:text-sm text-gray-700 font-medium line-clamp-2">
-              Sustainable lifestyle crafts made with organic fibers
+              Celestial dreamcatcher hangings & artisanal lifestyle crafts made with organic fibers
             </p>
           </div>
           <div className="pt-6">

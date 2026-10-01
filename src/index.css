@@ -718,6 +718,337 @@ input::placeholder, textarea::placeholder {
   will-change: transform;
 }
 
+/* ========================================================
+   VIBRANT ARTISAN CATEGORY STRIP ANIMATIONS & GLOWS
+   ======================================================== */
+
+/* 1. Flowing Rainbow Aurora Border for Header Category Strip */
+@keyframes categoryRainbowShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.category-rainbow-hairline {
+  background: linear-gradient(
+    90deg,
+    #f43f5e 0%,
+    #ea580c 18%,
+    #f59e0b 36%,
+    #10b981 54%,
+    #06b6d4 70%,
+    #8b5cf6 85%,
+    #ec4899 95%,
+    #f43f5e 100%
+  );
+  background-size: 300% 100%;
+  animation: categoryRainbowShift 8s ease infinite;
+  will-change: background-position;
+}
+
+/* 2. Delicate Sheen Sweep on Category Pill Hover */
+@keyframes categorySheenSweep {
+  0% {
+    transform: translate3d(-150%, 0, 0) skewX(-25deg);
+  }
+  100% {
+    transform: translate3d(250%, 0, 0) skewX(-25deg);
+  }
+}
+
+.category-sheen-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-150%, 0, 0) skewX(-25deg);
+}
+
+.group:hover .category-sheen-sweep {
+  opacity: 1;
+  animation: categorySheenSweep 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. Icon Micro-Animations for Category Items */
+/* Terracotta Pot Wobble 🏺 */
+@keyframes potWobble {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    transform: rotate(-10deg) scale(1.14);
+  }
+  40% {
+    transform: rotate(9deg) scale(1.14);
+  }
+  60% {
+    transform: rotate(-6deg) scale(1.07);
+  }
+  80% {
+    transform: rotate(4deg) scale(1.03);
+  }
+}
+
+.group:hover .icon-pot-wobble {
+  animation: potWobble 0.75s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Needle & Silk Thread Tilt 🧵 */
+@keyframes needleTilt {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(18deg) scale(1.16);
+  }
+  50% {
+    transform: rotate(-12deg) scale(1.1);
+  }
+  75% {
+    transform: rotate(8deg) scale(1.05);
+  }
+}
+
+.group:hover .icon-needle-tilt {
+  animation: needleTilt 0.8s ease-in-out;
+}
+
+/* Wall Art Canvas Float 🖼️ */
+@keyframes artFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.16) rotate(-3deg);
+  }
+}
+
+.group:hover .icon-art-float {
+  animation: artFloat 0.7s ease-in-out;
+}
+
+/* Gift / Handicrafts Bounce 🎁 */
+@keyframes giftBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-4px) scale(1.18);
+  }
+  65% {
+    transform: translateY(1.5px) scale(0.96);
+  }
+  85% {
+    transform: translateY(-1px) scale(1.02);
+  }
+}
+
+.group:hover .icon-gift-bounce {
+  animation: giftBounce 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Home Sparkle 🏠 */
+@keyframes homeSparkle {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.16) translateY(-2px);
+  }
+}
+
+.group:hover .icon-home-sparkle {
+  animation: homeSparkle 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Heart Pulse for Handkerchiefs / Embroidery ❤️ */
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.22);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+}
+
+.group:hover .icon-heart-pulse {
+  animation: heartPulse 0.8s ease-in-out infinite;
+}
+
+/* Flame Flicker for Clay Diyas 🔥 */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(-6deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.24) rotate(-3deg);
+  }
+}
+
+.group:hover .icon-flame-flicker {
+  animation: flameFlicker 0.75s ease-in-out infinite;
+}
+
+/* Sun Spin & Glow for Devotional Idols ☀️ */
+@keyframes sunSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(90deg) scale(1.22);
+  }
+  100% {
+    transform: rotate(180deg) scale(1.15);
+  }
+}
+
+.group:hover .icon-sun-spin {
+  animation: sunSpin 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Bell Chime for Brass Artifacts & Wind Chimes 🔔 */
+@keyframes bellChime {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    transform: rotate(-16deg) scale(1.18);
+  }
+  40% {
+    transform: rotate(14deg) scale(1.18);
+  }
+  60% {
+    transform: rotate(-8deg) scale(1.08);
+  }
+  80% {
+    transform: rotate(4deg) scale(1.04);
+  }
+}
+
+.group:hover .icon-bell-chime {
+  animation: bellChime 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Gem Facet Pulse for Clay Jewelry 💎 */
+@keyframes gemPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.26) rotate(10deg);
+  }
+}
+
+.group:hover .icon-gem-pulse {
+  animation: gemPulse 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 4. Luxury Vivid Glowing Shadows for Active Categories */
+.glow-terracotta {
+  box-shadow: 0 4px 18px -2px rgba(234, 88, 12, 0.45), 0 2px 8px -2px rgba(194, 65, 12, 0.35);
+}
+
+.glow-clothing {
+  box-shadow: 0 4px 18px -2px rgba(217, 70, 239, 0.45), 0 2px 8px -2px rgba(162, 28, 175, 0.35);
+}
+
+.glow-wallart {
+  box-shadow: 0 4px 18px -2px rgba(13, 148, 136, 0.45), 0 2px 8px -2px rgba(15, 118, 110, 0.35);
+}
+
+.glow-handicrafts {
+  box-shadow: 0 4px 18px -2px rgba(245, 158, 11, 0.5), 0 2px 8px -2px rgba(217, 119, 6, 0.35);
+}
+
+.glow-home {
+  box-shadow: 0 4px 18px -2px rgba(244, 63, 94, 0.45), 0 2px 8px -2px rgba(225, 29, 72, 0.35);
+}
+
+.glow-festive {
+  box-shadow: 0 4px 18px -2px rgba(236, 72, 153, 0.5), 0 2px 8px -2px rgba(245, 158, 11, 0.35);
+}
+
+/* 5. Ambient Icon Floating & Header Strip Aurora Mesh */
+@keyframes iconAmbientBreathe {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2.5px) scale(1.08);
+  }
+}
+
+.icon-ambient-breathe {
+  animation: iconAmbientBreathe 3.6s ease-in-out infinite;
+}
+
+@keyframes headerStripAuroraPulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.header-strip-aurora-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 241, 242, 0.95) 0%,
+    rgba(255, 247, 237, 0.93) 25%,
+    rgba(250, 245, 255, 0.93) 50%,
+    rgba(240, 253, 250, 0.93) 75%,
+    rgba(254, 243, 199, 0.95) 100%
+  );
+  background-size: 250% 100%;
+  animation: headerStripAuroraPulse 14s ease infinite;
+}
+
+@keyframes activeHaloPulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+}
+
+.animate-active-halo {
+  animation: activeHaloPulse 2.8s ease-in-out infinite;
+}
+
 /* Performance & Accessibility Guardrail */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -736,7 +1067,22 @@ input::placeholder, textarea::placeholder {
   .stardust-particle,
   .artisan-motif-drift,
   .artisan-motif-spin,
-  .header-aurora-beam {
+  .header-aurora-beam,
+  .category-rainbow-hairline,
+  .category-sheen-sweep,
+  .icon-pot-wobble,
+  .icon-needle-tilt,
+  .icon-art-float,
+  .icon-gift-bounce,
+  .icon-home-sparkle,
+  .icon-ambient-breathe,
+  .header-strip-aurora-bg,
+  .animate-active-halo,
+  .icon-heart-pulse,
+  .icon-flame-flicker,
+  .icon-sun-spin,
+  .icon-bell-chime,
+  .icon-gem-pulse {
     animation: none !important;
   }
 }
