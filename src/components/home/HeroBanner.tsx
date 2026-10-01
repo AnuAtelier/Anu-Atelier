@@ -11,6 +11,12 @@ interface HeroSlide {
 
 const HERO_SLIDES: HeroSlide[] = [
   {
+    image: '/img/hero-artisan-painting.jpg',
+    tag: 'Artisan Studio',
+    title: 'Hand-painted Terracotta Floral Art',
+    alt: 'Indian craftswoman hand-painting delicate floral patterns on a terracotta vase',
+  },
+  {
     image: '/img/hero-crafts-flatlay.jpg',
     tag: 'Artisan Heritage Flatlay',
     title: 'Terracotta Pottery, Linen & Brass Diyas',
@@ -51,12 +57,6 @@ const HERO_SLIDES: HeroSlide[] = [
     tag: 'Earthen Terracotta',
     title: 'Traditional Rustic Earthenware & Diyas',
     alt: 'Collection of authentic earthen terracotta pots, kulhads, and festival diyas',
-  },
-  {
-    image: '/img/hero-artisan-painting.jpg',
-    tag: 'Artisan Studio',
-    title: 'Hand-painted Terracotta Floral Art',
-    alt: 'Indian craftswoman hand-painting delicate floral patterns on a terracotta vase',
   },
   {
     image: '/img/hero-terracotta-ganesha-crafts.jpg',

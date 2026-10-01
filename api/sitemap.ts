@@ -19,13 +19,20 @@ interface VercelResponse extends ServerResponse {
   end: (data?: any) => this;
 }
 
+interface UrlEntry {
+  loc: string;
+  priority: string;
+  changefreq: string;
+  lastmod?: string;
+}
+
 export function buildSitemapXml(
   baseUrl: string,
   categories: { slug: string; updated_at?: string }[],
   artisans: { id: string; updated_at?: string }[],
   products: { slug: string; updated_at?: string }[]
 ): string {
-  const staticUrls = [
+  const staticUrls: UrlEntry[] = [
     { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
     { loc: `${baseUrl}/about`, priority: '0.6', changefreq: 'monthly' },
     { loc: `${baseUrl}/contact`, priority: '0.6', changefreq: 'monthly' },
@@ -76,31 +83,66 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
 
   try {
     const baseUrl = process.env.APP_BASE_URL || 'https://anuatelier.com';
-    const supabase = getServiceRoleSupabaseClient();
+    let categories: { slug: string; updated_at?: string }[] = [];
+    let artisans: { id: string; updated_at?: string }[] = [];
+    let products: { slug: string; updated_at?: string }[] = [];
 
-    // Fetch published categories
-    const { data: categories } = await supabase
-      .from('categories')
-      .select('slug, updated_at')
-      .is('deleted_at', null);
+    const hasSupabase = Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
-    // Fetch published artisans
-    const { data: artisans } = await supabase
-      .from('artisans')
-      .select('id, updated_at');
+    if (hasSupabase) {
+      try {
+        const supabase = getServiceRoleSupabaseClient();
+        const { data: c } = await supabase
+          .from('categories')
+          .select('slug, updated_at')
+          .is('deleted_at', null);
 
-    // Fetch published products
-    const { data: products } = await supabase
-      .from('products')
-      .select('slug, updated_at')
-      .eq('status', 'published')
-      .is('deleted_at', null);
+        const { data: a } = await supabase
+          .from('artisans')
+          .select('id, updated_at');
+
+        const { data: p } = await supabase
+          .from('products')
+          .select('slug, updated_at')
+          .eq('status', 'published')
+          .is('deleted_at', null);
+
+        if (c) categories = c;
+        if (a) artisans = a;
+        if (p) products = p;
+      } catch (err) {
+        logger.warn('Failed to query Supabase for sitemap, using local fallback', { error: err }, requestId);
+      }
+    }
+
+    if (products.length === 0) {
+      try {
+        const fs = await import('fs');
+        const path = await import('path');
+        const filePath = path.resolve(process.cwd(), 'products.json');
+        if (fs.existsSync(filePath)) {
+          const raw = fs.readFileSync(filePath, 'utf-8');
+          const localProducts = JSON.parse(raw);
+          products = localProducts.map((p: any) => ({
+            slug: p.slug || p.id,
+            updated_at: new Date(p.createdAt || Date.now()).toISOString(),
+          }));
+          const catSet = new Set<string>();
+          localProducts.forEach((p: any) => {
+            if (p.categoryId) catSet.add(p.categoryId);
+          });
+          categories = Array.from(catSet).map((slug) => ({ slug }));
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
 
     const sitemapXml = buildSitemapXml(
       baseUrl,
-      categories || [],
-      artisans || [],
-      products || []
+      categories,
+      artisans,
+      products
     );
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
@@ -109,7 +151,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   } catch (err: any) {
     logger.error('Failed to generate sitemap', { error: err.message, requestId });
-    const { statusCode, body } = formatErrorResponse(err);
-    res.status(statusCode).json(body);
+    const { status, body } = formatErrorResponse(err);
+    res.status(status).json(body);
   }
 }

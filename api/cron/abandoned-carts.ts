@@ -103,8 +103,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       queued_emails: queuedCount,
     });
   } catch (err: any) {
-    const { statusCode, body } = formatErrorResponse(err);
+    const { status, body } = formatErrorResponse(err);
     logger.error('Error during abandoned cart reminder job', { error: err.message, requestId });
-    res.status(statusCode).json(body);
+    res.status(status).json(body);
   }
 }

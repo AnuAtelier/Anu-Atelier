@@ -88,34 +88,67 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     const format = url.searchParams.get('format') || 'google';
     const baseUrl = process.env.APP_BASE_URL || 'https://anuatelier.com';
 
-    const supabase = getServiceRoleSupabaseClient();
+    let items: any[] = [];
+    const hasSupabase = Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
-    // Query published products with category and images
-    const { data: products, error } = await supabase
-      .from('products')
-      .select(`
-        id,
-        sku,
-        title,
-        slug,
-        short_description,
-        description,
-        price_paise,
-        mrp_paise,
-        stock,
-        is_free_delivery,
-        category:categories(name, slug),
-        images:product_images(url, is_primary)
-      `)
-      .eq('status', 'published')
-      .is('deleted_at', null)
-      .order('published_at', { ascending: false });
+    if (hasSupabase) {
+      try {
+        const supabase = getServiceRoleSupabaseClient();
+        const { data: products, error } = await supabase
+          .from('products')
+          .select(`
+            id,
+            sku,
+            title,
+            slug,
+            short_description,
+            description,
+            price_paise,
+            mrp_paise,
+            stock,
+            is_free_delivery,
+            category:categories(name, slug),
+            images:product_images(url, is_primary)
+          `)
+          .eq('status', 'published')
+          .is('deleted_at', null)
+          .order('published_at', { ascending: false });
 
-    if (error) {
-      throw error;
+        if (!error && products) {
+          items = products;
+        }
+      } catch (err) {
+        logger.warn('Failed to fetch catalog feed from Supabase, using local fallback', { error: err }, requestId);
+      }
     }
 
-    const items = products || [];
+    if (items.length === 0) {
+      try {
+        const fs = await import('fs');
+        const path = await import('path');
+        const filePath = path.resolve(process.cwd(), 'products.json');
+        if (fs.existsSync(filePath)) {
+          const raw = fs.readFileSync(filePath, 'utf-8');
+          const localProducts = JSON.parse(raw);
+          items = localProducts.map((p: any) => ({
+            id: p.id,
+            sku: p.id,
+            title: p.name,
+            slug: p.slug || p.id,
+            short_description: p.description?.slice(0, 150) || p.name,
+            description: p.description || p.name,
+            price_paise: (p.price || 0) * 100,
+            mrp_paise: (p.originalPrice || p.price || 0) * 100,
+            stock: p.stock || 10,
+            is_free_delivery: (p.price || 0) >= 499,
+            category: { name: p.categoryName || 'Handicrafts', slug: p.categoryId },
+            images: (p.images || [p.image]).map((img: string, i: number) => ({ url: img, is_primary: i === 0 })),
+          }));
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
 
     if (format === 'meta') {
       res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -147,7 +180,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   } catch (err: any) {
     logger.error('Failed to generate catalog feed', { error: err.message, requestId });
-    const { statusCode, body } = formatErrorResponse(err);
-    res.status(statusCode).json(body);
+    const { status, body } = formatErrorResponse(err);
+    res.status(status).json(body);
   }
 }

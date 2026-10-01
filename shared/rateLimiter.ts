@@ -13,14 +13,17 @@ interface RateLimitRecord {
 const memoryStore = new Map<string, RateLimitRecord>();
 
 // Clean up expired entries every 5 minutes
-setInterval(() => {
+const cleanupInterval = setInterval(() => {
   const now = Date.now();
   for (const [key, record] of memoryStore.entries()) {
     if (record.resetAt <= now) {
       memoryStore.delete(key);
     }
   }
-}, 300000).unref();
+}, 300000);
+if (typeof cleanupInterval === 'object' && cleanupInterval && 'unref' in cleanupInterval) {
+  (cleanupInterval as any).unref();
+}
 
 export interface RateLimitOptions {
   windowMs: number; // e.g. 60000 for 1 minute

@@ -197,9 +197,9 @@ describe('Phase B6: Growth Features - Abandoned Carts & Feeds', () => {
 
 describe('Phase B6: Customer Privacy & DPDPA Compliance', () => {
   it('enforces deletion confirmation string to be strictly "DELETE"', () => {
-    const confirmValid = 'DELETE';
-    const confirmInvalid = 'delete';
-    const confirmEmpty = '';
+    const confirmValid: string = 'DELETE';
+    const confirmInvalid: string = 'delete';
+    const confirmEmpty: string = '';
 
     expect(confirmValid === 'DELETE').toBe(true);
     expect(confirmInvalid === 'DELETE').toBe(false);

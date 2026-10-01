@@ -106,8 +106,8 @@ async function runRazorpaySimulation() {
 
   // 5. Amount Mismatch Simulation
   step('Simulate amount mismatch defense', () => {
-    const orderExpectedPaise = 149900;
-    const receivedPaise = 100000; // Mismatch: ₹1,000 received instead of ₹1,499
+    const orderExpectedPaise: number = 149900;
+    const receivedPaise: number = 100000; // Mismatch: ₹1,000 received instead of ₹1,499
     if (orderExpectedPaise === receivedPaise) {
       throw new Error('Amounts should not match');
     }

@@ -175,8 +175,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       return;
     } catch (err: any) {
       logger.error('Failed to export catalog CSV', { error: err.message, requestId });
-      const { statusCode, body } = formatErrorResponse(err);
-      res.status(statusCode).json(body);
+      const { status, body } = formatErrorResponse(err);
+      res.status(status).json(body);
       return;
     }
   }
@@ -336,8 +336,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       return;
     } catch (err: any) {
       logger.error('Failed to import catalog CSV', { error: err.message, requestId });
-      const { statusCode, body } = formatErrorResponse(err);
-      res.status(statusCode).json(body);
+      const { status, body } = formatErrorResponse(err);
+      res.status(status).json(body);
       return;
     }
   }
