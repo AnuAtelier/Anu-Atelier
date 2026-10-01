@@ -29,8 +29,16 @@ export const useProductStore = create<ProductState>((set, get) => ({
   },
 
   addProduct: async (product) => {
-    // 1. Optimistic update
-    set((state) => ({ products: [product, ...state.products] }));
+    // 1. Optimistic update & instant browser localStorage persistence
+    set((state) => {
+      const updated = [product, ...state.products];
+      if (typeof window !== 'undefined') {
+        const custom = catalogService.getLocalCustomProducts();
+        const merged = [product, ...custom.filter((p) => p.id !== product.id)];
+        localStorage.setItem('anu_published_products', JSON.stringify(merged));
+      }
+      return { products: updated };
+    });
     // 2. Publish to backend
     await catalogService.publishCraft(product);
   },

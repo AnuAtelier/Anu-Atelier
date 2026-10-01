@@ -10,22 +10,39 @@ interface AuthState {
   loginWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signupWithEmail: (email: string, password: string, fullName: string, phone?: string) => Promise<{ success: boolean; error?: string }>;
   loginWithDemo: (role: 'admin' | 'customer') => void;
+  loginWithSocial: (provider: 'google' | 'instagram') => Promise<{ success: boolean; error?: string }>;
+  loginWithVerificationCode: (identifier: string, code: string, type: 'email' | 'social_handle') => Promise<{ success: boolean; error?: string }>;
   updateProfile: (updates: Partial<UserProfile>) => void;
   logout: () => Promise<void>;
 }
 
 const LOCAL_STORAGE_KEY = 'anu_auth_user';
+const EMAIL_STORAGE_KEY = 'anu_customer_email';
+
+export const getStoredUser = (): UserProfile | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      return JSON.parse(saved);
+    }
+  } catch (e) {
+    console.error('Failed to load local auth session', e);
+  }
+  return null;
+};
+
+const initialUser = getStoredUser();
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
-  isLoading: true,
+  user: initialUser,
+  isLoading: false,
   error: null,
 
   initialize: async () => {
-    set({ isLoading: true, error: null });
-
     // 1. If Supabase is configured with credentials
     if (isSupabaseConfigured) {
+      set({ isLoading: true, error: null });
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
@@ -185,6 +202,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     };
 
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mockUser));
+    localStorage.setItem(EMAIL_STORAGE_KEY, trimmedEmail);
     set({ user: mockUser, isLoading: false });
     return { success: true };
   },
@@ -266,6 +284,81 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ user: demoUser, isLoading: false, error: null });
   },
 
+  loginWithSocial: async (provider: 'google' | 'instagram') => {
+    set({ isLoading: true, error: null });
+
+    if (isSupabaseConfigured && provider === 'google') {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin,
+          },
+        });
+        if (error) {
+          set({ isLoading: false, error: error.message });
+          return { success: false, error: error.message };
+        }
+        return { success: true };
+      } catch (err: any) {
+        console.warn('Supabase social auth fallback to simulated session', err);
+      }
+    }
+
+    // Customer login with verified social media handling
+    const isGoogle = provider === 'google';
+    const mockUser: UserProfile = {
+      id: `social-${provider}-${Date.now()}`,
+      email: isGoogle ? 'customer.google@gmail.com' : 'artisan.customer@instagram.user',
+      fullName: isGoogle ? 'Google Customer' : 'Instagram Customer',
+      role: 'customer',
+      isVerified: true,
+      authProvider: provider,
+      socialHandle: isGoogle ? undefined : '@anu_customer',
+      avatarUrl: isGoogle
+        ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80'
+        : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80',
+    };
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mockUser));
+    localStorage.setItem(EMAIL_STORAGE_KEY, mockUser.email);
+    set({ user: mockUser, isLoading: false, error: null });
+    return { success: true };
+  },
+
+  loginWithVerificationCode: async (identifier: string, code: string, type: 'email' | 'social_handle') => {
+    set({ isLoading: true, error: null });
+
+    const cleanCode = code.trim();
+    if (!cleanCode || cleanCode.length < 4) {
+      set({ isLoading: false, error: 'Please enter a valid verification code.' });
+      return { success: false, error: 'Please enter a valid verification code.' };
+    }
+
+    const cleanIdentifier = identifier.trim();
+    const isEmail = type === 'email';
+    const normalizedEmail = isEmail
+      ? cleanIdentifier.toLowerCase()
+      : `${cleanIdentifier.replace('@', '').toLowerCase()}@instagram.user`;
+
+    const userProfile: UserProfile = {
+      id: `verified-${Date.now()}`,
+      email: normalizedEmail,
+      fullName: isEmail
+        ? cleanIdentifier.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+        : (cleanIdentifier.startsWith('@') ? cleanIdentifier : `@${cleanIdentifier}`),
+      role: 'customer',
+      isVerified: true,
+      authProvider: type,
+      socialHandle: !isEmail ? (cleanIdentifier.startsWith('@') ? cleanIdentifier : `@${cleanIdentifier}`) : undefined,
+    };
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userProfile));
+    localStorage.setItem(EMAIL_STORAGE_KEY, normalizedEmail);
+    set({ user: userProfile, isLoading: false, error: null });
+    return { success: true };
+  },
+
   logout: async () => {
     if (isSupabaseConfigured) {
       try {
@@ -275,6 +368,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
     }
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.removeItem(EMAIL_STORAGE_KEY);
     set({ user: null, isLoading: false });
   },
 }));

@@ -30,6 +30,7 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const mobileSearchContainerRef = useRef<HTMLDivElement>(null);
 
   // Track window scroll to make header sleek on head and collapse announcement
   useEffect(() => {
@@ -63,7 +64,10 @@ export const Header: React.FC = () => {
   // Close search popup on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      const insideDesktop = searchContainerRef.current && searchContainerRef.current.contains(target);
+      const insideMobile = mobileSearchContainerRef.current && mobileSearchContainerRef.current.contains(target);
+      if (!insideDesktop && !insideMobile) {
         setIsSearchOpen(false);
       }
     };
@@ -134,8 +138,8 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Search Bar (Desktop) */}
-          <div ref={searchContainerRef} className="relative hidden md:block flex-1 max-w-xs xl:max-w-sm mx-2 xl:mx-4">
-            <form onSubmit={handleSearchSubmit} className="relative">
+          <div ref={searchContainerRef} className="relative hidden md:block flex-1 mx-2 sm:mx-4">
+            <form onSubmit={handleSearchSubmit} className="relative w-full">
               <input
                 ref={searchInputRef}
                 type="text"
@@ -283,10 +287,10 @@ export const Header: React.FC = () => {
                 </div>
                 <div className="flex flex-col text-left leading-tight">
                   <span className="text-[10px] uppercase font-bold tracking-wider text-rose-600">
-                    {isAdmin ? 'Owner' : `Hi, ${user.fullName.split(' ')[0]}`}
+                    {isAdmin ? 'Owner' : 'Customer'}
                   </span>
-                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800 truncate max-w-[110px] lg:max-w-[180px]">
-                    {isAdmin ? (user.fullName || 'Anushka') : 'My Account'}
+                  <span className="text-[11px] sm:text-xs font-semibold text-stone-800 truncate max-w-[85px] sm:max-w-[100px]">
+                    {user.fullName ? user.fullName.trim().split(' ')[0] : (isAdmin ? 'Anushka' : 'Account')}
                   </span>
                 </div>
               </Link>
@@ -309,6 +313,77 @@ export const Header: React.FC = () => {
         </div>
       </nav>
 
+      {/* Mobile Search Bar (Full in form, with live dropdown & clear button) */}
+      <div
+        ref={mobileSearchContainerRef}
+        className="md:hidden border-b border-[var(--border-color)] bg-white/95 backdrop-blur-md w-full px-4 sm:px-6 py-2 min-w-0 relative z-30"
+      >
+        <form onSubmit={handleSearchSubmit} className="relative w-full">
+          <input
+            type="text"
+            placeholder="Search handmade crafts..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setIsSearchOpen(true);
+            }}
+            onFocus={() => setIsSearchOpen(true)}
+            className="w-full pl-9 pr-8 py-2 rounded-full border border-pink-200/80 bg-white/90 text-[var(--text-main)] text-sm focus:outline-none focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-500/20 shadow-xs transition-all placeholder:text-gray-500"
+          />
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-pink-600/70 pointer-events-none" />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-2 text-[var(--text-muted)] hover:text-[var(--text-main)]"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </form>
+
+        {/* Mobile Search Dropdown Panel */}
+        {isSearchOpen && searchQuery.trim().length >= 2 && (
+          <div className="absolute left-4 right-4 top-full mt-1.5 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl shadow-lg-soft overflow-hidden z-50">
+            {searchResults.length > 0 ? (
+              <div>
+                <div className="p-2 border-b border-[var(--border-color)] text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                  Matching Crafts
+                </div>
+                {searchResults.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`/product/${product.slug || product.id}`}
+                    onClick={() => setIsSearchOpen(false)}
+                    className="flex items-center gap-3 p-3 hover:bg-[var(--bg-input)] transition-colors border-b border-[var(--border-color)] last:border-b-0"
+                  >
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-11 h-11 rounded-lg object-cover flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs sm:text-sm font-medium text-[var(--text-main)] truncate">{product.name}</p>
+                      <p className="text-xs text-[var(--primary)] font-semibold">₹{product.price}</p>
+                    </div>
+                  </Link>
+                ))}
+                <button
+                  onClick={() => handleSearchSubmit()}
+                  className="w-full py-2.5 text-center text-xs font-semibold text-[var(--primary)] hover:bg-[var(--bg-input)] transition-colors"
+                >
+                  View all results for "{searchQuery}" &rarr;
+                </button>
+              </div>
+            ) : (
+              <div className="p-5 text-center text-xs sm:text-sm text-[var(--text-muted)]">
+                No handcrafted items found for "{searchQuery}"
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* Sticky Quick-Access Category Navigation (Mobile & Tablet) */}
       <div className="lg:hidden border-b border-[var(--border-color)]/70 bg-white/95 backdrop-blur-md px-3 py-1.5 overflow-x-auto no-scrollbar flex items-center gap-1.5 shadow-2xs">
         {CATEGORY_LINKS.map((cat) => {
@@ -328,22 +403,6 @@ export const Header: React.FC = () => {
             </Link>
           );
         })}
-      </div>
-
-      {/* Mobile Search Input */}
-      <div className="md:hidden border-b border-[var(--border-color)] bg-[var(--bg-color)] w-full max-w-full overflow-hidden">
-        <div className="w-full px-4 sm:px-6 py-2 min-w-0">
-          <form onSubmit={handleSearchSubmit} className="relative w-full">
-            <input
-              type="text"
-              placeholder="Search handmade magic..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-8 py-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] text-sm focus:outline-none focus:border-[var(--primary)]"
-            />
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-[var(--text-muted)]" />
-          </form>
-        </div>
       </div>
     </header>
   );

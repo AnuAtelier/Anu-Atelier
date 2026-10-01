@@ -83,6 +83,9 @@ export interface UserProfile {
   phoneVerified?: boolean;
   avatarUrl?: string;
   role: 'customer' | 'admin';
+  socialHandle?: string;
+  isVerified?: boolean;
+  authProvider?: 'email' | 'google' | 'instagram' | 'social_handle';
 }
 
 export interface OrderItem {

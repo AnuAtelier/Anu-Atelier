@@ -97,7 +97,7 @@ export const MobileNav: React.FC = () => {
             <User className="h-4 w-4" />
           )}
           <span className="text-[10px] font-medium truncate max-w-[58px]">
-            {user ? (isAdmin ? 'Owner' : user.fullName.split(' ')[0]) : 'Login'}
+            {user ? (isAdmin ? 'Owner' : (user.fullName ? user.fullName.trim().split(' ')[0] : 'Account')) : 'Login'}
           </span>
         </Link>
       </div>
