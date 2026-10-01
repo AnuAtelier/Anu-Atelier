@@ -214,6 +214,34 @@ input::placeholder, textarea::placeholder {
 }
 
 /* ========================================================
+   SEAMLESS PAGE ENTRANCE TRANSITION (ZERO JERK)
+   ======================================================== */
+@keyframes pageEnterSmooth {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnterSmooth 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ========================================================
    HIGH PERFORMANCE GPU-ACCELERATED ANIMATIONS (60-120 FPS)
    Crafted with translate3d & opacity for zero lag on mobile/desktop
    ======================================================== */

@@ -30,13 +30,20 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { AddCraftPage } from './pages/AddCraftPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 
-// Auto scroll to top on route change
+// Auto scroll to top on route change without jerk or jump
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Disable smooth scrolling temporarily to prevent page-jump/jerk roll
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo({ top: 0, left: 0 });
+    // Re-enable default smooth scrolling on next frame for in-page anchors
+    const frameId = requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = '';
+    });
     // Guarantee all hearts on the incoming page immediately lock into unison
     syncHeartbeatAnimations();
+    return () => cancelAnimationFrame(frameId);
   }, [pathname]);
   return null;
 }
@@ -52,10 +59,12 @@ const AppContent: React.FC = () => {
   // 1. Clean Standalone Auth Layout: NO Navbar, NO Footer, NO MobileNav, NO WhatsAppFloat
   if (isAuthRoute) {
     return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
+      <div key={pathname} className="animate-page-enter w-full min-h-screen">
+        <Routes location={location}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </div>
     );
   }
 
@@ -74,41 +83,43 @@ const AppContent: React.FC = () => {
   if (isAdminRoute) {
     return (
       <AdminLayout>
-        <Routes>
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboardPage />
-              </AdminRoute>
-            }
-          />
-          <Route
-            path="/seller"
-            element={
-              <AdminRoute>
-                <AddCraftPage />
-              </AdminRoute>
-            }
-          />
-          <Route
-            path="/admin/add-craft"
-            element={
-              <AdminRoute>
-                <AddCraftPage />
-              </AdminRoute>
-            }
-          />
-          <Route
-            path="/admin/products/new"
-            element={
-              <AdminRoute>
-                <AddCraftPage />
-              </AdminRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <div key={pathname} className="animate-page-enter w-full min-w-0">
+          <Routes location={location}>
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboardPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/seller"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/add-craft"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/products/new"
+              element={
+                <AdminRoute>
+                  <AddCraftPage />
+                </AdminRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
       </AdminLayout>
     );
   }
@@ -119,18 +130,20 @@ const AppContent: React.FC = () => {
       <AnimatedArtisanBackground />
       <Header />
       <main className="flex-1 pb-16 sm:pb-0 relative z-10 w-full max-w-full min-w-0 overflow-x-clip">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/category/:slug" element={<CategoryPage />} />
-          <Route path="/product/:slug" element={<ProductPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/wishlist" element={<WishlistPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/order-success/:id" element={<OrderSuccessPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <div key={pathname} className="animate-page-enter w-full max-w-full min-w-0">
+          <Routes location={location}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/category/:slug" element={<CategoryPage />} />
+            <Route path="/product/:slug" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order-success/:id" element={<OrderSuccessPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
       </main>
       <Footer />
       <MobileNav />
