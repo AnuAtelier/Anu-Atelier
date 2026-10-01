@@ -95,16 +95,16 @@ export const Header: React.FC = () => {
 
   return (
     <header className={`sticky top-0 z-50 w-full max-w-full transition-all duration-300 ${
-      isScrolled ? 'shadow-md' : 'shadow-xs'
+      isScrolled ? 'shadow-md shadow-pink-900/5' : 'shadow-xs'
     }`}>
 
       {/* Main Navbar */}
       <nav
         style={{
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.96)' : 'var(--header-bg)',
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'var(--header-bg)',
           borderColor: isScrolled ? 'rgba(244, 114, 182, 0.35)' : 'var(--header-border)',
         }}
-        className="backdrop-blur-md border-b transition-all duration-300 w-full"
+        className="backdrop-blur-xl border-b transition-all duration-300 w-full relative"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-4 lg:gap-6 min-w-0">
           {/* Brand Logo */}
@@ -119,9 +119,19 @@ export const Header: React.FC = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-none transition-opacity">
-                Anu<span className="text-pink-600 italic font-semibold">Atelier</span>
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)] group-hover:opacity-95 leading-none transition-opacity">
+                  Anu<span className="text-pink-600 italic font-semibold">Atelier</span>
+                </span>
+                {/* Live Artisan Hallmark Badge */}
+                <span className="hidden xl:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50/70 border border-pink-200/80 text-rose-700 shadow-2xs">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                  </span>
+                  <span>Handcrafted</span>
+                </span>
+              </div>
               <span className="text-[10px] tracking-widest uppercase font-bold text-pink-600/80 mt-1 hidden sm:block">
                 Artisan Studio
               </span>
@@ -129,8 +139,8 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Search Bar (Desktop) */}
-          <div ref={searchContainerRef} className="relative hidden md:block flex-1 mx-2 sm:mx-4">
-            <form onSubmit={handleSearchSubmit} className="relative w-full">
+          <div ref={searchContainerRef} className="relative hidden md:block flex-1 mx-2 sm:mx-4 max-w-xl">
+            <form onSubmit={handleSearchSubmit} className="relative w-full group">
               <input
                 ref={searchInputRef}
                 type="text"
@@ -141,9 +151,14 @@ export const Header: React.FC = () => {
                   setIsSearchOpen(true);
                 }}
                 onFocus={() => setIsSearchOpen(true)}
-                className="w-full pl-10 pr-10 py-2.5 rounded-full border border-pink-200/70 bg-white/70 backdrop-blur-md text-[var(--text-main)] text-sm focus:outline-none focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-gray-500 shadow-xs"
+                className="w-full pl-10 pr-10 py-2.5 rounded-full border border-pink-200/80 bg-white/80 group-hover:bg-white focus:bg-white text-[var(--text-main)] text-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all placeholder:text-stone-400 shadow-xs"
               />
-              <Search className="absolute left-3.5 top-3 h-4 w-4 text-pink-600/70 pointer-events-none" />
+              <Search className="absolute left-3.5 top-3 h-4 w-4 text-pink-600/70 pointer-events-none group-focus-within:text-pink-600 transition-colors" />
+              {!searchQuery && (
+                <kbd className="absolute right-3.5 top-2.5 hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold text-stone-500 bg-stone-100/90 border border-stone-200/80 rounded-md pointer-events-none shadow-2xs">
+                  /
+                </kbd>
+              )}
               {searchQuery && (
                 <button
                   type="button"
@@ -198,17 +213,17 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Category Navigation Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-shrink-0">
             {CATEGORY_LINKS.map((cat) => {
               const isActive = location.pathname === cat.path;
               return (
                 <Link
                   key={cat.path}
                   to={cat.path}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 active:scale-95 ${
                     isActive
-                      ? 'bg-[var(--primary)] text-white shadow-xs'
-                      : 'text-[var(--text-main)] hover:text-[var(--primary)] hover:bg-pink-50/80'
+                      ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-xs ring-2 ring-pink-500/20'
+                      : 'text-[var(--text-main)] hover:text-pink-600 hover:bg-pink-50/80'
                   }`}
                 >
                   {cat.label}
@@ -234,11 +249,11 @@ export const Header: React.FC = () => {
             <Link
               to="/wishlist"
               aria-label="Wishlist"
-              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-200/60 flex items-center justify-center text-rose-700 transition-all shadow-xs"
+              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-rose-500/10 hover:bg-rose-500/20 hover:scale-105 active:scale-95 border border-rose-200/60 flex items-center justify-center text-rose-700 transition-all duration-200 shadow-xs"
             >
               <Heart className="h-4.5 w-4.5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-scale-in shadow-xs">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-scale-in shadow-xs">
                   {wishlistCount}
                 </span>
               )}
@@ -248,7 +263,7 @@ export const Header: React.FC = () => {
             <button
               onClick={toggleDrawer}
               aria-label="Shopping Cart"
-              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-pink-500/15 hover:bg-pink-500/25 border border-pink-300/70 flex items-center justify-center text-pink-700 transition-all shadow-xs cursor-pointer"
+              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-pink-500/15 hover:bg-pink-500/25 hover:scale-105 active:scale-95 border border-pink-300/70 flex items-center justify-center text-pink-700 transition-all duration-200 shadow-xs cursor-pointer"
             >
               <ShoppingBag className="h-4.5 w-4.5" />
               {cartCount > 0 && (
@@ -263,7 +278,7 @@ export const Header: React.FC = () => {
               <Link
                 to="/profile"
                 aria-label="My Account"
-                className="inline-flex items-center gap-2 pl-1 pr-2.5 sm:pr-3 py-1 rounded-full border border-pink-200/90 bg-white/90 hover:bg-pink-50/80 text-stone-900 transition-all shadow-xs group flex-shrink-0"
+                className="inline-flex items-center gap-2 pl-1 pr-2.5 sm:pr-3 py-1 rounded-full border border-pink-200/90 bg-white/90 hover:bg-pink-50/80 hover:scale-[1.02] active:scale-95 text-stone-900 transition-all duration-200 shadow-xs group flex-shrink-0"
                 title={`${user.fullName || 'User'} (${isAdmin ? 'Owner' : 'Customer'})`}
               >
                 <div className="relative flex-shrink-0">
@@ -289,7 +304,7 @@ export const Header: React.FC = () => {
               <Link
                 to="/login"
                 aria-label="Login to Anu Atelier"
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-pink-300/80 bg-white hover:bg-pink-50 text-stone-800 hover:text-[var(--primary)] text-xs sm:text-sm font-semibold transition-all shadow-xs group flex-shrink-0"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-pink-300/80 bg-white hover:bg-pink-50 hover:scale-[1.02] active:scale-95 text-stone-800 hover:text-[var(--primary)] text-xs sm:text-sm font-semibold transition-all duration-200 shadow-xs group flex-shrink-0"
               >
                 <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-pink-100 flex items-center justify-center text-[var(--primary)] group-hover:scale-105 transition-transform flex-shrink-0">
                   <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -383,10 +398,10 @@ export const Header: React.FC = () => {
             <Link
               key={cat.path}
               to={cat.path}
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 active:scale-95 ${
                 isActive
-                  ? 'bg-[var(--primary)] text-white shadow-xs'
-                  : 'bg-stone-100/90 text-stone-700 hover:bg-stone-200/80'
+                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-xs'
+                  : 'bg-stone-100/90 text-stone-700 hover:bg-pink-50 hover:text-pink-600'
               }`}
             >
               <span className="text-[11px]">{cat.emoji}</span>
@@ -394,6 +409,11 @@ export const Header: React.FC = () => {
             </Link>
           );
         })}
+      </div>
+
+      {/* Luminous Aurora Shimmer Hairline (Ultra-delicate luxury animation) */}
+      <div className="relative w-full h-[2px] overflow-hidden bg-gradient-to-r from-transparent via-rose-200/50 to-transparent">
+        <div className="header-aurora-beam" />
       </div>
     </header>
   );
