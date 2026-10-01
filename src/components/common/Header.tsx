@@ -5,7 +5,6 @@ import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { useProductStore } from '../../store/useProductStore';
 import { useAuthStore } from '../../store/useAuthStore';
-import { DEFAULT_SITE_SETTINGS } from '../../constants';
 
 const CATEGORY_LINKS = [
   { label: 'Home', path: '/', emoji: '🏠' },
@@ -98,14 +97,6 @@ export const Header: React.FC = () => {
     <header className={`sticky top-0 z-50 w-full max-w-full transition-all duration-300 ${
       isScrolled ? 'shadow-md' : 'shadow-xs'
     }`}>
-      {/* Announcement Bar: Collapses on scroll down so Header is cleanly on "head" */}
-      <div
-        className={`bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white text-[11px] sm:text-xs font-medium text-center tracking-wide flex items-center justify-center gap-2 overflow-hidden w-full transition-all duration-300 ease-in-out ${
-          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-10 py-1.5 px-3 sm:px-4 opacity-100'
-        }`}
-      >
-        <span className="truncate max-w-full">{DEFAULT_SITE_SETTINGS.announcementText}</span>
-      </div>
 
       {/* Main Navbar */}
       <nav
