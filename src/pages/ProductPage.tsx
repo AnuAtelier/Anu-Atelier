@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   Heart,
@@ -94,6 +95,19 @@ export const ProductPage: React.FC = () => {
     setZoomLevel((prev) => Math.max(Number((prev - 0.5).toFixed(1)), 1));
   };
 
+  const openLightbox = (index: number = activeImageIndex, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageIndex(index);
+    setZoomLevel(1);
+    setIsLightboxOpen(true);
+  };
+
+  const closeLightbox = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setIsLightboxOpen(false);
+    setZoomLevel(1);
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.touches[0].clientX);
   };
@@ -106,16 +120,24 @@ export const ProductPage: React.FC = () => {
     setTouchStartX(null);
   };
 
+  // Prevent background scroll when lightbox is open
+  useEffect(() => {
+    if (isLightboxOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isLightboxOpen]);
+
   // Keyboard navigation for Lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isLightboxOpen) return;
       if (e.key === 'ArrowRight') handleNextImage();
       if (e.key === 'ArrowLeft') handlePrevImage();
-      if (e.key === 'Escape') {
-        setIsLightboxOpen(false);
-        setZoomLevel(1);
-      }
+      if (e.key === 'Escape') closeLightbox();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -210,15 +232,17 @@ export const ProductPage: React.FC = () => {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className="relative w-full aspect-square max-h-[460px] sm:max-h-[500px] mx-auto rounded-3xl overflow-hidden bg-stone-50/90 border border-stone-200/80 shadow-xs flex items-center justify-center p-3 sm:p-5 select-none cursor-pointer group transition-all"
-            onClick={() => {
-              setIsLightboxOpen(true);
-              setZoomLevel(1);
-            }}
+            onClick={(e) => openLightbox(activeImageIndex, e)}
             title="Click to open full size image in new window"
           >
             <img
               src={galleryImages[activeImageIndex]}
               alt={`${product.name} - View ${activeImageIndex + 1}`}
+              onError={(e) => {
+                if (product && e.currentTarget.src !== product.image) {
+                  e.currentTarget.src = product.image;
+                }
+              }}
               className="w-full h-full object-contain mx-auto transition-transform duration-300 group-hover:scale-102"
             />
 
@@ -261,11 +285,7 @@ export const ProductPage: React.FC = () => {
             {/* Open Full Size Window Button */}
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsLightboxOpen(true);
-                setZoomLevel(1);
-              }}
+              onClick={(e) => openLightbox(activeImageIndex, e)}
               className="absolute bottom-3.5 right-3.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white text-stone-800 text-xs font-semibold shadow-md border border-stone-200/90 flex items-center gap-1.5 transition-all z-10 hover:scale-105 hover:text-pink-600 cursor-pointer"
             >
               <Maximize2 className="h-3.5 w-3.5 text-pink-600" />
@@ -586,167 +606,191 @@ export const ProductPage: React.FC = () => {
         </div>
       )}
 
-      {/* FULLSCREEN LIGHTBOX WINDOW: White Background, Full-size image, Zoom in/out, Slide left/right */}
-      {isLightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-white/98 backdrop-blur-xl flex flex-col justify-between select-none animate-fade-in"
-          onClick={() => {
-            setIsLightboxOpen(false);
-            setZoomLevel(1);
-          }}
-        >
-          {/* Top Control Bar */}
+      {/* FULLSCREEN LIGHTBOX WINDOW: Portaled to document.body to prevent parent transform clipping, fits screen perfectly */}
+      {isLightboxOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
           <div
-            className="flex items-center justify-between p-4 sm:p-5 bg-white/95 border-b border-stone-200 shadow-xs z-20"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[99999] bg-white/98 backdrop-blur-2xl flex flex-col justify-between select-none animate-fade-in text-stone-900"
+            onClick={(e) => {
+              // Only close when clicking directly on outer backdrop, never on controls/image
+              if (e.target === e.currentTarget) {
+                closeLightbox(e);
+              }
+            }}
           >
-            <div>
-              <p className="font-heading font-bold text-base sm:text-lg text-stone-900 truncate max-w-xs sm:max-w-md">
-                {product.name}
-              </p>
-              <p className="text-xs text-stone-500 font-medium">
-                Image {activeImageIndex + 1} of {galleryImages.length} • Click image or use + / - to zoom
-              </p>
-            </div>
+            {/* Top Control Bar */}
+            <div
+              className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4 bg-white/95 border-b border-stone-200 shadow-xs z-30 flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="min-w-0 pr-2">
+                <p className="font-heading font-bold text-base sm:text-lg text-stone-900 truncate max-w-xs sm:max-w-md">
+                  {product.name}
+                </p>
+                <p className="text-xs text-stone-500 font-medium">
+                  Image {activeImageIndex + 1} of {galleryImages.length} • Click image to zoom / fit • Esc to close
+                </p>
+              </div>
 
-            {/* Zoom & Close Controls */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <button
-                type="button"
-                onClick={handleZoomOut}
-                disabled={zoomLevel <= 1}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 disabled:opacity-40 disabled:cursor-not-allowed text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
-                title="Zoom Out (-)"
-              >
-                <ZoomOut className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-
-              <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded-lg bg-pink-50 border border-pink-200 text-[var(--primary)] min-w-[54px] text-center">
-                {Math.round(zoomLevel * 100)}%
-              </span>
-
-              <button
-                type="button"
-                onClick={handleZoomIn}
-                disabled={zoomLevel >= 3}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 disabled:opacity-40 disabled:cursor-not-allowed text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
-                title="Zoom In (+)"
-              >
-                <ZoomIn className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-
-              {zoomLevel > 1 && (
+              {/* Zoom & Close Controls */}
+              <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <button
                   type="button"
-                  onClick={() => setZoomLevel(1)}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
-                  title="Reset Zoom (100%)"
+                  onClick={handleZoomOut}
+                  disabled={zoomLevel <= 1}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 disabled:opacity-40 disabled:cursor-not-allowed text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
+                  title="Zoom Out (-)"
+                  aria-label="Zoom out"
                 >
-                  <RotateCcw className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ZoomOut className="h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+
+                <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded-lg bg-pink-50 border border-pink-200 text-[var(--primary)] min-w-[54px] text-center">
+                  {Math.round(zoomLevel * 100)}%
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleZoomIn}
+                  disabled={zoomLevel >= 3}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 disabled:opacity-40 disabled:cursor-not-allowed text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
+                  title="Zoom In (+)"
+                  aria-label="Zoom in"
+                >
+                  <ZoomIn className="h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+
+                {zoomLevel > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setZoomLevel(1)}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 flex items-center justify-center transition-all cursor-pointer"
+                    title="Reset Zoom to Fit Screen (100%)"
+                    aria-label="Reset zoom"
+                  >
+                    <RotateCcw className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={closeLightbox}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-rose-50 text-stone-700 hover:text-rose-600 border border-stone-200 flex items-center justify-center transition-all ml-1 sm:ml-2 cursor-pointer"
+                  title="Close Window (Esc)"
+                  aria-label="Close window"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Center Main Stage: Guaranteed Screen-Fit & Smooth Zoom */}
+            <div
+              className="relative flex-1 min-h-0 w-full flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden bg-stone-50/50"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  closeLightbox(e);
+                }
+              }}
+            >
+              {/* Slide Left Button */}
+              {galleryImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handlePrevImage}
+                  className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-stone-50 text-stone-800 shadow-xl border border-stone-200 flex items-center justify-center transition-all hover:scale-110 z-30 cursor-pointer"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
                 </button>
               )}
 
-              <button
-                type="button"
-                onClick={() => {
-                  setIsLightboxOpen(false);
-                  setZoomLevel(1);
+              {/* The Full Size Image Container - Perfectly Screen-Fitting */}
+              <div
+                className={`relative flex items-center justify-center max-w-full max-h-full ${
+                  zoomLevel > 1 ? 'overflow-auto cursor-grab active:cursor-grabbing p-4' : 'cursor-zoom-in'
+                }`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setZoomLevel((z) => (z === 1 ? 2 : 1));
                 }}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-rose-50 text-stone-700 hover:text-rose-600 border border-stone-200 flex items-center justify-center transition-all ml-1 sm:ml-2 cursor-pointer"
-                title="Close Window (Esc)"
+                title={zoomLevel > 1 ? 'Click to fit image to screen' : 'Click to zoom in'}
               >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Center Main Image: Full Size, Fit to Screen & Zoomable */}
-          <div
-            className="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden bg-stone-50/50"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Slide Left Button */}
-            {galleryImages.length > 1 && (
-              <button
-                type="button"
-                onClick={handlePrevImage}
-                className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-stone-50 text-stone-800 shadow-xl border border-stone-200 flex items-center justify-center transition-all hover:scale-110 z-20 cursor-pointer"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
-              </button>
-            )}
-
-            {/* The Full Size Image Container */}
-            <div
-              className="max-w-[92vw] max-h-[76vh] flex items-center justify-center overflow-auto scrollbar-none transition-transform duration-200 ease-out"
-              style={{
-                transform: `scale(${zoomLevel})`,
-                cursor: zoomLevel > 1 ? 'grab' : 'zoom-in',
-              }}
-              onClick={() => {
-                setZoomLevel((z) => (z === 1 ? 2 : 1));
-              }}
-              title="Click to zoom in / out"
-            >
-              <img
-                src={galleryImages[activeImageIndex]}
-                alt={`${product.name} - Full Size View ${activeImageIndex + 1}`}
-                className="max-h-[74vh] max-w-[88vw] object-contain rounded-2xl shadow-xl transition-all select-none border border-stone-200/60 bg-white"
-              />
-            </div>
-
-            {/* Slide Right Button */}
-            {galleryImages.length > 1 && (
-              <button
-                type="button"
-                onClick={handleNextImage}
-                className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-stone-50 text-stone-800 shadow-xl border border-stone-200 flex items-center justify-center transition-all hover:scale-110 z-20 cursor-pointer"
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
-              </button>
-            )}
-          </div>
-
-          {/* Bottom Thumbnails Strip in Lightbox Window */}
-          <div
-            className="p-3 sm:p-4 bg-white/95 border-t border-stone-200 flex flex-col items-center gap-1.5 z-20 shadow-xs"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {galleryImages.length > 1 && (
-              <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 scrollbar-none">
-                {galleryImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setActiveImageIndex(idx);
-                      setZoomLevel(1);
-                    }}
-                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all p-0.5 bg-stone-50 cursor-pointer ${
-                      activeImageIndex === idx
-                        ? 'border-gray-900 ring-2 ring-gray-900/20 scale-105 shadow-sm'
-                        : 'border-stone-200 opacity-70 hover:opacity-100 hover:border-stone-300'
-                    }`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-contain rounded-lg"
-                    />
-                  </button>
-                ))}
+                <img
+                  src={galleryImages[activeImageIndex]}
+                  alt={`${product.name} - Full Size View ${activeImageIndex + 1}`}
+                  onError={(e) => {
+                    if (product && e.currentTarget.src !== product.image) {
+                      e.currentTarget.src = product.image;
+                    }
+                  }}
+                  style={{
+                    transform: `scale(${zoomLevel})`,
+                    transformOrigin: 'center center',
+                    transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                  }}
+                  className="max-h-[calc(100vh-175px)] sm:max-h-[calc(100vh-185px)] max-w-[calc(100vw-32px)] sm:max-w-[calc(100vw-96px)] w-auto h-auto object-contain rounded-2xl shadow-xl transition-all select-none border border-stone-200/80 bg-white"
+                />
               </div>
-            )}
-            <p className="text-[11px] text-stone-500 font-medium">
-              Use Left / Right arrow keys or swipe to slide • Click image to zoom • Esc to close
-            </p>
-          </div>
-        </div>
-      )}
+
+              {/* Slide Right Button */}
+              {galleryImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handleNextImage}
+                  className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-stone-50 text-stone-800 shadow-xl border border-stone-200 flex items-center justify-center transition-all hover:scale-110 z-30 cursor-pointer"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
+                </button>
+              )}
+            </div>
+
+            {/* Bottom Thumbnails Strip in Lightbox Window */}
+            <div
+              className="p-3 sm:p-4 bg-white/95 border-t border-stone-200 flex flex-col items-center gap-1.5 z-30 shadow-xs flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {galleryImages.length > 1 && (
+                <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 scrollbar-none">
+                  {galleryImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setActiveImageIndex(idx);
+                        setZoomLevel(1);
+                      }}
+                      className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all p-0.5 bg-stone-50 cursor-pointer ${
+                        activeImageIndex === idx
+                          ? 'border-gray-900 ring-2 ring-gray-900/20 scale-105 shadow-sm'
+                          : 'border-stone-200 opacity-70 hover:opacity-100 hover:border-stone-300'
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        onError={(e) => {
+                          if (product && e.currentTarget.src !== product.image) {
+                            e.currentTarget.src = product.image;
+                          }
+                        }}
+                        className="w-full h-full object-contain rounded-lg"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+              <p className="text-[11px] text-stone-500 font-medium">
+                Use Left / Right arrow keys or swipe to slide • Click image to zoom / fit • Esc to close
+              </p>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

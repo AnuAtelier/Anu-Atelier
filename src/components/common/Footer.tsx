@@ -189,6 +189,12 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-1 text-xs text-gray-700">
               <li>
+                <Link to="/customer-favorites" className="group flex items-center gap-1.5 hover:text-amber-700 font-semibold transition-all text-[11.5px] text-amber-900">
+                  <span className="w-1 h-1 rounded-full bg-amber-400 group-hover:w-2 group-hover:bg-amber-600 transition-all duration-200"></span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-150">Customer Favorites ⭐</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/category/terracotta-clay" className="group flex items-center gap-1.5 hover:text-rose-600 font-medium transition-all text-[11.5px]">
                   <span className="w-1 h-1 rounded-full bg-rose-300 group-hover:w-2 group-hover:bg-rose-600 transition-all duration-200"></span>
                   <span className="group-hover:translate-x-1 transition-transform duration-150">Terracotta & Clay Items</span>
@@ -210,12 +216,6 @@ export const Footer: React.FC = () => {
                 <Link to="/search?q=diyas" className="group flex items-center gap-1.5 hover:text-rose-600 font-medium transition-all text-[11.5px]">
                   <span className="w-1 h-1 rounded-full bg-rose-300 group-hover:w-2 group-hover:bg-rose-600 transition-all duration-200"></span>
                   <span className="group-hover:translate-x-1 transition-transform duration-150">Artisan Diyas & Decor</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/search?q=macrame" className="group flex items-center gap-1.5 hover:text-rose-600 font-medium transition-all text-[11.5px]">
-                  <span className="w-1 h-1 rounded-full bg-rose-300 group-hover:w-2 group-hover:bg-rose-600 transition-all duration-200"></span>
-                  <span className="group-hover:translate-x-1 transition-transform duration-150">Boho Macrame Hangings</span>
                 </Link>
               </li>
             </ul>

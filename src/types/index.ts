@@ -125,3 +125,37 @@ export interface SiteSettings {
   codAvailable: boolean;
   replacementDays: number;
 }
+
+export interface ReelStory {
+  id: string;
+  type: 'artisan' | 'customer';
+  title: string;
+  authorName: string;
+  authorRole: string;
+  authorAvatar: string;
+  location?: string;
+  mediaType: 'image' | 'video';
+  mediaUrl: string;
+  caption: string;
+  likesCount: number;
+  viewsCount: string;
+  badge?: string;
+  craftTag?: {
+    productId?: string;
+    productSlug?: string;
+    productName: string;
+    productPrice: number;
+    productImage: string;
+  };
+  customerReview?: {
+    rating: number;
+    city: string;
+    comment: string;
+  };
+  musicTrack?: {
+    title: string;
+    artist: string;
+    audioUrl: string;
+  };
+  createdAt: number;
+}

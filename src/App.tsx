@@ -22,6 +22,7 @@ import { SearchPage } from './pages/SearchPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { OrderSuccessPage } from './pages/OrderSuccessPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { CustomerFavoritesPage } from './pages/CustomerFavoritesPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -141,6 +142,7 @@ const AppContent: React.FC = () => {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order-success/:id" element={<OrderSuccessPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/customer-favorites" element={<CustomerFavoritesPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>

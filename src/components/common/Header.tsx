@@ -53,7 +53,7 @@ const CATEGORY_CONFIGS: CategoryConfig[] = [
     subcategories: [
       { name: 'Featured Crafts', path: '/', icon: '✨' },
       { name: 'Artisan Story', path: '/#artisan-story', icon: '🌸' },
-      { name: 'Customer Favorites', path: '/#featured', icon: '⭐' },
+      { name: 'Customer Favorites', path: '/customer-favorites', icon: '⭐' },
       { name: 'Festive Clay Diyas', path: '/category/terracotta-clay?subcat=diyas', icon: '🪔' },
     ],
   },
@@ -155,6 +155,31 @@ const CATEGORY_CONFIGS: CategoryConfig[] = [
       { name: 'Handcrafted Wooden Toys', path: '/category/other-handicrafts?subcat=wooden-toys', icon: '🪵' },
       { name: 'Woven Bamboo Baskets', path: '/category/other-handicrafts?subcat=bamboo-baskets', icon: '🧺' },
       { name: 'Brass Idols & Ritual Diyas', path: '/category/other-handicrafts?subcat=brass-idols', icon: '🪔' },
+    ],
+  },
+  {
+    id: 'customer-favorites',
+    label: 'Favorites',
+    fullTitle: 'Customer Favorites & Top Sold',
+    path: '/customer-favorites',
+    emoji: '⭐',
+    badge: 'Top Sold',
+    badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
+    iconAnimClass: 'icon-sparkle-spin',
+    activeGradient: 'bg-gradient-to-r from-amber-500 via-rose-500 to-pink-600 text-white',
+    activeGlowClass: 'glow-terracotta',
+    borderColor: 'border-amber-200/90',
+    hoverBorderColor: 'hover:border-amber-400',
+    hoverBgColor: 'hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50',
+    hoverTextColor: 'hover:text-amber-800',
+    iconBgColor: 'bg-amber-100/90 text-amber-700',
+    cardBg: 'bg-white/95 hover:bg-amber-50/70',
+    subcategories: [
+      { name: 'All Top Bestsellers', path: '/customer-favorites', icon: '🏆' },
+      { name: 'Most Bought Terracotta', path: '/customer-favorites?category=terracotta-clay', icon: '🏺' },
+      { name: 'Most Bought Wall Art', path: '/customer-favorites?category=wall-art-decor', icon: '🖼️' },
+      { name: 'Most Bought Clothing', path: '/customer-favorites?category=embroidered-clothes', icon: '🧵' },
+      { name: 'Most Bought Handicrafts', path: '/customer-favorites?category=other-handicrafts', icon: '🦚' },
     ],
   },
 ];
@@ -526,8 +551,8 @@ export const Header: React.FC = () => {
         <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-pink-300/70 to-transparent" />
 
         <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-          {/* Mobile Layout: 5-Column Grid directly in front (Zero Scrollbar) */}
-          <div className="grid grid-cols-5 gap-1.5 py-1.5 sm:hidden">
+          {/* Mobile Layout: 6-Column Grid directly in front (Zero Scrollbar) */}
+          <div className="grid grid-cols-6 gap-1 py-1.5 sm:hidden">
             {CATEGORY_CONFIGS.map((cat) => {
               const isActive = isCategoryActive(cat.path);
 
@@ -544,9 +569,9 @@ export const Header: React.FC = () => {
                   <span className="category-sheen-sweep" />
 
                   {/* Animated Icon Avatar */}
-                  <div className="relative mb-1">
+                  <div className="relative mb-0.5">
                     <span
-                      className={`relative flex items-center justify-center w-6 h-6 rounded-full text-xs transition-transform duration-200 ${
+                      className={`relative flex items-center justify-center w-5.5 h-5.5 rounded-full text-xs transition-transform duration-200 ${
                         isActive ? 'bg-white/20 text-white' : `${cat.iconBgColor}`
                       } icon-ambient-breathe ${cat.iconAnimClass}`}
                     >
@@ -562,7 +587,7 @@ export const Header: React.FC = () => {
 
                   {/* Category Label */}
                   <span
-                    className={`text-[10px] font-bold tracking-tight leading-tight truncate w-full px-0.5 ${
+                    className={`text-[8.5px] min-[380px]:text-[9.5px] font-bold tracking-tight leading-tight truncate w-full px-0.5 ${
                       isActive ? 'text-white' : 'text-stone-800'
                     }`}
                   >
@@ -574,7 +599,7 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Tablet & Desktop Layout: Centered Flex Ribbon (Zero Scrollbar) */}
-          <div className="hidden sm:flex sm:items-center sm:justify-center gap-2 md:gap-3 lg:gap-5 py-2">
+          <div className="hidden sm:flex sm:items-center sm:justify-center gap-1.5 md:gap-2.5 lg:gap-4 py-2">
             {CATEGORY_CONFIGS.map((cat) => {
               const isActive = isCategoryActive(cat.path);
 

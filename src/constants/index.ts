@@ -171,7 +171,8 @@ Key Craft Highlights:
     image: '/img/baby-ganesha-clay-art.jpg',
     images: [
       '/img/baby-ganesha-clay-art.jpg',
-      '/img/baby-ganesha-clay-art-handcrafted.jpg',
+      '/img/Clay Baby Krishna with Flute and Pot.png',
+      '/img/ChatGPT Image Oct 3, 2026, 10_58_36 AM.png'
     ],
     stock: 20,
     status: 'published',
@@ -549,7 +550,7 @@ We understand that every friendship is unique. That's why we offer a variety of 
     createdAt: 1790342520684,
   },
   {
-    id: 'prod_13',
+    id: 'prod_16',
     slug: 'channapatna-wooden-toys-heritage-collection',
     name: 'Channapatna Handcrafted Wooden Toys & Folk Figurine Set',
     description: 'Vibrant, non-toxic lacquer finished traditional Indian wooden toys and figurines. Features hand-painted auto rickshaws, royal elephants, parrots, stacking rings, and miniature pull trains crafted from natural wood with vegetable dye pigments.',
@@ -571,7 +572,7 @@ We understand that every friendship is unique. That's why we offer a variety of 
     createdAt: 1790342550684,
   },
   {
-    id: 'prod_14',
+    id: 'prod_17',
     slug: 'illuminated-coastal-seashell-wind-chime-chandelier',
     name: 'Illuminated Coastal Seashell & Fairy Light Wind Chime Chandelier',
     description: 'Breathtaking handcrafted cascading seashell wind chime chandelier woven with natural rattan bamboo canopy, colorful ocean scallop shells, cowries, and warm fairy micro-LEDs. Gentle soothing sound with warm evening glow for patio, balcony, or living sanctuary.',
@@ -593,7 +594,7 @@ We understand that every friendship is unique. That's why we offer a variety of 
     createdAt: 1790342560684,
   },
   {
-    id: 'prod_15',
+    id: 'prod_18',
     slug: 'botanical-blossom-clay-necklace-earring-set',
     name: 'Botanical Blossom Terracotta Clay Necklace & Earring Set',
     description: 'Breathtaking hand-sculpted pastel sage green clay medallion jewelry set adorned with miniature white and pink sculpted blossom flowers, delicate foliage leaves, natural aventurine beads, and matching leverback earrings.',
